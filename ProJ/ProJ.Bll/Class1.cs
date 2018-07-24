@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProJ.ORM
+namespace ProJ.Bll
 {
     public class Class1
     {
