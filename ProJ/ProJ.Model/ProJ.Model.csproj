@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\ProJ.Model.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -40,17 +41,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionResult.cs" />
     <Compile Include="DB\Auth_Key.cs" />
     <Compile Include="DB\Auth_KeyDetail.cs" />
     <Compile Include="DB\Auth_Role.cs" />
     <Compile Include="DB\Auth_RoleAuthScope.cs" />
     <Compile Include="DB\Auth_User.cs" />
+    <Compile Include="DB\Auth_UserProfile.cs" />
     <Compile Include="DB\Auth_UserRole.cs" />
     <Compile Include="DB\Basic_Dict.cs" />
     <Compile Include="DB\Basic_Owner.cs" />
     <Compile Include="DB\ModelBase.cs" />
+    <Compile Include="DB\Project_Info.cs" />
+    <Compile Include="Para\Auth.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceBase.cs" />
+    <Compile Include="PublicEnum.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="View\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

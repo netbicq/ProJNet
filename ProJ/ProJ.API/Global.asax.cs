@@ -18,6 +18,7 @@ namespace ProJ.API
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            Public.AOP.Reg();
         }
     }
 }
