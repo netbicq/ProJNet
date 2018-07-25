@@ -52,7 +52,11 @@
     <Compile Include="DB\Basic_Dict.cs" />
     <Compile Include="DB\Basic_Owner.cs" />
     <Compile Include="DB\ModelBase.cs" />
+    <Compile Include="DB\Project_Contacts.cs" />
     <Compile Include="DB\Project_Info.cs" />
+    <Compile Include="DB\Project_Issue.cs" />
+    <Compile Include="DB\Project_Log.cs" />
+    <Compile Include="DB\Project_Schedule.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="Para\Auth.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -42,6 +42,8 @@ namespace ProJ.Bll
                 OtherEdit = user.OtherEdit,
                 OtherView = user.OtherView,
                 Pwd = user.Pwd,
+                OwnerID=Guid.Empty,
+                CreateMan=AppUser.UserInfo.Login,
                 TokenValidTime = DateTime.Now,
                 State = 1,
                 Token = ""

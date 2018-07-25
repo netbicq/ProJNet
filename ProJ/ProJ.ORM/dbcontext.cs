@@ -33,7 +33,17 @@ namespace ProJ.ORM
         public virtual DbSet<Basic_Owner> Basic_Owner { get; set; }
 
         public virtual DbSet<Auth_UserProfile> Auth_UserProfile { get; set; }
-        
+
+        public virtual DbSet<Project_Contacts> Project_Contacts { get; set; }
+
+        public virtual DbSet<Project_Info> Project_Info { get; set; }
+
+        public virtual DbSet<Project_Issue> Project_Issue { get; set; }
+
+        public virtual DbSet<Project_Log> Project_Log { get; set; }
+
+        public virtual DbSet<Project_Schedule> Project_Schedule { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.PluralizingTableNameConvention>();
