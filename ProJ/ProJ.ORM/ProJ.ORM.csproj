@@ -54,7 +54,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Command.cs" />
     <Compile Include="dbcontext.cs" />
+    <Compile Include="Extend.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IUnitwork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

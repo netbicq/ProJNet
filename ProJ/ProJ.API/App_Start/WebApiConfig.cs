@@ -19,6 +19,9 @@ namespace ProJ.API
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            config.Filters.Add(new Public.FilterExceptionFilter());
+            config.Filters.Add(new Public.ProJActionFilter());
+            config.Filters.Add(new Public.ProJFilter());
         }
     }
 }

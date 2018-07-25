@@ -23,5 +23,19 @@ namespace ProJ.Model
             /// </summary>
             ProIndustry=2
         }
+        /// <summary>
+        /// 一般状态枚举
+        /// </summary>
+        public enum GenericState
+        {
+            /// <summary>
+            /// 正常
+            /// </summary>
+            Normal = 1,
+            /// <summary>
+            /// 取消，作废
+            /// </summary>
+            Cancel = 2
+        }
     }
 }

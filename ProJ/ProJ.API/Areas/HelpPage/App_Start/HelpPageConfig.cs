@@ -41,7 +41,7 @@ namespace ProJ.API.Areas.HelpPage
                HttpContext.Current.Server.MapPath("~/bin/ProJ.Model.XML"),
               HttpContext.Current.Server.MapPath("~/bin/ProJ.API.XML"), 
               HttpContext.Current.Server.MapPath("~/bin/ProJ.ORM.XML"))
-              ));
+              );
             //// Uncomment the following to use "sample string" as the sample for all actions that have string as the body parameter or return type.
             //// Also, the string arrays will be used for IEnumerable<string>. The sample objects will be serialized into different media type 
             //// formats by the available formatters.
