@@ -13,7 +13,7 @@ namespace ProJ.API.Public
         /// <summary>
         /// 当前操作员
         /// </summary>
-        public Model.DB.Auth_User AppUser { get; set; }
+        public CurrentUser CurrentUser { get; set; }
         /// <summary>
         /// 业务类
         /// </summary>
@@ -23,12 +23,12 @@ namespace ProJ.API.Public
         public void SetService()
         {
             ServiceBase obj = BusinessService as ServiceBase;
-            if(AppUser !=null)
+            if(CurrentUser !=null)
             {
                 obj.AppUser = new AppServiceUser {
                      OutPutPaht =OutPutPath,
                       UploadPath =uploadPath,
-                       UserInfo =AppUser
+                        CurrentUserInfo =CurrentUser
                 };
                 
             }

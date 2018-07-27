@@ -43,7 +43,7 @@ namespace ProJ.Bll
                 OtherView = user.OtherView,
                 Pwd = user.Pwd,
                 OwnerID=Guid.Empty,
-                CreateMan=AppUser.UserInfo.Login,
+                CreateMan=AppUser.CurrentUserInfo.UserProfile.CNName,
                 TokenValidTime = DateTime.Now,
                 State = 1,
                 Token = ""
@@ -130,7 +130,7 @@ namespace ProJ.Bll
         /// <returns></returns>
         public ActionResult<bool> check()
         {
-            var token = AppUser.UserInfo.Token;
+            var token = AppUser.CurrentUserInfo.UserInfo.Token;
             var user = _rpsuser.GetModel(q => q.Token == token).Pwd;
             if (user == "admin")
             {
@@ -199,7 +199,7 @@ namespace ProJ.Bll
         /// <returns></returns>
         public ActionResult<bool> exit()
         {
-            var da = AppUser.UserInfo.ID;
+            var da = AppUser.CurrentUserInfo.UserInfo.ID;
             var dbuser = _rpsuser.GetModel(q => q.ID == da);
             if (dbuser == null)
             {

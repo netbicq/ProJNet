@@ -59,6 +59,8 @@
     <Compile Include="DB\Project_Schedule.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="Para\Auth.cs" />
+    <Compile Include="Para\Owner.cs" />
+    <Compile Include="Para\Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublicEnum.cs" />
     <Compile Include="View\Auth.cs" />

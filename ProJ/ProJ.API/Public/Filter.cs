@@ -46,8 +46,15 @@ namespace ProJ.API.Public
             if (user == null)
                 throw new Exception("非法请求");
 
-            api.AppUser = user;
+            var profiledb = obj.Unitwork.Repository<Model.DB.Auth_UserProfile>();
+            var profile = profiledb.GetModel(q => q.Login == user.Login);
 
+            api.CurrentUser = new CurrentUser
+            {
+                UserInfo = user,
+                UserProfile = profile
+            };
+           
             return true;
             return base.IsAuthorized(actionContext);
         }

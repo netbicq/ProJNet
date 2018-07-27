@@ -29,8 +29,7 @@ namespace ProJ.Bll
         /// <summary>
         /// 用户信息
         /// </summary>
-        public Auth_User UserInfo { get; set; }
-
+        public CurrentUser CurrentUserInfo { get; set; }
         /// <summary>
         /// 上传文件路径
         /// </summary>
@@ -39,5 +38,19 @@ namespace ProJ.Bll
         /// 导出文件路径
         /// </summary>
         public string OutPutPaht { get; set; }
+    }
+    /// <summary>
+    /// 当前用户
+    /// </summary>
+    public class CurrentUser
+    {
+        /// <summary>
+        /// 用户信息
+        /// </summary>
+        public Auth_User UserInfo { get; set; }
+        /// <summary>
+        /// Profile
+        /// </summary>
+        public Auth_UserProfile UserProfile { get; set; }
     }
 }
