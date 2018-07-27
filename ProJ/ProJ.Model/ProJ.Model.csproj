@@ -66,6 +66,8 @@
     <Compile Include="PublicEnum.cs" />
     <Compile Include="View\Auth.cs" />
     <Compile Include="View\Dict.cs" />
+    <Compile Include="View\Owner.cs" />
+    <Compile Include="View\Project.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -42,7 +42,7 @@ namespace ProJ.Bll
             }
             dict.Clone(dbdevice);
             dbdevice.State = (int)PublicEnum.GenericState.Normal;
-            dbdevice.CreateMan = AppUser.UserInfo.Login;
+            dbdevice.CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName;
             _dict.Add(dbdevice);
             _work.Commit();
 
