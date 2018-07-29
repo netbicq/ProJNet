@@ -130,15 +130,12 @@ namespace ProJ.Bll
             var Issue = _work.Repository<Model.DB.Project_Issue>().Queryable();
             var Log = _work.Repository < Model.DB.Project_Log>().Queryable();
             var retemp = from ac in proj
-                         let Schedules = Schedule.Where(q=>q.ProjectID==ac.ID)
-                         let logs = Log.Where(q=>q.ProjectID==ac.ID)
-                         let Issues = Issue.Where(q=>q.ProjectID==ac.ID)
                          select new ProjectView
                          {
                              Project_Info = ac,
-                             Project_Schedule= Schedules.Count()==0?null: Schedules,
-                             Project_Issue= Issues.Count() == 0 ? null : Issues,
-                             Project_Log= logs.Count() == 0 ? null : logs,
+                             Project_Schedule=from a in Schedule.Where(q=>q.ProjectID==ac.ID) select a,
+                             Project_Issue= from s in Issue.Where(q => q.ProjectID == ac.ID) select s,
+                             Project_Log= from d in Log.Where(q => q.ProjectID == ac.ID) select d,
                              StateStr = ac.State == (int)PublicEnum.ProjState.Normal ? "正常" :
                              ac.State == (int)PublicEnum.ProjState.Apply ? "申请" :
                              ac.State == (int)PublicEnum.ProjState.Modified ? "待修改" :
