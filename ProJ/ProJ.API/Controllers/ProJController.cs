@@ -70,5 +70,71 @@ namespace ProJ.API.Controllers
         {
             return bll.IssueNew(para);
         }
+        /// <summary>
+        /// 修改联系人
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <returns></returns>
+        [Route("conedit")]
+        [HttpPost]
+        public ActionResult<bool> ProCon(ProJCon para)
+        {
+            return bll.ProJCon(para);
+        }
+        /// <summary>
+        /// 修改进度计划
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <returns></returns>
+        [Route("editsch")]
+        [HttpPost]
+        public ActionResult<bool> ProJSch(ProJSch para)
+        {
+            return bll.ProJSch(para);
+        }
+        /// <summary>
+        /// 修改问题
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <returns></returns>
+        [Route("editiss")]
+        [HttpPost]
+        public ActionResult<bool> IssEdit(IssueEdit para)
+        {
+            return bll.IssEdit(para);
+        }
+        /// <summary>
+        /// 删除问题
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("deliss/{id:Guid}")]
+        [HttpGet]
+        public ActionResult<bool> IssDel(Guid id)
+        {
+            return bll.IssDel(id);
+        }
+        /// <summary>
+        /// 后续计划修改
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <returns></returns>
+        [Route("editafter")]
+        [HttpPost]
+        public ActionResult<bool> AfterEdit(AfterEdit para)
+        {
+            return bll.AfterEdit(para);
+        }
+        /// <summary>
+        /// 执行计划修改
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <returns></returns>
+        [Route("editschedule")]
+        [HttpPost]
+        public ActionResult<bool> ScheduleEdit(ScheduleEdit para)
+        {
+            return bll.ScheduleEdit(para);
+        }
     }
 }

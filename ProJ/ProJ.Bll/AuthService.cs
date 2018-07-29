@@ -387,6 +387,49 @@ namespace ProJ.Bll
             return new ActionResult<bool>(true);
 
         }
+        /// <summary>
+        /// 注册用户
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public ActionResult<bool> Regter(UserReg user)
+        {
+            var dbuser = new Model.DB.Auth_User()
+            {
+                Login = user.Login,
+                OtherEdit = user.OtherEdit,
+                OtherView = user.OtherView,
+                Pwd = user.Pwd,
+                OwnerID = Guid.Empty,
+                CreateMan = "注册用户",
+                TokenValidTime = DateTime.Now,
+                State = 1,
+                Token = ""
+            };
+            var profile = new Model.DB.Auth_UserProfile()
+            {
+                CNName = user.CNName,
+                Login = user.Login,
+                HeadIMG = "",
+                Tel = user.Tel
+            };
+
+            if (string.IsNullOrEmpty(user.Pwd) || string.IsNullOrEmpty(user.Login))
+            {
+                throw new Exception("用户名密码均不能为空");
+            }
+            if (_rpsuser.Any(q => q.Login == user.Login))
+            {
+                throw new Exception("用户名：" + user.Login + "已经存在");
+            }
+
+            _rpsprofiel.Add(profile);
+            _rpsuser.Add(dbuser);
+
+            _work.Commit();
+
+            return new ActionResult<bool>(true);
+        }
 
         /// <summary>
         /// 重置密码

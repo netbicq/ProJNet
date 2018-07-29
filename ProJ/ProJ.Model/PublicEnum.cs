@@ -146,5 +146,27 @@ namespace ProJ.Model
             /// </summary>
             Start = 4
         }
+        /// <summary>
+        /// 季度枚举
+        /// </summary>
+        public enum QuarterState
+        {
+            /// <summary>
+            /// 第一季度
+            /// </summary>
+            One = 1,
+            /// <summary>
+            /// 第二季度
+            /// </summary>
+            Two = 2,
+            /// <summary>
+            /// 第三季度
+            /// </summary>
+            Three = 3,
+            /// <summary>
+            /// 第四季度
+            /// </summary>
+            Four = 4
+        }
     }
 }

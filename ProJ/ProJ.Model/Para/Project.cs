@@ -90,7 +90,7 @@ namespace ProJ.Model.Para
         /// </summary>
         public Guid ProjectID { get; set; }
         /// <summary>
-        /// 日程类型 来自词典
+        /// 日程类型 
         /// </summary>
         public int ScheduleType { get; set; }
         /// <summary>
@@ -282,5 +282,65 @@ namespace ProJ.Model.Para
     {
         public Guid ProjectID { get; set; }
         public string IssueContent { get; set; }
+    }
+    /// <summary>
+    /// 联系人修改
+    /// </summary>
+    public class ProJCon: ProjectContactNew
+    {
+       public Guid ID { get; set; }
+    }
+    /// <summary>
+    /// 进度计划修改
+    /// </summary>
+    public class ProJSch : ProjectScheduleNew
+    {
+        public Guid ID { get; set; }
+    }
+    /// <summary>
+    /// 问题修改
+    /// </summary>
+    public class IssueEdit
+    {
+        public Guid ID { get; set; }
+        public string IssueContent { get; set; }
+    }
+    /// <summary>
+    /// 后续计划修改
+    /// </summary>
+    public class AfterEdit
+    {
+        public Guid ID { get; set; }
+        /// <summary>
+        /// 季度
+        /// </summary>
+        public PublicEnum.QuarterState Quarter { get; set; }
+        /// <summary>
+        /// 季度投资
+        /// </summary>
+        public decimal? QInvest { get; set; }
+        /// <summary>
+        /// 季度末形象进度
+        /// </summary>
+        public string QMemo { get; set; }
+    }
+    /// <summary>
+    /// 计划执行保存
+    /// </summary>
+    public class ScheduleEdit
+    {
+        public Guid ID { get; set; }
+        /// <summary>
+        /// 枚举
+        /// </summary>
+        public PublicEnum.PlanEnd Quarter { get; set; }
+        /// <summary>
+        /// 值
+        /// </summary>
+        public DateTime? Value { get; set; }
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public string Memo { get; set; }
     }
 }

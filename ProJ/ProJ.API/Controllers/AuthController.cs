@@ -221,5 +221,18 @@ namespace ProJ.API.Controllers
         {
             return bll.check();
         }
+        /// <summary>
+        /// 用户注册
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        /// 
+        [HttpPost]
+        [Route("reguser")]
+        [AllowAnonymous]
+        public ActionResult<bool> Regter(UserReg user)
+        {
+            return bll.Regter(user);
+        }
     }
 }

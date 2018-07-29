@@ -24,6 +24,69 @@ namespace ProJ.Bll
             Unitwork = work;
         }
         /// <summary>
+        /// 后续计划修改
+        /// </summary>
+        /// <param name="After"></param>
+        /// <returns></returns>
+        public ActionResult<bool> AfterEdit(AfterEdit After)
+        {
+            var Afterinfo = _work.Repository<Model.DB.Project_Info>();
+            var info = Afterinfo.GetModel(q=>q.ID==After.ID);
+            switch (After.Quarter)
+            {
+                case PublicEnum.QuarterState.One:
+                    info.Q1Invest = After.QInvest;
+                    info.Q1Memo = After.QMemo;
+                    Afterinfo.Update(info);
+                        break;
+                case PublicEnum.QuarterState.Two:
+                    info.Q2Invest = After.QInvest;
+                    info.Q2Memo = After.QMemo;
+                    Afterinfo.Update(info);
+                    break;
+                case PublicEnum.QuarterState.Three:
+                    info.Q3Invest = After.QInvest;
+                    info.Q3Memo = After.QMemo;
+                    Afterinfo.Update(info);
+                    break;
+                case PublicEnum.QuarterState.Four:
+                    info.Q4Invest = After.QInvest;
+                    info.Q4Memo = After.QMemo;
+                    Afterinfo.Update(info);
+                    break;
+                default:
+                    break;
+            }
+            _work.Commit();
+            return new ActionResult<bool>(true);
+        }
+        /// <summary>
+        /// 删除问题
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult<bool> IssDel(Guid id)
+        {
+            var Issue = _work.Repository<Model.DB.Project_Issue>();
+            var re = Issue.Delete(q => q.ID == id);
+            return new ActionResult<bool>(re > 0);
+        }
+        /// <summary>
+        /// 修改问题
+        /// </summary>
+        /// <param name="Iss"></param>
+        /// <returns></returns>
+        public ActionResult<bool> IssEdit(IssueEdit Iss)
+        {
+            var Issue = _work.Repository<Model.DB.Project_Issue>();
+            var re = Issue.GetModel(q=>q.ID==Iss.ID);
+            re.IssueContent = Iss.IssueContent;
+            Issue.Update(re);
+            _work.Commit();
+            return new ActionResult<bool>(true);
+        }
+
+        /// <summary>
         /// 问题发布
         /// </summary>
         /// <param name="Iss"></param>
@@ -36,6 +99,20 @@ namespace ProJ.Bll
             issu.CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName;
             issu.State = 1;
             Issue.Add(issu);
+            _work.Commit();
+            return new ActionResult<bool>(true);
+        }
+        /// <summary>
+        /// 修改联系人
+        /// </summary>
+        /// <param name="Con"></param>
+        /// <returns></returns>
+        public ActionResult<bool> ProJCon(ProJCon Con)
+        {
+            var Contact = _work.Repository<Model.DB.Project_Contacts>();
+            var re = Contact.GetModel(q => q.ID == Con.ID);
+            Con.Clone(re);
+            Contact.Update(re);
             _work.Commit();
             return new ActionResult<bool>(true);
         }
@@ -105,7 +182,6 @@ namespace ProJ.Bll
             dbs.ScheduleType = (int)PublicEnum.PlanType.Plan;
             Schedule.Add(dbs);
             var dbs2 = new Project_Schedule();
-            owner.Schedules.Clone(dbs2);
             dbs2.ProjectID = ID;
             dbs2.ScheduleType =(int)PublicEnum.PlanType.Ement;
             Schedule.Add(dbs2);
@@ -119,6 +195,123 @@ namespace ProJ.Bll
             _work.Commit();
             return new ActionResult<bool>(true);
         }
+        /// <summary>
+        /// 修改进度计划
+        /// </summary>
+        /// <param name="Sch"></param>
+        /// <returns></returns>
+        public ActionResult<bool> ProJSch(ProJSch Sch)
+        {
+            var Schedule = _work.Repository<Model.DB.Project_Schedule>();
+            var re = Schedule.GetModel(q => q.ID == Sch.ID);
+            Schedule.Clone(re);
+            Schedule.Update(re);
+            _work.Commit();
+            return new ActionResult<bool>(true);
+        }
+        /// <summary>
+        /// 执行计划修改
+        /// </summary>
+        /// <param name="Sch"></param>
+        /// <returns></returns>
+        public ActionResult<bool> ScheduleEdit(ScheduleEdit Sch)
+        {
+            var Schedule = _work.Repository<Model.DB.Project_Schedule>();
+            var info = Schedule.GetModel(q => q.ID == Sch.ID);
+            switch (Sch.Quarter)
+            {
+                case PublicEnum.PlanEnd.Point_GCKXXYJBGPF:
+                    info.Point_GCKXXYJBGPF = Sch.Value;
+                    info.Point_GCKXXYJBGMemo = Sch.Memo;
+                    Schedule.Update(info);
+                    break;
+                case PublicEnum.PlanEnd.Point_JSYDGHXKZPF:
+                    info.Point_JSYDGHXKZPF = Sch.Value;
+                    info.Point_JSYDGHXKZMemo = Sch.Memo;
+                    Schedule.Update(info);
+                    break;
+                case PublicEnum.PlanEnd.Point_DKBGWC:
+                    info.Point_DKBGWC = Sch.Value;
+                    info.Point_DKBGWCMemo = Sch.Memo;
+                    Schedule.Update(info);
+                    break;
+                case PublicEnum.PlanEnd.Point_CBSJJGSPF:
+                    info.Point_CBSJJGSPF = Sch.Value;
+                    info.Point_CBSJJGSMemo = Sch.Memo;
+                    Schedule.Update(info);
+                    break;
+                case PublicEnum.PlanEnd.Point_SGTBZHSC:
+                    info.Point_SGTBZHSC = Sch.Value;
+                    info.Point_SGTBZHSCMemo = Sch.Memo;
+                    Schedule.Update(info);
+                    break;
+                case PublicEnum.PlanEnd.Point_YSBZWC:
+                    info.Point_YSBZWC = Sch.Value;
+                    info.Point_YSBZWCMemo = Sch.Memo;
+                    Schedule.Update(info);
+                    break;
+                case PublicEnum.PlanEnd.Point_CSKZJPF:
+                    info.Point_CSKZJPF = Sch.Value;
+                    info.Point_CSKZJMemo = Sch.Memo;
+                    Schedule.Update(info);
+                    break;
+                case PublicEnum.PlanEnd.Point_SGJLZTP:
+                    info.Point_SGJLZTP = Sch.Value;
+                    info.Point_SGJLZTPMemo = Sch.Memo;
+                    Schedule.Update(info);
+                    break;
+                case PublicEnum.PlanEnd.Point_XMKG:
+                    info.Point_XMKG = Sch.Value;
+                    info.Point_XMKGMemo = Sch.Memo;
+                    Schedule.Update(info);
+                    break;
+                case PublicEnum.PlanEnd.Point_JSGCGHXKZPF:
+                    info.Point_JSGCGHXKZPF = Sch.Value;
+                    info.Point_JSGSGHXKZMemo = Sch.Memo;
+                    Schedule.Update(info);
+                    break;
+                case PublicEnum.PlanEnd.Point_SGJLRYBA:
+                    info.Point_SGJLRYBA = Sch.Value;
+                    info.Point_SGJLRYBAMemo = Sch.Memo;
+                    Schedule.Update(info);
+                    break;
+                case PublicEnum.PlanEnd.Point_SGXKZPF:
+                    info.Point_SGXKZPF = Sch.Value;
+                    info.Point_SGXKZMemo = Sch.Memo;
+                    Schedule.Update(info);
+                    break;
+                case PublicEnum.PlanEnd.Point_GHXZYDJYJSPF:
+                    info.Point_GHXZYDJYJSPF = Sch.Value;
+                    info.Point_GHXZJYDYJSMemo = Sch.Memo;
+                    Schedule.Update(info);
+                    break;
+                case PublicEnum.PlanEnd.Point_LZYSXJGDPF:
+                    info.Point_LZYSXJGDPF = Sch.Value;
+                    info.Point_LZYSXJGDMemo = Sch.Memo;
+                    Schedule.Update(info);
+                    break;
+                case PublicEnum.PlanEnd.Point_TDCRHT:
+                    info.Point_TDCRHT = Sch.Value;
+                    info.Point_TDCRHTMemo = Sch.Memo;
+                    Schedule.Update(info);
+                    break;
+                case PublicEnum.PlanEnd.Point_TDSYQZ:
+                    info.Point_TDSYQZ = Sch.Value;
+                    info.Point_TDSYQZMemo = Sch.Memo;
+                    Schedule.Update(info);
+                    break;
+                case PublicEnum.PlanEnd.Point_XMZPSJFAPF:
+                    info.Point_XMZPSJFAPF = Sch.Value;
+                    info.Point_XMZPSJFAMemo = Sch.Memo;
+                    Schedule.Update(info);
+                    break;
+                default:
+                    break;
+            }
+            _work.Commit();
+            return new ActionResult<bool>(true);
+        }
+
         /// <summary>
         /// 状态
         /// </summary>
