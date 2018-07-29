@@ -16,6 +16,12 @@ namespace ProJ.IBll
         ActionResult<bool> ProJNew(Model.Para.ProjectAdd owner);
         ActionResult<Pager<Model.View.ProjectView>> ProJList(PagerQuery<string> para);
         /// <summary>
+        /// 项目行业和项目级别
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        ActionResult<IEnumerable<Basic_Dict>> Statedict(PublicEnum.DictType state);
+        /// <summary>
         /// 状态
         /// </summary>
         /// <param name="state"></param>
@@ -39,6 +45,12 @@ namespace ProJ.IBll
         /// <param name="owner"></param>
         /// <returns></returns>
         ActionResult<bool> ProJSch(Model.Para.ProJSch Sch);
+        /// <summary>
+        /// 修改基本信息
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <returns></returns>
+        ActionResult<bool> Projedit(Model.Para.ProjEdit pro);
         /// <summary>
         /// 修改问题
         /// </summary>

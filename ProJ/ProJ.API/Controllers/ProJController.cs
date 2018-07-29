@@ -60,6 +60,18 @@ namespace ProJ.API.Controllers
             return bll.StateSet(state, ID);
         }
         /// <summary>
+        /// 词典选择器
+        /// </summary>
+        /// <param name="state"></param>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        [Route("stateset/{state}")]
+        [HttpGet]
+        public ActionResult<IEnumerable<Model.DB.Basic_Dict>> Statedict(PublicEnum.DictType state)
+        {
+            return bll.Statedict(state);
+        }
+        /// <summary>
         /// 问题发布
         /// </summary>
         /// <param name="dict"></param>
@@ -135,6 +147,17 @@ namespace ProJ.API.Controllers
         public ActionResult<bool> ScheduleEdit(ScheduleEdit para)
         {
             return bll.ScheduleEdit(para);
+        }
+        /// <summary>
+        /// 修改基本信息
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <returns></returns>
+        [Route("editprojs")]
+        [HttpPost]
+        public ActionResult<bool> ProjEdit(ProjEdit para)
+        {
+            return bll.Projedit(para);
         }
     }
 }

@@ -20,8 +20,24 @@ namespace ProJ.Model.View
         /// </summary>
         public IEnumerable<Project_Schedule> Project_Schedule { get; set; }
         /// <summary>
+        /// 联系人
+        /// </summary>
+        public Project_Contacts Project_Contacts { get; set; }
+        /// <summary>
         /// 状态
         /// </summary>
         public string StateStr { get; set; }
+        /// <summary>
+        /// 项目级别
+        /// </summary>
+        public string ProJLeveStr { get; set; }
+        /// <summary>
+        /// 项目行业
+        /// </summary>
+        public string ProjStr { get; set; }
+        /// <summary>
+        /// 业主单位
+        /// </summary>
+        public string OwnerStr { get; set; }
     }
 }

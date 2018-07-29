@@ -30,33 +30,55 @@ namespace ProJ.Bll
         /// <returns></returns>
         public ActionResult<bool> AfterEdit(AfterEdit After)
         {
-            var Afterinfo = _work.Repository<Model.DB.Project_Info>();
-            var info = Afterinfo.GetModel(q=>q.ID==After.ID);
-            switch (After.Quarter)
+            var info1 = _work.Repository<Model.DB.Project_Info>();
+            var to = info1.GetModel(q => q.ID == After.ID);
+            if (to.State != (int)PublicEnum.ProjState.Modified)
             {
-                case PublicEnum.QuarterState.One:
-                    info.Q1Invest = After.QInvest;
-                    info.Q1Memo = After.QMemo;
-                    Afterinfo.Update(info);
-                        break;
-                case PublicEnum.QuarterState.Two:
-                    info.Q2Invest = After.QInvest;
-                    info.Q2Memo = After.QMemo;
-                    Afterinfo.Update(info);
-                    break;
-                case PublicEnum.QuarterState.Three:
-                    info.Q3Invest = After.QInvest;
-                    info.Q3Memo = After.QMemo;
-                    Afterinfo.Update(info);
-                    break;
-                case PublicEnum.QuarterState.Four:
-                    info.Q4Invest = After.QInvest;
-                    info.Q4Memo = After.QMemo;
-                    Afterinfo.Update(info);
-                    break;
-                default:
-                    break;
+                throw new Exception("此项目状态不允许操作");
             }
+            if (to.State == (int)PublicEnum.ProjState.Start)
+            {
+                throw new Exception("开工不允许任何操作");
+            }
+            to.State = (int)PublicEnum.ProjState.Normal;
+            info1.Update(to);
+
+            var Afterinfo = _work.Repository<Model.DB.Project_Info>();
+            var info = Afterinfo.GetModel(q => q.ID == After.ID);
+            After.Clone(info);
+            Afterinfo.Update(info);
+            //switch (After.Quarter)
+            //{
+            //    case PublicEnum.QuarterState.One:
+            //        info.Q1Invest = After.QInvest;
+            //        info.Q1Memo = After.QMemo;
+            //        Afterinfo.Update(info);
+            //        break;
+            //    case PublicEnum.QuarterState.Two:
+            //        info.Q2Invest = After.QInvest;
+            //        info.Q2Memo = After.QMemo;
+            //        Afterinfo.Update(info);
+            //        break;
+            //    case PublicEnum.QuarterState.Three:
+            //        info.Q3Invest = After.QInvest;
+            //        info.Q3Memo = After.QMemo;
+            //        Afterinfo.Update(info);
+            //        break;
+            //    case PublicEnum.QuarterState.Four:
+            //        info.Q4Invest = After.QInvest;
+            //        info.Q4Memo = After.QMemo;
+            //        Afterinfo.Update(info);
+            //        break;
+            //    default:
+            //        break;
+            //}
+            var Log = _work.Repository<Project_Log>();
+            var logs = new Project_Log();
+            logs.ProjectID = After.ID;
+            logs.LogContent = "修改了后续计划：";
+            logs.CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName;
+            logs.State = 1;
+            Log.Add(logs);
             _work.Commit();
             return new ActionResult<bool>(true);
         }
@@ -78,10 +100,30 @@ namespace ProJ.Bll
         /// <returns></returns>
         public ActionResult<bool> IssEdit(IssueEdit Iss)
         {
+            var info1 = _work.Repository<Model.DB.Project_Info>();
+            var to = info1.GetModel(q => q.ID == Iss.ProjectID);
+            if (to.State != (int)PublicEnum.ProjState.Modified)
+            {
+                throw new Exception("此项目状态不允许操作");
+            }
+            if (to.State == (int)PublicEnum.ProjState.Start)
+            {
+                throw new Exception("开工不允许任何操作");
+            }
+            to.State = (int)PublicEnum.ProjState.Normal;
+            info1.Update(to);
             var Issue = _work.Repository<Model.DB.Project_Issue>();
-            var re = Issue.GetModel(q=>q.ID==Iss.ID);
+            var re = Issue.GetModel(q => q.ID == Iss.ID);
             re.IssueContent = Iss.IssueContent;
             Issue.Update(re);
+
+            var Log = _work.Repository<Project_Log>();
+            var logs = new Project_Log();
+            logs.ProjectID = Iss.ProjectID;
+            logs.LogContent = "修改了问题";
+            logs.CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName;
+            logs.State = 1;
+            Log.Add(logs);
             _work.Commit();
             return new ActionResult<bool>(true);
         }
@@ -93,12 +135,26 @@ namespace ProJ.Bll
         /// <returns></returns>
         public ActionResult<bool> IssueNew(IssueNew Iss)
         {
+            var pro= _work.Repository<Model.DB.Project_Info>();
+            var to = pro.GetModel(q=>q.ID==Iss.ProjectID);
+            if (to.State == (int)PublicEnum.ProjState.Start)
+            {
+                throw new Exception("开工不允许任何操作");
+            }
             var Issue = _work.Repository<Model.DB.Project_Issue>();
             var issu = new Project_Issue();
             Iss.Clone(issu);
             issu.CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName;
             issu.State = 1;
             Issue.Add(issu);
+
+            var Log = _work.Repository<Project_Log>();
+            var logs = new Project_Log();
+            logs.ProjectID = Iss.ProjectID;
+            logs.LogContent = "发布了问题";
+            logs.CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName;
+            logs.State = 1;
+            Log.Add(logs);
             _work.Commit();
             return new ActionResult<bool>(true);
         }
@@ -109,10 +165,61 @@ namespace ProJ.Bll
         /// <returns></returns>
         public ActionResult<bool> ProJCon(ProJCon Con)
         {
+            var info1 = _work.Repository<Model.DB.Project_Info>();
+            var to = info1.GetModel(q => q.ID == Con.ProjectID);
+            if (to.State != (int)PublicEnum.ProjState.Modified)
+            {
+                throw new Exception("此项目状态不允许操作");
+            }
+            if (to.State == (int)PublicEnum.ProjState.Start)
+            {
+                throw new Exception("开工不允许任何操作");
+            }
+            to.State = (int)PublicEnum.ProjState.Normal;
+            info1.Update(to);
             var Contact = _work.Repository<Model.DB.Project_Contacts>();
             var re = Contact.GetModel(q => q.ID == Con.ID);
             Con.Clone(re);
             Contact.Update(re);
+
+            var Log = _work.Repository<Project_Log>();
+            var logs = new Project_Log();
+            logs.ProjectID =Con.ProjectID;
+            logs.LogContent = "修改了联系人";
+            logs.CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName;
+            logs.State = 1;
+            Log.Add(logs);
+            _work.Commit();
+            return new ActionResult<bool>(true);
+        }
+        /// <summary>
+        /// 修改基本信息
+        /// </summary>
+        /// <param name="pro"></param>
+        /// <returns></returns>
+        public ActionResult<bool> Projedit(ProjEdit pro)
+        {
+            var info1 = _work.Repository<Model.DB.Project_Info>();
+            var to = info1.GetModel(q => q.ID == pro.ID);
+            if (to.State != (int)PublicEnum.ProjState.Modified)
+            {
+                throw new Exception("此项目状态不允许操作");
+            }
+            if (to.State == (int)PublicEnum.ProjState.Start)
+            {
+                throw new Exception("开工不允许任何操作");
+            }
+            pro.Clone(to);
+            to.State = (int)PublicEnum.ProjState.Normal;
+            info1.Update(to);
+
+            var Log = _work.Repository<Project_Log>();
+            var logs = new Project_Log();
+            logs.ProjectID = pro.ID;
+            logs.LogContent = "修改了基本信息";
+            logs.CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName;
+            logs.State = 1;
+            Log.Add(logs);
             _work.Commit();
             return new ActionResult<bool>(true);
         }
@@ -128,18 +235,28 @@ namespace ProJ.Bll
             var Contacts = _work.Repository<Model.DB.Project_Contacts>().Queryable();
             var Schedule = _work.Repository<Model.DB.Project_Schedule>().Queryable();
             var Issue = _work.Repository<Model.DB.Project_Issue>().Queryable();
-            var Log = _work.Repository < Model.DB.Project_Log>().Queryable();
+            var Log = _work.Repository<Model.DB.Project_Log>().Queryable();
+            var dict = _work.Repository<Model.DB.Basic_Dict>().Queryable();
+            var owner = _work.Repository<Model.DB.Basic_Owner>().Queryable();
             var retemp = from ac in proj
+                         let owners = owner.FirstOrDefault(q => q.ID == ac.OwnerID)
+                         let dicts = dict.FirstOrDefault(q => q.ID == ac.IndustryID)
+                         let dicts2 = dict.FirstOrDefault(q => q.ID == ac.LevelID)
+                         let con = Contacts.FirstOrDefault(q=>q.ProjectID==ac.ID)
                          select new ProjectView
                          {
                              Project_Info = ac,
-                             Project_Schedule=from a in Schedule.Where(q=>q.ProjectID==ac.ID) select a,
-                             Project_Issue= from s in Issue.Where(q => q.ProjectID == ac.ID) select s,
-                             Project_Log= from d in Log.Where(q => q.ProjectID == ac.ID) select d,
+                             Project_Schedule = from a in Schedule.Where(q => q.ProjectID == ac.ID) select a,
+                             Project_Issue = from s in Issue.Where(q => q.ProjectID == ac.ID) select s,
+                             Project_Log = from d in Log.Where(q => q.ProjectID == ac.ID) select d,
                              StateStr = ac.State == (int)PublicEnum.ProjState.Normal ? "正常" :
                              ac.State == (int)PublicEnum.ProjState.Apply ? "申请" :
                              ac.State == (int)PublicEnum.ProjState.Modified ? "待修改" :
-                             ac.State == (int)PublicEnum.ProjState.Start ? "开工" :"未知"
+                             ac.State == (int)PublicEnum.ProjState.Start ? "开工" : "未知",
+                             OwnerStr = owners == null ? null : owners.OwnerName,
+                             ProjStr = dicts == null ? null : dicts.DictName,
+                             ProJLeveStr = dicts2 == null ? null : dicts2.DictName,
+                             Project_Contacts= con
                          };
             var re = new Pager<ProjectView>().GetCurrentPage(retemp, para.PageSize, para.PageIndex);
             return new ActionResult<Pager<ProjectView>>(re);
@@ -180,12 +297,12 @@ namespace ProJ.Bll
             Schedule.Add(dbs);
             var dbs2 = new Project_Schedule();
             dbs2.ProjectID = ID;
-            dbs2.ScheduleType =(int)PublicEnum.PlanType.Ement;
+            dbs2.ScheduleType = (int)PublicEnum.PlanType.Ement;
             Schedule.Add(dbs2);
 
             var logs = new Project_Log();
             logs.ProjectID = ID;
-            logs.LogContent = "添加工程项目："+ owner.ProjectInfo.ProjectName;
+            logs.LogContent = "添加工程项目：" + owner.ProjectInfo.ProjectName;
             logs.CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName;
             logs.State = 1;
             Log.Add(logs);
@@ -199,10 +316,30 @@ namespace ProJ.Bll
         /// <returns></returns>
         public ActionResult<bool> ProJSch(ProJSch Sch)
         {
+            var info = _work.Repository<Model.DB.Project_Info>();
+            var to = info.GetModel(q=>q.ID==Sch.ProjectID);
+            if (to.State!=(int)PublicEnum.ProjState.Modified)
+            {
+                throw new Exception("此项目状态不允许操作");
+            }
+            if (to.State == (int)PublicEnum.ProjState.Start)
+            {
+                throw new Exception("开工不允许任何操作");
+            }
+            to.State = (int)PublicEnum.ProjState.Normal;
+            info.Update(to);
             var Schedule = _work.Repository<Model.DB.Project_Schedule>();
             var re = Schedule.GetModel(q => q.ID == Sch.ID);
             Schedule.Clone(re);
             Schedule.Update(re);
+
+            var Log = _work.Repository<Project_Log>();
+            var logs = new Project_Log();
+            logs.ProjectID = Sch.ProjectID;
+            logs.LogContent = "修改了进度计划";
+            logs.CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName;
+            logs.State = 1;
+            Log.Add(logs);
             _work.Commit();
             return new ActionResult<bool>(true);
         }
@@ -213,91 +350,254 @@ namespace ProJ.Bll
         /// <returns></returns>
         public ActionResult<bool> ScheduleEdit(ScheduleEdit Sch)
         {
+            if (string.IsNullOrEmpty(Sch.Memo)&&Sch.Value==DateTime.MinValue)
+            {
+                throw new Exception("参数不能为空");
+            }
+            var info1 = _work.Repository<Model.DB.Project_Info>();
+            var to = info1.GetModel(q => q.ID == Sch.ProjectID);
+            if (to.State == (int)PublicEnum.ProjState.Start)
+            {
+                throw new Exception("开工不允许任何操作");
+            }
             var Schedule = _work.Repository<Model.DB.Project_Schedule>();
             var info = Schedule.GetModel(q => q.ID == Sch.ID);
             switch (Sch.Quarter)
             {
                 case PublicEnum.PlanEnd.Point_GCKXXYJBGPF:
+                    if (info.Point_GCKXXYJBGPF != null||info.Point_GCKXXYJBGMemo!=null)
+                    {
+                        if (to.State != (int)PublicEnum.ProjState.Modified)
+                        {
+                            throw new Exception("此项目状态不允许操作");
+                        }
+                        to.State = (int)PublicEnum.ProjState.Normal;
+                        info1.Update(to);
+                    }
                     info.Point_GCKXXYJBGPF = Sch.Value;
                     info.Point_GCKXXYJBGMemo = Sch.Memo;
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_JSYDGHXKZPF:
+                    if (info.Point_JSYDGHXKZPF != null || info.Point_JSYDGHXKZMemo != null)
+                    {
+                        if (to.State != (int)PublicEnum.ProjState.Modified)
+                        {
+                            throw new Exception("此项目状态不允许操作");
+                        }
+                        to.State = (int)PublicEnum.ProjState.Normal;
+                        info1.Update(to);
+                    }
                     info.Point_JSYDGHXKZPF = Sch.Value;
                     info.Point_JSYDGHXKZMemo = Sch.Memo;
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_DKBGWC:
+                    if (info.Point_DKBGWC != null || info.Point_DKBGWCMemo != null)
+                    {
+                        if (to.State != (int)PublicEnum.ProjState.Modified)
+                        {
+                            throw new Exception("此项目状态不允许操作");
+                        }
+                        to.State = (int)PublicEnum.ProjState.Normal;
+                        info1.Update(to);
+                    }
                     info.Point_DKBGWC = Sch.Value;
                     info.Point_DKBGWCMemo = Sch.Memo;
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_CBSJJGSPF:
+                    if (info.Point_CBSJJGSPF != null || info.Point_CBSJJGSMemo != null)
+                    {
+                        if (to.State != (int)PublicEnum.ProjState.Modified)
+                        {
+                            throw new Exception("此项目状态不允许操作");
+                        }
+                        to.State = (int)PublicEnum.ProjState.Normal;
+                        info1.Update(to);
+                    }
                     info.Point_CBSJJGSPF = Sch.Value;
                     info.Point_CBSJJGSMemo = Sch.Memo;
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_SGTBZHSC:
+                    if (info.Point_SGTBZHSC != null || info.Point_SGTBZHSCMemo != null)
+                    {
+                        if (to.State != (int)PublicEnum.ProjState.Modified)
+                        {
+                            throw new Exception("此项目状态不允许操作");
+                        }
+                        to.State = (int)PublicEnum.ProjState.Normal;
+                        info1.Update(to);
+                    }
                     info.Point_SGTBZHSC = Sch.Value;
                     info.Point_SGTBZHSCMemo = Sch.Memo;
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_YSBZWC:
+                    if (info.Point_YSBZWC != null || info.Point_YSBZWCMemo != null)
+                    {
+                        if (to.State != (int)PublicEnum.ProjState.Modified)
+                        {
+                            throw new Exception("此项目状态不允许操作");
+                        }
+                        to.State = (int)PublicEnum.ProjState.Normal;
+                        info1.Update(to);
+                    }
                     info.Point_YSBZWC = Sch.Value;
                     info.Point_YSBZWCMemo = Sch.Memo;
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_CSKZJPF:
+                    if (info.Point_CSKZJPF != null || info.Point_CSKZJMemo != null)
+                    {
+                        if (to.State != (int)PublicEnum.ProjState.Modified)
+                        {
+                            throw new Exception("此项目状态不允许操作");
+                        }
+                        to.State = (int)PublicEnum.ProjState.Normal;
+                        info1.Update(to);
+                    }
                     info.Point_CSKZJPF = Sch.Value;
                     info.Point_CSKZJMemo = Sch.Memo;
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_SGJLZTP:
+                    if (info.Point_SGJLZTP != null || info.Point_SGJLZTPMemo != null)
+                    {
+                        if (to.State != (int)PublicEnum.ProjState.Modified)
+                        {
+                            throw new Exception("此项目状态不允许操作");
+                        }
+                        to.State = (int)PublicEnum.ProjState.Normal;
+                        info1.Update(to);
+                    }
                     info.Point_SGJLZTP = Sch.Value;
                     info.Point_SGJLZTPMemo = Sch.Memo;
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_XMKG:
+                    if (info.Point_XMKG != null || info.Point_XMKGMemo != null)
+                    {
+                        if (to.State != (int)PublicEnum.ProjState.Modified)
+                        {
+                            throw new Exception("此项目状态不允许操作");
+                        }
+                        to.State = (int)PublicEnum.ProjState.Normal;
+                        info1.Update(to);
+                    }
                     info.Point_XMKG = Sch.Value;
                     info.Point_XMKGMemo = Sch.Memo;
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_JSGCGHXKZPF:
+                    if (info.Point_JSGCGHXKZPF != null || info.Point_JSGSGHXKZMemo != null)
+                    {
+                        if (to.State != (int)PublicEnum.ProjState.Modified)
+                        {
+                            throw new Exception("此项目状态不允许操作");
+                        }
+                        to.State = (int)PublicEnum.ProjState.Normal;
+                        info1.Update(to);
+                    }
                     info.Point_JSGCGHXKZPF = Sch.Value;
                     info.Point_JSGSGHXKZMemo = Sch.Memo;
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_SGJLRYBA:
+                    if (info.Point_SGJLRYBA != null || info.Point_SGJLRYBAMemo != null)
+                    {
+                        if (to.State != (int)PublicEnum.ProjState.Modified)
+                        {
+                            throw new Exception("此项目状态不允许操作");
+                        }
+                        to.State = (int)PublicEnum.ProjState.Normal;
+                        info1.Update(to);
+                    }
                     info.Point_SGJLRYBA = Sch.Value;
                     info.Point_SGJLRYBAMemo = Sch.Memo;
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_SGXKZPF:
+                    if (info.Point_SGXKZPF != null || info.Point_SGXKZMemo != null)
+                    {
+                        if (to.State != (int)PublicEnum.ProjState.Modified)
+                        {
+                            throw new Exception("此项目状态不允许操作");
+                        }
+                        to.State = (int)PublicEnum.ProjState.Normal;
+                        info1.Update(to);
+                    }
                     info.Point_SGXKZPF = Sch.Value;
                     info.Point_SGXKZMemo = Sch.Memo;
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_GHXZYDJYJSPF:
+                    if (info.Point_GHXZYDJYJSPF != null || info.Point_GHXZJYDYJSMemo != null)
+                    {
+                        if (to.State != (int)PublicEnum.ProjState.Modified)
+                        {
+                            throw new Exception("此项目状态不允许操作");
+                        }
+                        to.State = (int)PublicEnum.ProjState.Normal;
+                        info1.Update(to);
+                    }
                     info.Point_GHXZYDJYJSPF = Sch.Value;
                     info.Point_GHXZJYDYJSMemo = Sch.Memo;
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_LZYSXJGDPF:
+                    if (info.Point_LZYSXJGDPF != null || info.Point_LZYSXJGDMemo != null)
+                    {
+                        if (to.State != (int)PublicEnum.ProjState.Modified)
+                        {
+                            throw new Exception("此项目状态不允许操作");
+                        }
+                        to.State = (int)PublicEnum.ProjState.Normal;
+                        info1.Update(to);
+                    }
                     info.Point_LZYSXJGDPF = Sch.Value;
                     info.Point_LZYSXJGDMemo = Sch.Memo;
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_TDCRHT:
+                    if (info.Point_TDCRHT != null || info.Point_TDCRHTMemo != null)
+                    {
+                        if (to.State != (int)PublicEnum.ProjState.Modified)
+                        {
+                            throw new Exception("此项目状态不允许操作");
+                        }
+                        to.State = (int)PublicEnum.ProjState.Normal;
+                        info1.Update(to);
+                    }
                     info.Point_TDCRHT = Sch.Value;
                     info.Point_TDCRHTMemo = Sch.Memo;
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_TDSYQZ:
+                    if (info.Point_TDSYQZ != null || info.Point_TDSYQZMemo != null)
+                    {
+                        if (to.State != (int)PublicEnum.ProjState.Modified)
+                        {
+                            throw new Exception("此项目状态不允许操作");
+                        }
+                        to.State = (int)PublicEnum.ProjState.Normal;
+                        info1.Update(to);
+                    }
                     info.Point_TDSYQZ = Sch.Value;
                     info.Point_TDSYQZMemo = Sch.Memo;
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_XMZPSJFAPF:
+                    if (info.Point_XMZPSJFAPF != null || info.Point_XMZPSJFAMemo != null)
+                    {
+                        if (to.State != (int)PublicEnum.ProjState.Modified)
+                        {
+                            throw new Exception("此项目状态不允许操作");
+                        }
+                        to.State = (int)PublicEnum.ProjState.Normal;
+                        info1.Update(to);
+                    }
                     info.Point_XMZPSJFAPF = Sch.Value;
                     info.Point_XMZPSJFAMemo = Sch.Memo;
                     Schedule.Update(info);
@@ -305,8 +605,26 @@ namespace ProJ.Bll
                 default:
                     break;
             }
+            var Log = _work.Repository<Project_Log>();
+            var logs = new Project_Log();
+            logs.ProjectID = Sch.ProjectID;
+            logs.LogContent = "修改了执行计划：";
+            logs.CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName;
+            logs.State = 1;
+            Log.Add(logs);
             _work.Commit();
             return new ActionResult<bool>(true);
+        }
+        /// <summary>
+        /// 词典选择器
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        public ActionResult<IEnumerable<Basic_Dict>> Statedict(PublicEnum.DictType state)
+        {
+            var dict = _work.Repository<Model.DB.Basic_Dict>();
+            var re = dict.Queryable(q => q.DictType == (int)state);
+            return new ActionResult<IEnumerable<Basic_Dict>>(re);
         }
 
         /// <summary>
@@ -323,8 +641,33 @@ namespace ProJ.Bll
             {
                 throw new Exception("项目不存在");
             }
+            if (em.State == (int)PublicEnum.ProjState.Start)
+            {
+                throw new Exception("开工不允许任何操作");
+            }
             em.State = (int)state;
             proj.Update(em);
+
+            var Log = _work.Repository<Project_Log>();
+            var logs = new Project_Log();
+            logs.ProjectID = em.ID;
+            logs.CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName;
+            logs.State = 1;
+            if (state==PublicEnum.ProjState.Apply)
+            {
+                logs.LogContent = "申请修改";
+                Log.Add(logs);
+            }
+            else if (state == PublicEnum.ProjState.Modified)
+            {
+                logs.LogContent = "同意申请修改";
+                Log.Add(logs);
+            }
+            else if (state == PublicEnum.ProjState.Start)
+            {
+                logs.LogContent = "项目开工";
+                Log.Add(logs);
+            }
             _work.Commit();
             return new ActionResult<bool>(true);
         }

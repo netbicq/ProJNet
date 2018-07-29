@@ -303,6 +303,7 @@ namespace ProJ.Model.Para
     public class IssueEdit
     {
         public Guid ID { get; set; }
+        public Guid ProjectID { get; set; }
         public string IssueContent { get; set; }
     }
     /// <summary>
@@ -312,17 +313,49 @@ namespace ProJ.Model.Para
     {
         public Guid ID { get; set; }
         /// <summary>
-        /// 季度
+        /// 第一季度投资
         /// </summary>
-        public PublicEnum.QuarterState Quarter { get; set; }
+        public decimal? Q1Invest { get; set; }
         /// <summary>
-        /// 季度投资
+        /// 第二季度投资
         /// </summary>
-        public decimal? QInvest { get; set; }
+        public decimal? Q2Invest { get; set; }
         /// <summary>
-        /// 季度末形象进度
+        /// 第三季度投资
         /// </summary>
-        public string QMemo { get; set; }
+        public decimal? Q3Invest { get; set; }
+        /// <summary>
+        /// 第四季度投资
+        /// </summary>
+        public decimal? Q4Invest { get; set; }
+        /// <summary>
+        /// 第一季度末形象进度
+        /// </summary>
+        public string Q1Memo { get; set; }
+        /// <summary>
+        /// 第二季度末形象进度
+        /// </summary>
+        public string Q2Memo { get; set; }
+        /// <summary>
+        /// 第三季度末形象进度
+        /// </summary>
+        public string Q3Memo { get; set; }
+        /// <summary>
+        /// 第四季度末形象进度
+        /// </summary>
+        public string Q4Memo { get; set; }
+        ///// <summary>
+        ///// 季度
+        ///// </summary>
+        //public PublicEnum.QuarterState Quarter { get; set; }
+        ///// <summary>
+        ///// 季度投资
+        ///// </summary>
+        //public decimal? QInvest { get; set; }
+        ///// <summary>
+        ///// 季度末形象进度
+        ///// </summary>
+        //public string QMemo { get; set; }
     }
     /// <summary>
     /// 计划执行保存
@@ -330,6 +363,10 @@ namespace ProJ.Model.Para
     public class ScheduleEdit
     {
         public Guid ID { get; set; }
+        /// <summary>
+        /// 工程项目ID
+        /// </summary>
+        public Guid ProjectID { get; set; }
         /// <summary>
         /// 枚举
         /// </summary>
@@ -342,5 +379,36 @@ namespace ProJ.Model.Para
         /// 备注
         /// </summary>
         public string Memo { get; set; }
+    }
+    /// <summary>
+    /// 基本信息修改
+    /// </summary>
+    public class ProjEdit
+    {
+        public Guid ID { get; set; }
+        /// <summary>
+        /// 项目名称
+        /// </summary>
+        public string ProjectName { get; set; }
+        /// <summary>
+        /// 业主ID
+        /// </summary>
+        public Guid OwnerID { get; set; }
+        /// <summary>
+        /// 项目级别ID
+        /// </summary>
+        public Guid LevelID { get; set; }
+        /// <summary>
+        /// 项目行业ID
+        /// </summary>
+        public Guid IndustryID { get; set; }
+        /// <summary>
+        /// 项目投资额
+        /// </summary>
+        public decimal? InvestMoney { get; set; }
+        /// <summary>
+        /// 开工日期
+        /// </summary>
+        public DateTime? ComemenceDate { get; set; }
     }
 }
