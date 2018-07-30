@@ -27,6 +27,18 @@ namespace ProJ.API.Controllers
         }
 
         /// <summary>
+        /// 审核通过
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+
+        [HttpGet]
+        [Route("yamm/{id:Guid}")]
+        public ActionResult<bool> yami(Guid ID)
+        {
+            return bll.Ys(ID);
+        }
+        /// <summary>
         /// 新建 用户
         /// </summary>
         /// <param name="user"></param>

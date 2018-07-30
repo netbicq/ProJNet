@@ -12,29 +12,57 @@ namespace ProJ.Model.Para
     public class UserReg
     {
         /// <summary>
-        /// Login
+        /// 登陆名称
         /// </summary>
         public string Login { get; set; }
         /// <summary>
-        /// 密码
+        /// 登陆密码
         /// </summary>
         public string Pwd { get; set; }
         /// <summary>
-        /// 查看他们数据
+        /// 单位名称
         /// </summary>
-        public bool OtherView { get; set; }
+        public string OwnerName { get; set; }
         /// <summary>
-        /// 修改他人数据
+        /// 片区负责人
         /// </summary>
-        public bool OtherEdit { get; set; }
+        public string SitePrincipal { get; set; }
         /// <summary>
-        /// 姓名
+        /// 片区负责人电话
         /// </summary>
-        public string CNName { get; set; }
+        public string SitePrincipalTEL { get; set; }
         /// <summary>
-        /// 电话
+        /// 片区联系人
         /// </summary>
-        public string Tel { get; set; }
+        public string SiteLink { get; set; }
+        /// <summary>
+        /// 片区联系人电话
+        /// </summary>
+        public string SiteLinkTEL { get; set; }
+        /// <summary>
+        /// 经办人
+        /// </summary>
+        public string Handler { get; set; }
+        /// <summary>
+        /// 经办人电话
+        /// </summary>
+        public string HandlerTEL { get; set; }
+        /// <summary>
+        /// 分管领导
+        /// </summary>
+        public string Principal { get; set; }
+        /// <summary>
+        /// 分管领导电话
+        /// </summary>
+        public string PrincipalTEL { get; set; }
+        /// <summary>
+        /// 主要领导
+        /// </summary>
+        public string Leader { get; set; }
+        /// <summary>
+        /// 主要领导电话
+        /// </summary>
+        public string LeaderTEL { get; set; }
 
     }
     /// <summary>

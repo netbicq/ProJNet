@@ -51,7 +51,8 @@ namespace ProJ.Bll
                 ID = Guid.NewGuid(),
                 CreateDate = DateTime.Now,
                 CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName,
-                State = (int)PublicEnum.GenericState.Normal
+                State = (int)PublicEnum.GenericState.Normal,
+                RegDate=DateTime.Now
             };
 
             owner.Clone(ownermodel);

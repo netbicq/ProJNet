@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ProJ.IBll;
 using ProJ.Model;
+using ProJ.Model.DB;
 using ProJ.Model.Para;
 using ProJ.Model.View;
 using ProJ.ORM;
@@ -347,7 +348,7 @@ namespace ProJ.Bll
                         {
                             UserInfo = u,
                             UserProfile = pro,
-                            StateStr = u.State == (int)PublicEnum.GenericState.Cancel ? "作废" :
+                            StateStr = u.State == (int)PublicEnum.GenericState.Cancel ? "未审核" :
                               u.State == (int)PublicEnum.GenericState.Normal ? "正常" : "未知"
                         };
 
@@ -394,37 +395,76 @@ namespace ProJ.Bll
         /// <returns></returns>
         public ActionResult<bool> Regter(UserReg user)
         {
-            var dbuser = new Model.DB.Auth_User()
+            if (string.IsNullOrEmpty(user.Handler)
+                 || string.IsNullOrEmpty(user.HandlerTEL)
+                 || string.IsNullOrEmpty(user.Principal)
+                 || string.IsNullOrEmpty(user.PrincipalTEL)
+                 )
             {
+                throw new Exception("联系人 联系人电话 负责人 负责人电话均不能为空");
+            }
+            if (string.IsNullOrEmpty(user.Login)
+                || string.IsNullOrEmpty(user.Pwd)
+                )
+            {
+                throw new Exception("操作员和密码不能为空");
+            }
+
+
+
+            Model.DB.Basic_Owner ownermodel = new Model.DB.Basic_Owner
+            {
+                ID = Guid.NewGuid(),
+                CreateDate = DateTime.Now,
+                CreateMan = "自主注册",
+                State = (int)PublicEnum.GenericState.Cancel,
+                RegDate=DateTime.Now
+            };
+
+            user.Clone(ownermodel);
+
+            //操作员
+            Model.DB.Auth_User usermodel = new Auth_User()
+            {
+                CreateDate = DateTime.Now,
+                CreateMan = "自主注册",
+                ID = Guid.NewGuid(),
                 Login = user.Login,
-                OtherEdit = user.OtherEdit,
-                OtherView = user.OtherView,
+                OtherEdit = false,
+                OtherView = false,
+                OwnerID = ownermodel.ID,
                 Pwd = user.Pwd,
-                OwnerID = Guid.Empty,
-                CreateMan = "注册用户",
-                TokenValidTime = DateTime.Now,
-                State = 1,
-                Token = ""
+                State = (int)PublicEnum.GenericState.Normal,
+                Token = "",
+                TokenValidTime = DateTime.Now
             };
-            var profile = new Model.DB.Auth_UserProfile()
+
+            //Profile
+            Model.DB.Auth_UserProfile profilemodel = new Auth_UserProfile()
             {
-                CNName = user.CNName,
-                Login = user.Login,
+                CNName = user.OwnerName,
                 HeadIMG = "",
-                Tel = user.Tel
+                ID = Guid.NewGuid(),
+                Login = user.Login,
+                Tel = ""
             };
 
-            if (string.IsNullOrEmpty(user.Pwd) || string.IsNullOrEmpty(user.Login))
-            {
-                throw new Exception("用户名密码均不能为空");
-            }
-            if (_rpsuser.Any(q => q.Login == user.Login))
-            {
-                throw new Exception("用户名：" + user.Login + "已经存在");
-            }
+            var ownerdb = _work.Repository<Model.DB.Basic_Owner>();
+            var userdb = _work.Repository<Model.DB.Auth_User>();
+            var profiledb = _work.Repository<Model.DB.Auth_UserProfile>();
 
-            _rpsprofiel.Add(profile);
-            _rpsuser.Add(dbuser);
+            if (ownerdb.Any(q => q.OwnerName == ownermodel.OwnerName))
+            {
+                throw new Exception("业主名称已经存在");
+            }
+            if (userdb.Any(q => q.Login == usermodel.Login))
+            {
+                throw new Exception("登陆名已经存在");
+            }
+            ownerdb.Add(ownermodel);
+            userdb.Add(usermodel);
+            profiledb.Add(profilemodel);
+
 
             _work.Commit();
 
@@ -542,6 +582,10 @@ namespace ProJ.Bll
             {
                 throw new Exception("用户名或密码错误");
             }
+            if (user.State==(int)PublicEnum.GenericState.Cancel)
+            {
+                throw new Exception("账号未审核");
+            }
             var profile = _rpsprofiel.GetModel(q => q.Login == para.Login);
 
             user.Token = Command.CreateToken(64);
@@ -555,6 +599,24 @@ namespace ProJ.Bll
             });
 
 
+        }
+        /// <summary>
+        /// 审核通过
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult<bool> Ys(Guid id)
+        {
+            var own = _work.Repository<Basic_Owner>();
+            var owner = own.GetModel(q => q.ID == id);
+            owner.State = (int)PublicEnum.GenericState.Normal;
+            own.Update(owner);
+            var user = _rpsuser.GetModel(q => q.Login == owner.Login);
+            user.State = (int)PublicEnum.GenericState.Normal;
+            _rpsuser.Update(user);
+            _work.Commit();
+
+            return new ActionResult<bool>(true);
         }
     }
 }

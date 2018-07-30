@@ -330,7 +330,7 @@ namespace ProJ.Bll
             info.Update(to);
             var Schedule = _work.Repository<Model.DB.Project_Schedule>();
             var re = Schedule.GetModel(q => q.ID == Sch.ID);
-            Schedule.Clone(re);
+            Sch.Clone(re);
             Schedule.Update(re);
 
             var Log = _work.Repository<Project_Log>();
