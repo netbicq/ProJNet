@@ -434,7 +434,7 @@ namespace ProJ.Bll
                 OtherView = false,
                 OwnerID = ownermodel.ID,
                 Pwd = user.Pwd,
-                State = (int)PublicEnum.GenericState.Normal,
+                State = (int)PublicEnum.GenericState.Cancel,
                 Token = "",
                 TokenValidTime = DateTime.Now
             };

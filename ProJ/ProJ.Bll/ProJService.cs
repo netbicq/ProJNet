@@ -248,7 +248,7 @@ namespace ProJ.Bll
                              Project_Info = ac,
                              Project_Schedule = from a in Schedule.Where(q => q.ProjectID == ac.ID) select a,
                              Project_Issue = from s in Issue.Where(q => q.ProjectID == ac.ID) select s,
-                             Project_Log = from d in Log.Where(q => q.ProjectID == ac.ID) select d,
+                             Project_Log = from d in Log.Where(q => q.ProjectID == ac.ID) orderby d.CreateDate descending select d,
                              StateStr = ac.State == (int)PublicEnum.ProjState.Normal ? "正常" :
                              ac.State == (int)PublicEnum.ProjState.Apply ? "申请" :
                              ac.State == (int)PublicEnum.ProjState.Modified ? "待修改" :

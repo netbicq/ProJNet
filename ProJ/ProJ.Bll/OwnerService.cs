@@ -236,7 +236,8 @@ namespace ProJ.Bll
                         select new Model.View.OwnerView
                         {
                             OwnerInfo = ac,
-                            StateStr = ac.State == (int)PublicEnum.GenericState.Normal ? "正常" : "未知"
+                            StateStr = ac.State == (int)PublicEnum.GenericState.Normal ? "正常" :
+                             ac.State == (int)PublicEnum.GenericState.Cancel ? "未审核" : "未知"
                         };
             var re = new Pager<OwnerView>().GetCurrentPage(retmp, para.PageSize, para.PageIndex);
             return new ActionResult<Pager<OwnerView>>(re);
