@@ -135,8 +135,8 @@ namespace ProJ.Bll
         /// <returns></returns>
         public ActionResult<bool> IssueNew(IssueNew Iss)
         {
-            var pro= _work.Repository<Model.DB.Project_Info>();
-            var to = pro.GetModel(q=>q.ID==Iss.ProjectID);
+            var pro = _work.Repository<Model.DB.Project_Info>();
+            var to = pro.GetModel(q => q.ID == Iss.ProjectID);
             if (to.State == (int)PublicEnum.ProjState.Start)
             {
                 throw new Exception("开工不允许任何操作");
@@ -184,7 +184,7 @@ namespace ProJ.Bll
 
             var Log = _work.Repository<Project_Log>();
             var logs = new Project_Log();
-            logs.ProjectID =Con.ProjectID;
+            logs.ProjectID = Con.ProjectID;
             logs.LogContent = "修改了联系人";
             logs.CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName;
             logs.State = 1;
@@ -242,7 +242,7 @@ namespace ProJ.Bll
                          let owners = owner.FirstOrDefault(q => q.ID == ac.OwnerID)
                          let dicts = dict.FirstOrDefault(q => q.ID == ac.IndustryID)
                          let dicts2 = dict.FirstOrDefault(q => q.ID == ac.LevelID)
-                         let con = Contacts.FirstOrDefault(q=>q.ProjectID==ac.ID)
+                         let con = Contacts.FirstOrDefault(q => q.ProjectID == ac.ID)
                          select new ProjectView
                          {
                              Project_Info = ac,
@@ -256,9 +256,87 @@ namespace ProJ.Bll
                              OwnerStr = owners == null ? null : owners.OwnerName,
                              ProjStr = dicts == null ? null : dicts.DictName,
                              ProJLeveStr = dicts2 == null ? null : dicts2.DictName,
-                             Project_Contacts= con
+                             Project_Contacts = con,
+                             EditTable = new Schss(),
+                             Color = new Schss()
                          };
             var re = new Pager<ProjectView>().GetCurrentPage(retemp, para.PageSize, para.PageIndex);
+            var relist = re.Data.ToList();
+            foreach (var item in relist)
+            {
+                item.Project_Schedule=item.Project_Schedule.OrderBy(q => q.ScheduleType);
+                var ye = item.Project_Schedule.FirstOrDefault(q => q.ScheduleType == 2);
+                if ((ye.Point_CBSJJGSMemo == null && ye.Point_CBSJJGSPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                    item.EditTable.Point_CBSJJGSPF = true;
+                if ((ye.Point_CSKZJMemo == null && ye.Point_CSKZJPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                    item.EditTable.Point_CSKZJPF = true;
+                if ((ye.Point_DKBGWC == null && ye.Point_DKBGWCMemo == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                    item.EditTable.Point_DKBGWC = true;
+                if ((ye.Point_GCKXXYJBGMemo == null && ye.Point_GCKXXYJBGPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                    item.EditTable.Point_GCKXXYJBGPF = true;
+                if ((ye.Point_GHXZJYDYJSMemo == null && ye.Point_GHXZYDJYJSPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                    item.EditTable.Point_GHXZYDJYJSPF = true;
+                if ((ye.Point_JSGCGHXKZPF == null && ye.Point_JSGSGHXKZMemo == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                    item.EditTable.Point_JSGCGHXKZPF = true;
+                if ((ye.Point_JSYDGHXKZMemo == null && ye.Point_JSYDGHXKZPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                    item.EditTable.Point_JSYDGHXKZPF = true;
+                if ((ye.Point_LZYSXJGDMemo == null && ye.Point_LZYSXJGDPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                    item.EditTable.Point_LZYSXJGDPF = true;
+                if ((ye.Point_SGJLRYBA == null && ye.Point_SGJLRYBAMemo == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                    item.EditTable.Point_SGJLRYBA = true;
+                if ((ye.Point_SGJLZTP == null && ye.Point_SGJLZTPMemo == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                    item.EditTable.Point_SGJLZTP = true;
+                if ((ye.Point_SGTBZHSC == null && ye.Point_SGTBZHSCMemo == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                    item.EditTable.Point_SGTBZHSC = true;
+                if ((ye.Point_SGXKZMemo == null && ye.Point_SGXKZPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                    item.EditTable.Point_SGXKZPF = true;
+                if ((ye.Point_TDCRHT == null && ye.Point_TDCRHTMemo == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                    item.EditTable.Point_TDCRHT = true;
+                if ((ye.Point_TDSYQZ == null && ye.Point_TDSYQZMemo == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                    item.EditTable.Point_TDSYQZ = true;
+                if ((ye.Point_XMKG == null && ye.Point_XMKGMemo == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                    item.EditTable.Point_XMKG = true;
+                if ((ye.Point_XMZPSJFAMemo == null && ye.Point_XMZPSJFAPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                    item.EditTable.Point_XMZPSJFAPF = true;
+                if ((ye.Point_YSBZWC == null && ye.Point_YSBZWCMemo == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                    item.EditTable.Point_YSBZWC = true;
+                var yeone = item.Project_Schedule.FirstOrDefault(q => q.ScheduleType == 1);
+                if (ye.Point_CBSJJGSPF > yeone.Point_CBSJJGSPF)
+                    item.Color.Point_CBSJJGSPF = true;
+                if (ye.Point_CSKZJPF > yeone.Point_CSKZJPF)
+                    item.Color.Point_CSKZJPF = true;
+                if (ye.Point_DKBGWC > yeone.Point_DKBGWC)
+                    item.Color.Point_DKBGWC = true;
+                if (ye.Point_GCKXXYJBGPF > yeone.Point_GCKXXYJBGPF)
+                    item.Color.Point_GCKXXYJBGPF = true;
+                if (ye.Point_GHXZYDJYJSPF > yeone.Point_GHXZYDJYJSPF)
+                    item.Color.Point_GHXZYDJYJSPF = true;
+                if (ye.Point_JSGCGHXKZPF > yeone.Point_JSGCGHXKZPF)
+                    item.Color.Point_JSGCGHXKZPF = true;
+                if (ye.Point_JSYDGHXKZPF > yeone.Point_JSYDGHXKZPF)
+                    item.Color.Point_JSYDGHXKZPF = true;
+                if (ye.Point_LZYSXJGDPF > yeone.Point_LZYSXJGDPF)
+                    item.Color.Point_LZYSXJGDPF = true;
+                if (ye.Point_SGJLRYBA > yeone.Point_SGJLRYBA)
+                    item.Color.Point_SGJLRYBA = true;
+                if (ye.Point_SGJLZTP > yeone.Point_SGJLZTP)
+                    item.Color.Point_SGJLZTP = true;
+                if (ye.Point_SGTBZHSC > yeone.Point_SGTBZHSC)
+                    item.Color.Point_SGTBZHSC = true;
+                if (ye.Point_SGXKZPF > yeone.Point_SGXKZPF)
+                    item.Color.Point_SGXKZPF = true;
+                if (ye.Point_TDCRHT > yeone.Point_TDCRHT)
+                    item.Color.Point_TDCRHT = true;
+                if (ye.Point_TDSYQZ > yeone.Point_TDSYQZ)
+                    item.Color.Point_TDSYQZ = true;
+                if (ye.Point_XMKG > yeone.Point_XMKG)
+                    item.Color.Point_XMKG = true;
+                if (ye.Point_XMZPSJFAPF > yeone.Point_XMZPSJFAPF)
+                    item.Color.Point_XMZPSJFAPF = true;
+                if (ye.Point_YSBZWC > yeone.Point_YSBZWC)
+                    item.Color.Point_YSBZWC = true;
+            }
+            re.Data = relist;
             return new ActionResult<Pager<ProjectView>>(re);
         }
         /// <summary>
@@ -317,8 +395,8 @@ namespace ProJ.Bll
         public ActionResult<bool> ProJSch(ProJSch Sch)
         {
             var info = _work.Repository<Model.DB.Project_Info>();
-            var to = info.GetModel(q=>q.ID==Sch.ProjectID);
-            if (to.State!=(int)PublicEnum.ProjState.Modified)
+            var to = info.GetModel(q => q.ID == Sch.ProjectID);
+            if (to.State != (int)PublicEnum.ProjState.Modified)
             {
                 throw new Exception("此项目状态不允许操作");
             }
@@ -350,7 +428,7 @@ namespace ProJ.Bll
         /// <returns></returns>
         public ActionResult<bool> ScheduleEdit(ScheduleEdit Sch)
         {
-            if (string.IsNullOrEmpty(Sch.Memo)&&Sch.Value==DateTime.MinValue)
+            if (string.IsNullOrEmpty(Sch.Memo) && Sch.Value == DateTime.MinValue)
             {
                 throw new Exception("参数不能为空");
             }
@@ -365,7 +443,7 @@ namespace ProJ.Bll
             switch (Sch.Quarter)
             {
                 case PublicEnum.PlanEnd.Point_GCKXXYJBGPF:
-                    if (info.Point_GCKXXYJBGPF != null||info.Point_GCKXXYJBGMemo!=null)
+                    if (info.Point_GCKXXYJBGPF != null || info.Point_GCKXXYJBGMemo != null)
                     {
                         if (to.State != (int)PublicEnum.ProjState.Modified)
                         {
@@ -653,7 +731,7 @@ namespace ProJ.Bll
             logs.ProjectID = em.ID;
             logs.CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName;
             logs.State = 1;
-            if (state==PublicEnum.ProjState.Apply)
+            if (state == PublicEnum.ProjState.Apply)
             {
                 logs.LogContent = "申请修改";
                 Log.Add(logs);
