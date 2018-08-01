@@ -11,6 +11,20 @@ namespace ProJ.IBll
     {
 
         /// <summary>
+        /// 审核通过
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+
+        ActionResult<bool> Ys(Guid id);
+        /// <summary>
+        /// 用户注册
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+
+        ActionResult<bool> Regter(Model.Para.UserReg user);
+        /// <summary>
         /// 新建
         /// </summary>
         /// <param name="user"></param>

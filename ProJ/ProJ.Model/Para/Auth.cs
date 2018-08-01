@@ -7,6 +7,65 @@ using System.Threading.Tasks;
 namespace ProJ.Model.Para
 {
     /// <summary>
+    /// 注册用户参数模型
+    /// </summary>
+    public class UserReg
+    {
+        /// <summary>
+        /// 登陆名称
+        /// </summary>
+        public string Login { get; set; }
+        /// <summary>
+        /// 登陆密码
+        /// </summary>
+        public string Pwd { get; set; }
+        /// <summary>
+        /// 单位名称
+        /// </summary>
+        public string OwnerName { get; set; }
+        /// <summary>
+        /// 片区负责人
+        /// </summary>
+        public string SitePrincipal { get; set; }
+        /// <summary>
+        /// 片区负责人电话
+        /// </summary>
+        public string SitePrincipalTEL { get; set; }
+        /// <summary>
+        /// 片区联系人
+        /// </summary>
+        public string SiteLink { get; set; }
+        /// <summary>
+        /// 片区联系人电话
+        /// </summary>
+        public string SiteLinkTEL { get; set; }
+        /// <summary>
+        /// 经办人
+        /// </summary>
+        public string Handler { get; set; }
+        /// <summary>
+        /// 经办人电话
+        /// </summary>
+        public string HandlerTEL { get; set; }
+        /// <summary>
+        /// 分管领导
+        /// </summary>
+        public string Principal { get; set; }
+        /// <summary>
+        /// 分管领导电话
+        /// </summary>
+        public string PrincipalTEL { get; set; }
+        /// <summary>
+        /// 主要领导
+        /// </summary>
+        public string Leader { get; set; }
+        /// <summary>
+        /// 主要领导电话
+        /// </summary>
+        public string LeaderTEL { get; set; }
+
+    }
+    /// <summary>
     /// 新建用户参数模型
     /// </summary>
     public class UserNew

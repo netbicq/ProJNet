@@ -42,7 +42,7 @@ namespace ProJ.Bll
             }
             dict.Clone(dbdevice);
             dbdevice.State = (int)PublicEnum.GenericState.Normal;
-            dbdevice.CreateMan = AppUser.UserInfo.Login;
+            dbdevice.CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName;
             _dict.Add(dbdevice);
             _work.Commit();
 
@@ -56,10 +56,11 @@ namespace ProJ.Bll
         /// <returns></returns>
         public ActionResult<bool> DelDict(Guid id)
         {
-            //if (_emp.Any(q => q.EmployeeType == id))
-            //{
-            //    throw new Exception("以存在被删除词典");
-            //}
+            var proj = _work.Repository<Project_Info>();
+            if (proj.Any(q => q.IndustryID == id)|| proj.Any(q => q.LevelID == id))
+            {
+                throw new Exception("以存在被删除词典");
+            }
             var dict = _dict.Delete(q => q.ID == id);
             return new ActionResult<bool>(dict > 0);
         }

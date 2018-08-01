@@ -67,6 +67,8 @@
     <Compile Include="PublicEnum.cs" />
     <Compile Include="View\Auth.cs" />
     <Compile Include="View\Dict.cs" />
+    <Compile Include="View\Owner.cs" />
+    <Compile Include="View\Project.cs" />
     <Compile Include="View\Report.cs" />
   </ItemGroup>
   <ItemGroup />

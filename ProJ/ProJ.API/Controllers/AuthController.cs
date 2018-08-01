@@ -27,6 +27,18 @@ namespace ProJ.API.Controllers
         }
 
         /// <summary>
+        /// 审核通过
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+
+        [HttpGet]
+        [Route("yamm/{id:Guid}")]
+        public ActionResult<bool> yami(Guid ID)
+        {
+            return bll.Ys(ID);
+        }
+        /// <summary>
         /// 新建 用户
         /// </summary>
         /// <param name="user"></param>
@@ -220,6 +232,19 @@ namespace ProJ.API.Controllers
         public ActionResult<bool> check()
         {
             return bll.check();
+        }
+        /// <summary>
+        /// 用户注册
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        /// 
+        [HttpPost]
+        [Route("reguser")]
+        [AllowAnonymous]
+        public ActionResult<bool> Regter(UserReg user)
+        {
+            return bll.Regter(user);
         }
     }
 }

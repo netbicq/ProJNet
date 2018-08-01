@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ProJ.Model;
 using ProJ.Model.DB;
 using ProJ.Model.Para;
+using ProJ.Model.View;
 using ProJ.ORM;
 
 namespace ProJ.Bll
@@ -21,6 +22,7 @@ namespace ProJ.Bll
         public OwnerService(ORM.IUnitwork work)
         {
             _work = work;
+            Unitwork = work;
 
         }
         public ActionResult<bool> AddOwner(OwnerNew owner)
@@ -49,7 +51,8 @@ namespace ProJ.Bll
                 ID = Guid.NewGuid(),
                 CreateDate = DateTime.Now,
                 CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName,
-                State = (int)PublicEnum.GenericState.Normal
+                State = (int)PublicEnum.GenericState.Normal,
+                RegDate=DateTime.Now
             };
 
             owner.Clone(ownermodel);
@@ -146,6 +149,7 @@ namespace ProJ.Bll
             {
                 ID = Guid.NewGuid(),
                 CreateDate = DateTime.Now,
+                RegDate=DateTime.Now,
                 CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName,
                 State = (int)PublicEnum.GenericState.Normal
             };
@@ -222,14 +226,28 @@ namespace ProJ.Bll
 
         }
 
-        public ActionResult<Pager<Basic_Owner>> GetOwnerList(PagerQuery<string> para)
+        public ActionResult<Pager<OwnerView>> GetOwnerList(PagerQuery<string> para)
         {
-            throw new NotImplementedException();
+            var ownerdb = _work.Repository<Model.DB.Basic_Owner>();
+            var retmp = from ac in ownerdb.GetList(q =>
+                      (q.OwnerName.Contains(para.KeyWord)
+                       || string.IsNullOrEmpty(para.KeyWord)
+                       ))
+                        select new Model.View.OwnerView
+                        {
+                            OwnerInfo = ac,
+                            StateStr = ac.State == (int)PublicEnum.GenericState.Normal ? "正常" :
+                             ac.State == (int)PublicEnum.GenericState.Cancel ? "未审核" : "未知"
+                        };
+            var re = new Pager<OwnerView>().GetCurrentPage(retmp, para.PageSize, para.PageIndex);
+            return new ActionResult<Pager<OwnerView>>(re);
         }
 
-        public ActionResult<Basic_Owner> OwnerSelector()
+        public ActionResult<IEnumerable<Basic_Owner>> OwnerSelector()
         {
-            throw new NotImplementedException();
+            var ownerdb = _work.Repository<Model.DB.Basic_Owner>();
+            var re = ownerdb.Queryable(q=>q.State==(int)PublicEnum.GenericState.Normal);
+            return new ActionResult<IEnumerable<Basic_Owner>>(re);
         }
     }
 }

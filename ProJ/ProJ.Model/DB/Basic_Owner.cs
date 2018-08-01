@@ -47,7 +47,7 @@ namespace ProJ.Model.DB
         /// <summary>
         /// 经办人电话
         /// </summary>
-        public string HanderTEL { get; set; }
+        public string HandlerTEL { get; set; }
         /// <summary>
         /// 分管领导
         /// </summary>

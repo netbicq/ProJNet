@@ -17,9 +17,9 @@ namespace ProJ.IBll
 
         ActionResult<bool> DelOwner(Guid id);
 
-        ActionResult<Model.DB.Basic_Owner> OwnerSelector();
+        ActionResult<IEnumerable<Model.DB.Basic_Owner>> OwnerSelector();
 
-        ActionResult<Pager<Model.DB.Basic_Owner>> GetOwnerList(PagerQuery<string> para);
+        ActionResult<Pager<Model.View.OwnerView>> GetOwnerList(PagerQuery<string> para);
 
 
     }
