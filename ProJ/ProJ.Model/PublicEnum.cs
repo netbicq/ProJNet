@@ -9,6 +9,7 @@ namespace ProJ.Model
     public class PublicEnum
     {
 
+       
         /// <summary>
         /// 词典类型
         /// </summary>
@@ -36,6 +37,21 @@ namespace ProJ.Model
             /// 取消，作废
             /// </summary>
             Cancel = 2
+        }
+        /// <summary>
+        /// 项目执行
+        /// </summary>
+        public enum ExeceedType
+        {
+            /// <summary>
+            /// 正常
+            /// </summary>
+            Normal = 1,
+            /// <summary>
+            /// 逾期
+            /// </summary>
+            Execeed =2
+            
         }
     }
 }
