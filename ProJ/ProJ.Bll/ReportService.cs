@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ProJ.Model;
 using ProJ.Model.Para;
 using ProJ.Model.View;
+using ProJ.ORM;
 
 namespace ProJ.Bll
 {
@@ -35,6 +36,8 @@ namespace ProJ.Bll
                 (para.Query.ProjectOwner.Contains(q.OwnerID) || para.Query.ProjectOwner.Count() == 0)
                 &&
                 (para.KeyWord == "" || q.ProjectName.Contains(para.KeyWord))
+                && 
+                (q.OwnerID == AppUser.CurrentUserInfo.UserInfo.OwnerID || AppUser.CurrentUserInfo.UserInfo.OwnerID == Guid.Empty)    
                 );
             var proids = projects.Select(s => s.ID);
             var proidsid = projects.Select(s => s.OwnerID);
@@ -178,8 +181,14 @@ namespace ProJ.Bll
                          select r;
 
             var exp = para.Query.ExeceedType == PublicEnum.ExeceedType.Normal ? retemp : relist;
-            var re = new Pager<Model.View.Report>().GetCurrentPage(exp, para.PageSize, para.PageIndex);
 
+            string excel = "";
+            if (para.ToExcel)
+            {
+                excel = Command.CreateExcel(exp, AppUser.OutPutPaht);
+            }
+            var re = new Pager<Model.View.Report>().GetCurrentPage(exp, para.PageSize, para.PageIndex);
+            re.ExcelResult = excel;
             return new ActionResult<Pager<Report>>(re);
         }
     }

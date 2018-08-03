@@ -238,7 +238,10 @@ namespace ProJ.Bll
             var Log = _work.Repository<Model.DB.Project_Log>().Queryable();
             var dict = _work.Repository<Model.DB.Basic_Dict>().Queryable();
             var owner = _work.Repository<Model.DB.Basic_Owner>().Queryable();
-            var retemp = from ac in proj
+            var retemp = from ac in proj.Where(q =>
+                        (q.OwnerID == AppUser.CurrentUserInfo.UserInfo.OwnerID|| AppUser.CurrentUserInfo.UserInfo.OwnerID==Guid.Empty)
+                        && (para.KeyWord.Contains(q.ProjectName)|| string.IsNullOrEmpty(para.KeyWord))
+                         )
                          let owners = owner.FirstOrDefault(q => q.ID == ac.OwnerID)
                          let dicts = dict.FirstOrDefault(q => q.ID == ac.IndustryID)
                          let dicts2 = dict.FirstOrDefault(q => q.ID == ac.LevelID)
@@ -257,8 +260,7 @@ namespace ProJ.Bll
                              ProjStr = dicts == null ? null : dicts.DictName,
                              ProJLeveStr = dicts2 == null ? null : dicts2.DictName,
                              Project_Contacts = con,
-                             EditTable = new Schss(),
-                             Color = new Schss()
+                             EditTable = new Schss()
                          };
             var re = new Pager<ProjectView>().GetCurrentPage(retemp, para.PageSize, para.PageIndex);
             var relist = re.Data.ToList();
@@ -300,41 +302,6 @@ namespace ProJ.Bll
                     item.EditTable.Point_XMZPSJFAPF = true;
                 if ((ye.Point_YSBZWC == null && ye.Point_YSBZWCMemo == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
                     item.EditTable.Point_YSBZWC = true;
-                var yeone = item.Project_Schedule.FirstOrDefault(q => q.ScheduleType == 1);
-                if (ye.Point_CBSJJGSPF > yeone.Point_CBSJJGSPF)
-                    item.Color.Point_CBSJJGSPF = true;
-                if (ye.Point_CSKZJPF > yeone.Point_CSKZJPF)
-                    item.Color.Point_CSKZJPF = true;
-                if (ye.Point_DKBGWC > yeone.Point_DKBGWC)
-                    item.Color.Point_DKBGWC = true;
-                if (ye.Point_GCKXXYJBGPF > yeone.Point_GCKXXYJBGPF)
-                    item.Color.Point_GCKXXYJBGPF = true;
-                if (ye.Point_GHXZYDJYJSPF > yeone.Point_GHXZYDJYJSPF)
-                    item.Color.Point_GHXZYDJYJSPF = true;
-                if (ye.Point_JSGCGHXKZPF > yeone.Point_JSGCGHXKZPF)
-                    item.Color.Point_JSGCGHXKZPF = true;
-                if (ye.Point_JSYDGHXKZPF > yeone.Point_JSYDGHXKZPF)
-                    item.Color.Point_JSYDGHXKZPF = true;
-                if (ye.Point_LZYSXJGDPF > yeone.Point_LZYSXJGDPF)
-                    item.Color.Point_LZYSXJGDPF = true;
-                if (ye.Point_SGJLRYBA > yeone.Point_SGJLRYBA)
-                    item.Color.Point_SGJLRYBA = true;
-                if (ye.Point_SGJLZTP > yeone.Point_SGJLZTP)
-                    item.Color.Point_SGJLZTP = true;
-                if (ye.Point_SGTBZHSC > yeone.Point_SGTBZHSC)
-                    item.Color.Point_SGTBZHSC = true;
-                if (ye.Point_SGXKZPF > yeone.Point_SGXKZPF)
-                    item.Color.Point_SGXKZPF = true;
-                if (ye.Point_TDCRHT > yeone.Point_TDCRHT)
-                    item.Color.Point_TDCRHT = true;
-                if (ye.Point_TDSYQZ > yeone.Point_TDSYQZ)
-                    item.Color.Point_TDSYQZ = true;
-                if (ye.Point_XMKG > yeone.Point_XMKG)
-                    item.Color.Point_XMKG = true;
-                if (ye.Point_XMZPSJFAPF > yeone.Point_XMZPSJFAPF)
-                    item.Color.Point_XMZPSJFAPF = true;
-                if (ye.Point_YSBZWC > yeone.Point_YSBZWC)
-                    item.Color.Point_YSBZWC = true;
             }
             re.Data = relist;
             return new ActionResult<Pager<ProjectView>>(re);
@@ -738,6 +705,14 @@ namespace ProJ.Bll
             }
             else if (state == PublicEnum.ProjState.Modified)
             {
+                AuthService hen = new AuthService(_work);
+                var be = hen.GetLoginMenu(AppUser.CurrentUserInfo.UserInfo.Login).data;
+                var me = be.Select(s => s.Menu33.FirstOrDefault(q=>q.AuthKey== "project.project.check"));
+                var fe= me.FirstOrDefault(q=>q!=null);
+                if (fe == null)
+                {
+                    throw new Exception("没有此功能的权限");
+                }
                 logs.LogContent = "同意申请修改";
                 Log.Add(logs);
             }

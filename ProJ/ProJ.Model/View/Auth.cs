@@ -23,6 +23,10 @@ namespace ProJ.Model.View
         /// 状态
         /// </summary>
         public string StateStr { get; set; }
+        /// <summary>
+        /// 申请通过
+        /// </summary>
+        public bool Check { get; set; }
     }
 
     /// <summary>
@@ -90,7 +94,10 @@ namespace ProJ.Model.View
         /// 菜单
         /// </summary>
         public IEnumerable<Model.DB.Auth_Key> Menu { get; set; }
-
+        /// <summary>
+        /// 三级菜单
+        /// </summary>
+        public IEnumerable<Model.DB.Auth_Key> Menu33 { get; set; }
     }
 
     /// <summary>

@@ -246,7 +246,7 @@ namespace ProJ.Bll
         public ActionResult<IEnumerable<Basic_Owner>> OwnerSelector()
         {
             var ownerdb = _work.Repository<Model.DB.Basic_Owner>();
-            var re = ownerdb.Queryable(q=>q.State==(int)PublicEnum.GenericState.Normal);
+            var re = ownerdb.Queryable(q=>q.State==(int)PublicEnum.GenericState.Normal&&(AppUser.CurrentUserInfo.UserInfo.OwnerID==q.ID|| AppUser.CurrentUserInfo.UserInfo.OwnerID==Guid.Empty));
             return new ActionResult<IEnumerable<Basic_Owner>>(re);
         }
     }

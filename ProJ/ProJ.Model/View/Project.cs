@@ -43,10 +43,6 @@ namespace ProJ.Model.View
         /// 是否可修改
         /// </summary>
         public Schss EditTable { get; set; }
-        /// <summary>
-        /// 变红
-        /// </summary>
-        public Schss Color { get; set; }
     }
     public class Schss
     {

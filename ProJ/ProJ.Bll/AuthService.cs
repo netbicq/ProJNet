@@ -232,13 +232,16 @@ namespace ProJ.Bll
 
             var modulestrs = keybase.Select(s => s.ModuleName);
             var menustrs = keybase.Select(s => s.MenuName);
-
+            //33333333333
+            var menu333 = keybase.Select(s => s.FunctionName);
+            
             var modulebase = _work.Repository<Model.DB.Auth_Key>().Queryable(q => modulestrs.Contains(q.ModuleName) && string.IsNullOrEmpty(q.FunctionName) && string.IsNullOrEmpty(q.MenuName));
 
-            var menubase = _work.Repository<Model.DB.Auth_Key>().Queryable(q => modulestrs.Contains(q.ModuleName) && menustrs.Contains(q.MenuName));
-
-            var keysall = keybase.Union(modulebase).Union(menubase);
-
+            var menubase = _work.Repository<Model.DB.Auth_Key>().Queryable(q => modulestrs.Contains(q.ModuleName) && menustrs.Contains(q.MenuName)&&string.IsNullOrEmpty(q.FunctionName));
+            //33333333333333333
+            var menub333 = _work.Repository<Model.DB.Auth_Key>().Queryable(q => modulestrs.Contains(q.ModuleName) && menu333.Contains(q.FunctionName)&&string.IsNullOrEmpty(q.RoutUrl));
+            var keysall = keybase.Union(modulebase).Union(menubase).Union(menub333);
+            
             var re = from ak in keysall
                      group ak by ak.ModuleName into modeulg
                      //group ak by new { ak.ModuleName, Index = ak.OrderIndex } into modeulg
@@ -247,8 +250,8 @@ namespace ProJ.Bll
                      {
                          ModuleName = modeulg.Key,
                          ModulInfo = keysall.FirstOrDefault(q => q.ModuleName == modeulg.Key && string.IsNullOrEmpty(q.MenuName) && string.IsNullOrEmpty(q.RoutUrl)),
-                         Menu = keysall.Where(q => q.ModuleName == modeulg.Key && !string.IsNullOrEmpty(q.MenuName) && !string.IsNullOrEmpty(q.RoutUrl)).OrderBy(q => q.OrderIndex)
-
+                         Menu = keysall.Where(q => q.ModuleName == modeulg.Key && !string.IsNullOrEmpty(q.MenuName) && !string.IsNullOrEmpty(q.RoutUrl)).OrderBy(q => q.OrderIndex),
+                         Menu33 = keysall.Where(q => q.ModuleName == modeulg.Key && !string.IsNullOrEmpty(q.MenuName) && !string.IsNullOrEmpty(q.FunctionName)),
                      };
             var result = from r in re
                          orderby r.ModulInfo.OrderIndex
@@ -591,11 +594,20 @@ namespace ProJ.Bll
             user.Token = Command.CreateToken(64);
             _rpsuser.Update(user);
             _work.Commit();
-
+            //申请通过
+            bool lg = false;
+            var be = GetLoginMenu(para.Login).data;
+            var me = be.Select(s => s.Menu33.FirstOrDefault(q => q.AuthKey == "project.project.check"));
+            var fe = me.FirstOrDefault(q => q != null);
+            if (fe != null)
+            {
+                lg = true;
+            }
             return new ActionResult<UserView>(new UserView
             {
                 UserInfo = user,
-                UserProfile = profile
+                UserProfile = profile,
+                Check=lg
             });
 
 
