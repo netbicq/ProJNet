@@ -1,6 +1,6 @@
 ﻿namespace ProJ.SMSClient
 {
-    partial class Form1
+    partial class frmSMS
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -34,9 +34,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(644, 422);
+            this.ClientSize = new System.Drawing.Size(667, 424);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "SMS发送";
             this.ResumeLayout(false);
 
         }

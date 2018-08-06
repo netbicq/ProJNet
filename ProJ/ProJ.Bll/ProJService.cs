@@ -138,7 +138,7 @@ namespace ProJ.Bll
                 if (sch2.Point_CBSJJGSPF != null && sch1.Point_CBSJJGSPF != null&&((DateTime)sch2.Point_CBSJJGSPF - (DateTime)sch1.Point_CBSJJGSPF).TotalDays>0)
                 {
                     var me = new SMSBase {Exec=PublicEnum.PlanEnd.Point_CBSJJGSPF,PointName= "初步设计及概算批复",WeekInt= Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_CBSJJGSPF - (DateTime)sch1.Point_CBSJJGSPF).TotalDays / 7))};
-                    if (!sms.Any(q=>q.PointName==me.PointName&&q.WeekInt==me.WeekInt))
+                    if (!sms.Any(q=>q.PointName==me.PointName&&q.WeekInt==me.WeekInt && q.ProjectID ==item.ProjectInfo.ID))
                     {
                         baseword.Add(me);
                     }

@@ -27,6 +27,9 @@ namespace ProJ.Model.DB
         /// 发送时间
         /// </summary>
         public DateTime SendDate { get; set; }
-
+        /// <summary>
+        /// 项目ID
+        /// </summary>
+        public Guid ProjectID { get; set; }
     }
 }
