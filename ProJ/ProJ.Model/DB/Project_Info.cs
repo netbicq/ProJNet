@@ -66,6 +66,6 @@ namespace ProJ.Model.DB
         /// <summary>
         /// 第四季度末形象进度
         /// </summary>
-        public string Q4Memo { get; set; }
+        public string Q4Memo { get; set; } 
     }
 }

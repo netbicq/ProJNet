@@ -16,6 +16,11 @@ namespace ProJ.IBll
         ActionResult<bool> ProJNew(Model.Para.ProjectAdd owner);
         ActionResult<Pager<Model.View.ProjectView>> ProJList(PagerQuery<string> para);
         /// <summary>
+        /// 获取超期工程项目列表
+        /// </summary>
+        /// <returns></returns>
+        ActionResult<IEnumerable<Model.View.ProjectSMS>> GetProjectSMS();
+        /// <summary>
         /// 项目行业和项目级别
         /// </summary>
         /// <param name="state"></param>

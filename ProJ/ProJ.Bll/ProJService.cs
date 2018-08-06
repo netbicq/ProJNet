@@ -82,6 +82,22 @@ namespace ProJ.Bll
             _work.Commit();
             return new ActionResult<bool>(true);
         }
+
+        /// <summary>
+        /// 获取当前时间存在超期节点的工程项目列表
+        /// 用于手机短信提醒
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult<IEnumerable<ProjectSMS>> GetProjectSMS()
+        {
+            ///查出已经超期未执行的节点
+            ///算出超期了几周
+            ///查询 Model.DB.Project_SMS表里面是否存在已经发送，
+            ///如果存在则不再返回，如果不存在则返回用于手机短信发送
+
+            return new ActionResult<IEnumerable<ProjectSMS>>();
+        }
+
         /// <summary>
         /// 删除问题
         /// </summary>
