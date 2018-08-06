@@ -112,6 +112,26 @@ namespace ProJ.Bll
             List<ProjectSMS> proview = new List<ProjectSMS>();
             foreach (var item in probin)
             {
+                if (string.IsNullOrEmpty(item.ProjectContact.HandlerTEL))
+                {
+                    item.ProjectContact.HandlerTEL = item.OwerInfo.HandlerTEL;
+                }
+                if (string.IsNullOrEmpty(item.ProjectContact.LeaderTEL))
+                {
+                    item.ProjectContact.HandlerTEL = item.OwerInfo.LeaderTEL;
+                }
+                if (string.IsNullOrEmpty(item.ProjectContact.PrincipalTEL))
+                {
+                    item.ProjectContact.HandlerTEL = item.OwerInfo.PrincipalTEL;
+                }
+                if (string.IsNullOrEmpty(item.ProjectContact.SiteLinkTEL))
+                {
+                    item.ProjectContact.HandlerTEL = item.OwerInfo.SiteLinkTEL;
+                }
+                if (string.IsNullOrEmpty(item.ProjectContact.SitePrincipalTEL))
+                {
+                    item.ProjectContact.HandlerTEL = item.OwerInfo.SitePrincipalTEL;
+                }
                 List<SMSBase> baseword = new List<SMSBase>();
                 var sch1 = Schedule.FirstOrDefault(q => q.ProjectID == item.ProjectInfo.ID && q.ScheduleType == (int)PublicEnum.PlanType.Plan);
                 var sch2 = Schedule.FirstOrDefault(q => q.ProjectID == item.ProjectInfo.ID && q.ScheduleType == (int)PublicEnum.PlanType.Ement);
