@@ -155,7 +155,15 @@ namespace ProJ.Bll
             {
                 throw new Exception("用户不存在");
             }
-
+            if (dbuser.OwnerID!=Guid.Empty)
+            {
+                var own = _work.Repository<Basic_Owner>();
+                var owner = own.GetModel(q => q.ID == dbuser.OwnerID);
+                if (owner!=null)
+                {
+                    throw new Exception("请先删除对应的业主单位");
+                }
+            }
             _rpsuser.Delete(dbuser);
             _rpsprofiel.Delete(q => q.Login
             == dbuser.Login);
