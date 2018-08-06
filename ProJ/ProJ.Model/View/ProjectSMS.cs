@@ -36,5 +36,6 @@ namespace ProJ.Model.View
 
         public string PointName { get; set; }
 
+        public PublicEnum.PlanEnd Exec { get; set; }
     }
 }

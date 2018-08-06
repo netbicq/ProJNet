@@ -44,6 +44,8 @@ namespace ProJ.ORM
 
         public virtual DbSet<Project_Schedule> Project_Schedule { get; set; }
 
+        public virtual DbSet<Project_SMS> Project_SMS { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.PluralizingTableNameConvention>();
