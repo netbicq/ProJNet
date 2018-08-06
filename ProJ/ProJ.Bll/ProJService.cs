@@ -94,8 +94,39 @@ namespace ProJ.Bll
             ///算出超期了几周
             ///查询 Model.DB.Project_SMS表里面是否存在已经发送，
             ///如果存在则不再返回，如果不存在则返回用于手机短信发送
+            var proj = _work.Repository<Model.DB.Project_Info>().Queryable();
+            var Contacts = _work.Repository<Model.DB.Project_Contacts>().Queryable();
+            var Schedule = _work.Repository<Model.DB.Project_Schedule>().Queryable();
+            var owner = _work.Repository<Model.DB.Basic_Owner>().Queryable();
+            var sms = _work.Repository<Model.DB.Project_SMS>().Queryable();
+            var retemp = from ac in proj
+                         let owners = owner.FirstOrDefault(q => q.ID == ac.OwnerID)
+                         let con = Contacts.FirstOrDefault(q => q.ProjectID == ac.ID)
+                         select new ProjectSMS
+                         {
+                             OwerInfo = owners,
+                             ProjectContact = con,
+                             ProjectInfo = ac
+                         };
+            var probin = retemp.ToList();
+            foreach (var item in probin)
+            {
+                List<SMSBase> baseword = new List<SMSBase>();
+                var sch1 = Schedule.FirstOrDefault(q => q.ProjectID == item.ProjectInfo.ID && q.ScheduleType == (int)PublicEnum.PlanType.Plan);
+                var sch2 = Schedule.FirstOrDefault(q => q.ProjectID == item.ProjectInfo.ID && q.ScheduleType == (int)PublicEnum.PlanType.Ement);
+                if (((DateTime)sch2.Point_CBSJJGSPF - (DateTime)sch1.Point_CBSJJGSPF).TotalDays>0)
+                {
+                    var me = new SMSBase { PointName= "初步设计及概算批复",WeekInt= Convert.ToInt32(Math.Ceiling(((DateTime)sch2.Point_CBSJJGSPF - (DateTime)sch1.Point_CBSJJGSPF).TotalDays / 7))};
+                    if (!sms.Any(q=>q.PointName==me.PointName))
+                    {
+                        baseword.Add(me);
+                    }
+                }
+                item.Timeouts = baseword;
+            };
+            
 
-            return new ActionResult<IEnumerable<ProjectSMS>>();
+            return new ActionResult<IEnumerable<ProjectSMS>>(probin);
         }
 
         /// <summary>
@@ -255,8 +286,8 @@ namespace ProJ.Bll
             var dict = _work.Repository<Model.DB.Basic_Dict>().Queryable();
             var owner = _work.Repository<Model.DB.Basic_Owner>().Queryable();
             var retemp = from ac in proj.Where(q =>
-                        (q.OwnerID == AppUser.CurrentUserInfo.UserInfo.OwnerID|| AppUser.CurrentUserInfo.UserInfo.OwnerID==Guid.Empty)
-                        && (para.KeyWord.Contains(q.ProjectName)|| string.IsNullOrEmpty(para.KeyWord))
+                        (q.OwnerID == AppUser.CurrentUserInfo.UserInfo.OwnerID || AppUser.CurrentUserInfo.UserInfo.OwnerID == Guid.Empty)
+                        && (para.KeyWord.Contains(q.ProjectName) || string.IsNullOrEmpty(para.KeyWord))
                          )
                          let owners = owner.FirstOrDefault(q => q.ID == ac.OwnerID)
                          let dicts = dict.FirstOrDefault(q => q.ID == ac.IndustryID)
@@ -282,7 +313,7 @@ namespace ProJ.Bll
             var relist = re.Data.ToList();
             foreach (var item in relist)
             {
-                item.Project_Schedule=item.Project_Schedule.OrderBy(q => q.ScheduleType);
+                item.Project_Schedule = item.Project_Schedule.OrderBy(q => q.ScheduleType);
                 var ye = item.Project_Schedule.FirstOrDefault(q => q.ScheduleType == 2);
                 if ((ye.Point_CBSJJGSMemo == null && ye.Point_CBSJJGSPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
                     item.EditTable.Point_CBSJJGSPF = true;
@@ -723,8 +754,8 @@ namespace ProJ.Bll
             {
                 AuthService hen = new AuthService(_work);
                 var be = hen.GetLoginMenu(AppUser.CurrentUserInfo.UserInfo.Login).data;
-                var me = be.Select(s => s.Menu33.FirstOrDefault(q=>q.AuthKey== "project.project.check"));
-                var fe= me.FirstOrDefault(q=>q!=null);
+                var me = be.Select(s => s.Menu33.FirstOrDefault(q => q.AuthKey == "project.project.check"));
+                var fe = me.FirstOrDefault(q => q != null);
                 if (fe == null)
                 {
                     throw new Exception("没有此功能的权限");

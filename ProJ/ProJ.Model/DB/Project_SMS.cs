@@ -9,12 +9,12 @@ namespace ProJ.Model.DB
     /// <summary>
     /// 工程项目超期短信发送日志
     /// </summary>
-    public class Project_SMS
+    public class Project_SMS:ModelBase
     {
-        /// <summary>
-        /// ID
-        /// </summary>
-        public Guid ID { get; set; }
+        ///// <summary>
+        ///// ID
+        ///// </summary>
+        //public Guid ID { get; set; }
         /// <summary>
         /// 节点名称
         /// </summary>
