@@ -118,19 +118,19 @@ namespace ProJ.Bll
                 }
                 if (string.IsNullOrEmpty(item.ProjectContact.LeaderTEL))
                 {
-                    item.ProjectContact.HandlerTEL = item.OwerInfo.LeaderTEL;
+                    item.ProjectContact.LeaderTEL = item.OwerInfo.HandlerTEL;
                 }
                 if (string.IsNullOrEmpty(item.ProjectContact.PrincipalTEL))
                 {
-                    item.ProjectContact.HandlerTEL = item.OwerInfo.PrincipalTEL;
+                    item.ProjectContact.PrincipalTEL = item.OwerInfo.HandlerTEL;
                 }
                 if (string.IsNullOrEmpty(item.ProjectContact.SiteLinkTEL))
                 {
-                    item.ProjectContact.HandlerTEL = item.OwerInfo.SiteLinkTEL;
+                    item.ProjectContact.SiteLinkTEL = item.OwerInfo.HandlerTEL;
                 }
                 if (string.IsNullOrEmpty(item.ProjectContact.SitePrincipalTEL))
                 {
-                    item.ProjectContact.HandlerTEL = item.OwerInfo.SitePrincipalTEL;
+                    item.ProjectContact.SitePrincipalTEL = item.OwerInfo.HandlerTEL;
                 }
                 List<SMSBase> baseword = new List<SMSBase>();
                 var sch1 = Schedule.FirstOrDefault(q => q.ProjectID == item.ProjectInfo.ID && q.ScheduleType == (int)PublicEnum.PlanType.Plan);
