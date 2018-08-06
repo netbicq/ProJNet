@@ -67,5 +67,17 @@ namespace ProJ.Model.DB
         /// 第四季度末形象进度
         /// </summary>
         public string Q4Memo { get; set; }
+        /// <summary>
+        /// 超期第一周短信发送时间
+        /// </summary>
+        public DateTime? W1SMS { get; set; }
+        /// <summary>
+        /// 超期第二周短信发送时间
+        /// </summary>
+        public DateTime? W2SMS { get; set; }
+        /// <summary>
+        /// 超期第三周短信发送时间
+        /// </summary>
+        public DateTime? W3SMS { get; set; }
     }
 }
