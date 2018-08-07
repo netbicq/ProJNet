@@ -11,6 +11,14 @@ namespace ProJ.SMSClient
 
     public class SMSSend
     {
+        /// <summary>
+        /// 最后发送日期
+        /// </summary>
+        public static DateTime SendLastTime { get; set; }
+        /// <summary>
+        /// 发送时间
+        /// </summary>
+        public static int SendHour { get; set; }
 
         public async Task SendSMS()
         {
@@ -130,4 +138,6 @@ namespace ProJ.SMSClient
 
         public string dtype { get { return "json"; } }
     }
+
+   
 }
