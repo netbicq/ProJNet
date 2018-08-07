@@ -146,7 +146,7 @@ namespace ProJ.Bll
                 if (sch2.Point_CSKZJPF != null && sch1.Point_CSKZJPF != null&&((DateTime)sch2.Point_CSKZJPF - (DateTime)sch1.Point_CSKZJPF).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_CSKZJPF, PointName = "财审控制价批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_CSKZJPF - (DateTime)sch1.Point_CSKZJPF).TotalDays / 7)) };
-                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt))
+                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
                         baseword.Add(me);
                     }
@@ -154,7 +154,7 @@ namespace ProJ.Bll
                 if (sch2.Point_DKBGWC != null && sch1.Point_DKBGWC != null&&((DateTime)sch2.Point_DKBGWC - (DateTime)sch1.Point_DKBGWC).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_DKBGWC, PointName = "地勘报告完成", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_DKBGWC - (DateTime)sch1.Point_DKBGWC).TotalDays / 7)) };
-                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt))
+                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
                         baseword.Add(me);
                     }
@@ -162,7 +162,7 @@ namespace ProJ.Bll
                 if (sch2.Point_GCKXXYJBGPF != null && sch1.Point_GCKXXYJBGPF != null&&((DateTime)sch2.Point_GCKXXYJBGPF - (DateTime)sch1.Point_GCKXXYJBGPF).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_GCKXXYJBGPF, PointName = "工程可行性研究报告批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_GCKXXYJBGPF - (DateTime)sch1.Point_GCKXXYJBGPF).TotalDays / 7)) };
-                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt))
+                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
                         baseword.Add(me);
                     }
@@ -170,7 +170,7 @@ namespace ProJ.Bll
                 if (sch2.Point_GHXZYDJYJSPF != null && sch1.Point_GHXZYDJYJSPF != null&&((DateTime)sch2.Point_GHXZYDJYJSPF - (DateTime)sch1.Point_GHXZYDJYJSPF).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_GHXZYDJYJSPF, PointName = "规划选址及用地意见书批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_GHXZYDJYJSPF - (DateTime)sch1.Point_GHXZYDJYJSPF).TotalDays / 7)) };
-                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt))
+                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
                         baseword.Add(me);
                     }
@@ -178,7 +178,7 @@ namespace ProJ.Bll
                 if (sch2.Point_JSGCGHXKZPF != null && sch1.Point_JSGCGHXKZPF != null&&((DateTime)sch2.Point_JSGCGHXKZPF - (DateTime)sch1.Point_JSGCGHXKZPF).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_JSGCGHXKZPF, PointName = "建设工程规划许可证批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_JSGCGHXKZPF - (DateTime)sch1.Point_JSGCGHXKZPF).TotalDays / 7)) };
-                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt))
+                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
                         baseword.Add(me);
                     }
@@ -186,7 +186,7 @@ namespace ProJ.Bll
                 if (sch2.Point_JSYDGHXKZPF != null && sch1.Point_JSYDGHXKZPF != null&&((DateTime)sch2.Point_JSYDGHXKZPF - (DateTime)sch1.Point_JSYDGHXKZPF).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_JSYDGHXKZPF, PointName = "建设用地规划许可证批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_JSYDGHXKZPF - (DateTime)sch1.Point_JSYDGHXKZPF).TotalDays / 7)) };
-                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt))
+                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
                         baseword.Add(me);
                     }
@@ -194,7 +194,7 @@ namespace ProJ.Bll
                 if (sch2.Point_LZYSXJGDPF != null && sch1.Point_LZYSXJGDPF != null&&((DateTime)sch2.Point_LZYSXJGDPF - (DateTime)sch1.Point_LZYSXJGDPF).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_LZYSXJGDPF, PointName = "农转用手续及供地批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_LZYSXJGDPF - (DateTime)sch1.Point_LZYSXJGDPF).TotalDays / 7)) };
-                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt))
+                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
                         baseword.Add(me);
                     }
@@ -202,7 +202,7 @@ namespace ProJ.Bll
                 if (sch2.Point_SGJLRYBA != null && sch1.Point_SGJLRYBA != null&&((DateTime)sch2.Point_SGJLRYBA - (DateTime)sch1.Point_SGJLRYBA).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_SGJLRYBA, PointName = "施工监理人员备案", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGJLRYBA - (DateTime)sch1.Point_SGJLRYBA).TotalDays / 7)) };
-                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt))
+                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
                         baseword.Add(me);
                     }
@@ -210,7 +210,7 @@ namespace ProJ.Bll
                 if (sch2.Point_SGJLZTP != null && sch1.Point_SGJLZTP != null&&((DateTime)sch2.Point_SGJLZTP - (DateTime)sch1.Point_SGJLZTP).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_SGJLZTP, PointName = "施工监理招投标", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGJLZTP - (DateTime)sch1.Point_SGJLZTP).TotalDays / 7)) };
-                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt))
+                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
                         baseword.Add(me);
                     }
@@ -218,7 +218,7 @@ namespace ProJ.Bll
                 if (sch2.Point_SGTBZHSC != null && sch1.Point_SGTBZHSC != null&&((DateTime)sch2.Point_SGTBZHSC - (DateTime)sch1.Point_SGTBZHSC).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_SGTBZHSC, PointName = "施工图编制和审查", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGTBZHSC - (DateTime)sch1.Point_SGTBZHSC).TotalDays / 7)) };
-                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt))
+                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
                         baseword.Add(me);
                     }
@@ -226,7 +226,7 @@ namespace ProJ.Bll
                 if (sch2.Point_SGXKZPF != null && sch1.Point_SGXKZPF != null&&((DateTime)sch2.Point_SGXKZPF - (DateTime)sch1.Point_SGXKZPF).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_SGXKZPF, PointName = "施工许可证批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGXKZPF - (DateTime)sch1.Point_SGXKZPF).TotalDays / 7)) };
-                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt))
+                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
                         baseword.Add(me);
                     }
@@ -234,7 +234,7 @@ namespace ProJ.Bll
                 if (sch2.Point_TDCRHT != null && sch1.Point_TDCRHT != null&&((DateTime)sch2.Point_TDCRHT - (DateTime)sch1.Point_TDCRHT).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_TDCRHT, PointName = "土地出让合同", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_TDCRHT - (DateTime)sch1.Point_TDCRHT).TotalDays / 7)) };
-                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt))
+                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
                         baseword.Add(me);
                     }
@@ -242,7 +242,7 @@ namespace ProJ.Bll
                 if (sch2.Point_TDSYQZ != null && sch1.Point_TDSYQZ != null&&((DateTime)sch2.Point_TDSYQZ - (DateTime)sch1.Point_TDSYQZ).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_TDSYQZ, PointName = "土地使用权证", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_TDSYQZ - (DateTime)sch1.Point_TDSYQZ).TotalDays / 7)) };
-                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt))
+                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
                         baseword.Add(me);
                     }
@@ -250,7 +250,7 @@ namespace ProJ.Bll
                 if (sch2.Point_XMKG != null && sch1.Point_XMKG != null&&((DateTime)sch2.Point_XMKG - (DateTime)sch1.Point_XMKG).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_XMKG, PointName = "项目开工", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_XMKG - (DateTime)sch1.Point_XMKG).TotalDays / 7)) };
-                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt))
+                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
                         baseword.Add(me);
                     }
@@ -258,7 +258,7 @@ namespace ProJ.Bll
                 if (sch2.Point_XMZPSJFAPF != null && sch1.Point_XMZPSJFAPF != null&&((DateTime)sch2.Point_XMZPSJFAPF - (DateTime)sch1.Point_XMZPSJFAPF).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_XMZPSJFAPF, PointName = "项目总平设计方案批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_CBSJJGSPF - (DateTime)sch1.Point_CBSJJGSPF).TotalDays / 7)) };
-                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt))
+                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
                         baseword.Add(me);
                     }
@@ -266,7 +266,7 @@ namespace ProJ.Bll
                 if (sch2.Point_YSBZWC != null && sch1.Point_YSBZWC != null&&((DateTime)sch2.Point_YSBZWC - (DateTime)sch1.Point_YSBZWC).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_YSBZWC, PointName = "预算编制完成", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_YSBZWC - (DateTime)sch1.Point_YSBZWC).TotalDays / 7)) };
-                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt))
+                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
                         baseword.Add(me);
                     }
