@@ -47,7 +47,7 @@ namespace ProJ.SMSClient
                 {
                     await new SMSSend().SendSMS();
                 });
-                 
+                //_smstimer.Stop();
             }
             catch (Exception ex)
             {

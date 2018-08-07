@@ -89,7 +89,10 @@ namespace ProJ.SMSClient
                                         break;
                                 }
                                 var db = _work.Repository<Model.DB.Project_SMS>();
-                               
+                                if (tsms.WeekInt>3)
+                                {
+                                    tsms.WeekInt = 3;
+                                }
                                 if(!db.Any(q=>q.ProjectID == sms.ProjectInfo.ID && q.PointName == tsms.PointName && q.WeekInt == tsms.WeekInt))
                                 {
                                     db.Add(dbsms);
