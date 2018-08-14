@@ -611,11 +611,21 @@ namespace ProJ.Bll
             {
                 lg = true;
             }
+            //开工
+            bool sta = false;
+            var wq = GetLoginMenu(para.Login).data;
+            var eq = wq.Select(s => s.Menu33.FirstOrDefault(q => q.AuthKey == "project.project.start"));
+            var fq = eq.FirstOrDefault(q => q != null);
+            if (fq != null)
+            {
+                sta = true;
+            }
             return new ActionResult<UserView>(new UserView
             {
                 UserInfo = user,
                 UserProfile = profile,
-                Check=lg
+                Check=lg,
+                Start=sta
             });
 
 

@@ -27,6 +27,10 @@ namespace ProJ.Model.View
         /// 申请通过
         /// </summary>
         public bool Check { get; set; }
+        /// <summary>
+        /// 开工
+        /// </summary>
+        public bool Start { get; set; }
     }
 
     /// <summary>

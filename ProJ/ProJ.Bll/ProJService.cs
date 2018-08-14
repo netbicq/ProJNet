@@ -32,7 +32,7 @@ namespace ProJ.Bll
         {
             var info1 = _work.Repository<Model.DB.Project_Info>();
             var to = info1.GetModel(q => q.ID == After.ID);
-            if (to.State != (int)PublicEnum.ProjState.Modified)
+            if (to.State != (int)PublicEnum.ProjState.Modified && to.State != (int)PublicEnum.ProjState.Normal)
             {
                 throw new Exception("此项目状态不允许操作");
             }
@@ -40,8 +40,8 @@ namespace ProJ.Bll
             {
                 throw new Exception("开工不允许任何操作");
             }
-            to.State = (int)PublicEnum.ProjState.Normal;
-            info1.Update(to);
+            //to.State = (int)PublicEnum.ProjState.Normal;
+            //info1.Update(to);
 
             var Afterinfo = _work.Repository<Model.DB.Project_Info>();
             var info = Afterinfo.GetModel(q => q.ID == After.ID);
@@ -99,7 +99,7 @@ namespace ProJ.Bll
             var Schedule = _work.Repository<Model.DB.Project_Schedule>().Queryable();
             var owner = _work.Repository<Model.DB.Basic_Owner>().Queryable();
             var sms = _work.Repository<Model.DB.Project_SMS>().Queryable();
-            var retemp = from ac in proj.Where(q=>q.State!=(int)PublicEnum.ProjState.Start)
+            var retemp = from ac in proj.Where(q => q.State != (int)PublicEnum.ProjState.Start)
                          let owners = owner.FirstOrDefault(q => q.ID == ac.OwnerID)
                          let con = Contacts.FirstOrDefault(q => q.ProjectID == ac.ID)
                          select new ProjectSMS
@@ -135,149 +135,217 @@ namespace ProJ.Bll
                 List<SMSBase> baseword = new List<SMSBase>();
                 var sch1 = Schedule.FirstOrDefault(q => q.ProjectID == item.ProjectInfo.ID && q.ScheduleType == (int)PublicEnum.PlanType.Plan);
                 var sch2 = Schedule.FirstOrDefault(q => q.ProjectID == item.ProjectInfo.ID && q.ScheduleType == (int)PublicEnum.PlanType.Ement);
-                if (sch2.Point_CBSJJGSPF != null && sch1.Point_CBSJJGSPF != null&&((DateTime)sch2.Point_CBSJJGSPF - (DateTime)sch1.Point_CBSJJGSPF).TotalDays>0)
+                sch2.Point_CBSJJGSPF = (DateTime?)((sch2.Point_CBSJJGSPF == null && string.IsNullOrEmpty(sch2.Point_CBSJJGSMemo)) ? DateTime.Now : sch2.Point_CBSJJGSPF);
+                sch2.Point_CSKZJPF = (DateTime?)((sch2.Point_CSKZJPF == null && string.IsNullOrEmpty(sch2.Point_CSKZJMemo)) ? DateTime.Now : sch2.Point_CSKZJPF);
+                sch2.Point_DKBGWC = (DateTime?)((sch2.Point_DKBGWC == null && string.IsNullOrEmpty(sch2.Point_DKBGWCMemo)) ? DateTime.Now : sch2.Point_DKBGWC);
+                sch2.Point_GCKXXYJBGPF = (DateTime?)((sch2.Point_GCKXXYJBGPF == null && string.IsNullOrEmpty(sch2.Point_GCKXXYJBGMemo)) ? DateTime.Now : sch2.Point_GCKXXYJBGPF);
+                sch2.Point_GHXZYDJYJSPF = (DateTime?)((sch2.Point_GHXZYDJYJSPF == null && string.IsNullOrEmpty(sch2.Point_GHXZJYDYJSMemo)) ? DateTime.Now : sch2.Point_GHXZYDJYJSPF);
+                sch2.Point_JSGCGHXKZPF = (DateTime?)((sch2.Point_JSGCGHXKZPF == null && string.IsNullOrEmpty(sch2.Point_JSGSGHXKZMemo)) ? DateTime.Now : sch2.Point_JSGCGHXKZPF);
+                sch2.Point_JSYDGHXKZPF = (DateTime?)((sch2.Point_JSYDGHXKZPF == null && string.IsNullOrEmpty(sch2.Point_JSYDGHXKZMemo)) ? DateTime.Now : sch2.Point_JSYDGHXKZPF);
+                sch2.Point_LZYSXJGDPF = (DateTime?)((sch2.Point_LZYSXJGDPF == null && string.IsNullOrEmpty(sch2.Point_LZYSXJGDMemo)) ? DateTime.Now : sch2.Point_LZYSXJGDPF);
+                sch2.Point_SGJLRYBA = (DateTime?)((sch2.Point_SGJLRYBA == null && string.IsNullOrEmpty(sch2.Point_SGJLRYBAMemo)) ? DateTime.Now : sch2.Point_SGJLRYBA);
+                sch2.Point_SGJLZTP = (DateTime?)((sch2.Point_SGJLZTP == null && string.IsNullOrEmpty(sch2.Point_SGJLZTPMemo)) ? DateTime.Now : sch2.Point_SGJLZTP);
+                sch2.Point_SGTBZHSC = (DateTime?)((sch2.Point_SGTBZHSC == null && string.IsNullOrEmpty(sch2.Point_SGTBZHSCMemo)) ? DateTime.Now : sch2.Point_SGTBZHSC);
+                sch2.Point_SGXKZPF = (DateTime?)((sch2.Point_SGXKZPF == null && string.IsNullOrEmpty(sch2.Point_SGXKZMemo)) ? DateTime.Now : sch2.Point_SGXKZPF);
+                sch2.Point_TDCRHT = (DateTime?)((sch2.Point_TDCRHT == null && string.IsNullOrEmpty(sch2.Point_TDCRHTMemo)) ? DateTime.Now : sch2.Point_TDCRHT);
+                sch2.Point_TDSYQZ = (DateTime?)((sch2.Point_TDSYQZ == null && string.IsNullOrEmpty(sch2.Point_TDSYQZMemo)) ? DateTime.Now : sch2.Point_TDSYQZ);
+                sch2.Point_XMKG = (DateTime?)((sch2.Point_XMKG == null && string.IsNullOrEmpty(sch2.Point_XMKGMemo)) ? DateTime.Now : sch2.Point_XMKG);
+                sch2.Point_XMZPSJFAPF = (DateTime?)((sch2.Point_XMZPSJFAPF == null && string.IsNullOrEmpty(sch2.Point_XMZPSJFAMemo)) ? DateTime.Now : sch2.Point_XMZPSJFAPF);
+                sch2.Point_YSBZWC = (DateTime?)((sch2.Point_YSBZWC == null && string.IsNullOrEmpty(sch2.Point_YSBZWCMemo)) ? DateTime.Now : sch2.Point_YSBZWC);
+                if (sch2.Point_CBSJJGSPF != null && sch1.Point_CBSJJGSPF != null && ((DateTime)sch2.Point_CBSJJGSPF - (DateTime)sch1.Point_CBSJJGSPF).TotalDays > 0)
                 {
-                    var me = new SMSBase {Exec=PublicEnum.PlanEnd.Point_CBSJJGSPF,PointName= "初步设计及概算批复",WeekInt= Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_CBSJJGSPF - (DateTime)sch1.Point_CBSJJGSPF).TotalDays / 7))>3?3: Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_CBSJJGSPF - (DateTime)sch1.Point_CBSJJGSPF).TotalDays / 7)) };
-                    if (!sms.Any(q=>q.PointName==me.PointName&&q.WeekInt==me.WeekInt && q.ProjectID ==item.ProjectInfo.ID))
+                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_CBSJJGSPF, PointName = "初步设计及概算批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_CBSJJGSPF - (DateTime)sch1.Point_CBSJJGSPF).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_CBSJJGSPF - (DateTime)sch1.Point_CBSJJGSPF).TotalDays / 7)) };
+                    if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        baseword.Add(me);
+                        if (me.WeekInt != 0)
+                        {
+                            baseword.Add(me);
+                        }
                     }
                 }
-                if (sch2.Point_CSKZJPF != null && sch1.Point_CSKZJPF != null&&((DateTime)sch2.Point_CSKZJPF - (DateTime)sch1.Point_CSKZJPF).TotalDays > 0)
+                if (sch2.Point_CSKZJPF != null && sch1.Point_CSKZJPF != null && ((DateTime)sch2.Point_CSKZJPF - (DateTime)sch1.Point_CSKZJPF).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_CSKZJPF, PointName = "财审控制价批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_CSKZJPF - (DateTime)sch1.Point_CSKZJPF).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_CSKZJPF - (DateTime)sch1.Point_CSKZJPF).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        baseword.Add(me);
+                        if (me.WeekInt != 0)
+                        {
+                            baseword.Add(me);
+                        }
                     }
                 }
-                if (sch2.Point_DKBGWC != null && sch1.Point_DKBGWC != null&&((DateTime)sch2.Point_DKBGWC - (DateTime)sch1.Point_DKBGWC).TotalDays > 0)
+                if (sch2.Point_DKBGWC != null && sch1.Point_DKBGWC != null && ((DateTime)sch2.Point_DKBGWC - (DateTime)sch1.Point_DKBGWC).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_DKBGWC, PointName = "地勘报告完成", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_DKBGWC - (DateTime)sch1.Point_DKBGWC).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_DKBGWC - (DateTime)sch1.Point_DKBGWC).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        baseword.Add(me);
+                        if (me.WeekInt != 0)
+                        {
+                            baseword.Add(me);
+                        }
                     }
                 }
-                if (sch2.Point_GCKXXYJBGPF != null && sch1.Point_GCKXXYJBGPF != null&&((DateTime)sch2.Point_GCKXXYJBGPF - (DateTime)sch1.Point_GCKXXYJBGPF).TotalDays > 0)
+                if (sch2.Point_GCKXXYJBGPF != null && sch1.Point_GCKXXYJBGPF != null && ((DateTime)sch2.Point_GCKXXYJBGPF - (DateTime)sch1.Point_GCKXXYJBGPF).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_GCKXXYJBGPF, PointName = "工程可行性研究报告批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_GCKXXYJBGPF - (DateTime)sch1.Point_GCKXXYJBGPF).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_GCKXXYJBGPF - (DateTime)sch1.Point_GCKXXYJBGPF).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        baseword.Add(me);
+                        if (me.WeekInt != 0)
+                        {
+                            baseword.Add(me);
+                        }
                     }
                 }
-                if (sch2.Point_GHXZYDJYJSPF != null && sch1.Point_GHXZYDJYJSPF != null&&((DateTime)sch2.Point_GHXZYDJYJSPF - (DateTime)sch1.Point_GHXZYDJYJSPF).TotalDays > 0)
+                if (sch2.Point_GHXZYDJYJSPF != null && sch1.Point_GHXZYDJYJSPF != null && ((DateTime)sch2.Point_GHXZYDJYJSPF - (DateTime)sch1.Point_GHXZYDJYJSPF).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_GHXZYDJYJSPF, PointName = "规划选址及用地意见书批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_GHXZYDJYJSPF - (DateTime)sch1.Point_GHXZYDJYJSPF).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_GHXZYDJYJSPF - (DateTime)sch1.Point_GHXZYDJYJSPF).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        baseword.Add(me);
+                        if (me.WeekInt != 0)
+                        {
+                            baseword.Add(me);
+                        }
                     }
                 }
-                if (sch2.Point_JSGCGHXKZPF != null && sch1.Point_JSGCGHXKZPF != null&&((DateTime)sch2.Point_JSGCGHXKZPF - (DateTime)sch1.Point_JSGCGHXKZPF).TotalDays > 0)
+                if (sch2.Point_JSGCGHXKZPF != null && sch1.Point_JSGCGHXKZPF != null && ((DateTime)sch2.Point_JSGCGHXKZPF - (DateTime)sch1.Point_JSGCGHXKZPF).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_JSGCGHXKZPF, PointName = "建设工程规划许可证批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_JSGCGHXKZPF - (DateTime)sch1.Point_JSGCGHXKZPF).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_JSGCGHXKZPF - (DateTime)sch1.Point_JSGCGHXKZPF).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        baseword.Add(me);
+                        if (me.WeekInt != 0)
+                        {
+                            baseword.Add(me);
+                        }
                     }
                 }
-                if (sch2.Point_JSYDGHXKZPF != null && sch1.Point_JSYDGHXKZPF != null&&((DateTime)sch2.Point_JSYDGHXKZPF - (DateTime)sch1.Point_JSYDGHXKZPF).TotalDays > 0)
+                if (sch2.Point_JSYDGHXKZPF != null && sch1.Point_JSYDGHXKZPF != null && ((DateTime)sch2.Point_JSYDGHXKZPF - (DateTime)sch1.Point_JSYDGHXKZPF).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_JSYDGHXKZPF, PointName = "建设用地规划许可证批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_JSYDGHXKZPF - (DateTime)sch1.Point_JSYDGHXKZPF).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_JSYDGHXKZPF - (DateTime)sch1.Point_JSYDGHXKZPF).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        baseword.Add(me);
+                        if (me.WeekInt != 0)
+                        {
+                            baseword.Add(me);
+                        }
                     }
                 }
-                if (sch2.Point_LZYSXJGDPF != null && sch1.Point_LZYSXJGDPF != null&&((DateTime)sch2.Point_LZYSXJGDPF - (DateTime)sch1.Point_LZYSXJGDPF).TotalDays > 0)
+                if (sch2.Point_LZYSXJGDPF != null && sch1.Point_LZYSXJGDPF != null && ((DateTime)sch2.Point_LZYSXJGDPF - (DateTime)sch1.Point_LZYSXJGDPF).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_LZYSXJGDPF, PointName = "农转用手续及供地批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_LZYSXJGDPF - (DateTime)sch1.Point_LZYSXJGDPF).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_LZYSXJGDPF - (DateTime)sch1.Point_LZYSXJGDPF).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        baseword.Add(me);
+                        if (me.WeekInt != 0)
+                        {
+                            baseword.Add(me);
+                        }
                     }
                 }
-                if (sch2.Point_SGJLRYBA != null && sch1.Point_SGJLRYBA != null&&((DateTime)sch2.Point_SGJLRYBA - (DateTime)sch1.Point_SGJLRYBA).TotalDays > 0)
+                if (sch2.Point_SGJLRYBA != null && sch1.Point_SGJLRYBA != null && ((DateTime)sch2.Point_SGJLRYBA - (DateTime)sch1.Point_SGJLRYBA).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_SGJLRYBA, PointName = "施工监理人员备案", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGJLRYBA - (DateTime)sch1.Point_SGJLRYBA).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGJLRYBA - (DateTime)sch1.Point_SGJLRYBA).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        baseword.Add(me);
+                        if (me.WeekInt != 0)
+                        {
+                            baseword.Add(me);
+                        }
                     }
                 }
-                if (sch2.Point_SGJLZTP != null && sch1.Point_SGJLZTP != null&&((DateTime)sch2.Point_SGJLZTP - (DateTime)sch1.Point_SGJLZTP).TotalDays > 0)
+                if (sch2.Point_SGJLZTP != null && sch1.Point_SGJLZTP != null && ((DateTime)sch2.Point_SGJLZTP - (DateTime)sch1.Point_SGJLZTP).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_SGJLZTP, PointName = "施工监理招投标", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGJLZTP - (DateTime)sch1.Point_SGJLZTP).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGJLZTP - (DateTime)sch1.Point_SGJLZTP).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        baseword.Add(me);
+                        if (me.WeekInt != 0)
+                        {
+                            baseword.Add(me);
+                        }
                     }
                 }
-                if (sch2.Point_SGTBZHSC != null && sch1.Point_SGTBZHSC != null&&((DateTime)sch2.Point_SGTBZHSC - (DateTime)sch1.Point_SGTBZHSC).TotalDays > 0)
+                if (sch2.Point_SGTBZHSC != null && sch1.Point_SGTBZHSC != null && ((DateTime)sch2.Point_SGTBZHSC - (DateTime)sch1.Point_SGTBZHSC).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_SGTBZHSC, PointName = "施工图编制和审查", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGTBZHSC - (DateTime)sch1.Point_SGTBZHSC).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGTBZHSC - (DateTime)sch1.Point_SGTBZHSC).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        baseword.Add(me);
+                        if (me.WeekInt != 0)
+                        {
+                            baseword.Add(me);
+                        }
                     }
                 }
-                if (sch2.Point_SGXKZPF != null && sch1.Point_SGXKZPF != null&&((DateTime)sch2.Point_SGXKZPF - (DateTime)sch1.Point_SGXKZPF).TotalDays > 0)
+                if (sch2.Point_SGXKZPF != null && sch1.Point_SGXKZPF != null && ((DateTime)sch2.Point_SGXKZPF - (DateTime)sch1.Point_SGXKZPF).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_SGXKZPF, PointName = "施工许可证批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGXKZPF - (DateTime)sch1.Point_SGXKZPF).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGXKZPF - (DateTime)sch1.Point_SGXKZPF).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        baseword.Add(me);
+                        if (me.WeekInt != 0)
+                        {
+                            baseword.Add(me);
+                        }
                     }
                 }
-                if (sch2.Point_TDCRHT != null && sch1.Point_TDCRHT != null&&((DateTime)sch2.Point_TDCRHT - (DateTime)sch1.Point_TDCRHT).TotalDays > 0)
+                if (sch2.Point_TDCRHT != null && sch1.Point_TDCRHT != null && ((DateTime)sch2.Point_TDCRHT - (DateTime)sch1.Point_TDCRHT).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_TDCRHT, PointName = "土地出让合同", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_TDCRHT - (DateTime)sch1.Point_TDCRHT).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_TDCRHT - (DateTime)sch1.Point_TDCRHT).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        baseword.Add(me);
+                        if (me.WeekInt != 0)
+                        {
+                            baseword.Add(me);
+                        }
                     }
                 }
-                if (sch2.Point_TDSYQZ != null && sch1.Point_TDSYQZ != null&&((DateTime)sch2.Point_TDSYQZ - (DateTime)sch1.Point_TDSYQZ).TotalDays > 0)
+                if (sch2.Point_TDSYQZ != null && sch1.Point_TDSYQZ != null && ((DateTime)sch2.Point_TDSYQZ - (DateTime)sch1.Point_TDSYQZ).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_TDSYQZ, PointName = "土地使用权证", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_TDSYQZ - (DateTime)sch1.Point_TDSYQZ).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_TDSYQZ - (DateTime)sch1.Point_TDSYQZ).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        baseword.Add(me);
+                        if (me.WeekInt != 0)
+                        {
+                            baseword.Add(me);
+                        }
                     }
                 }
-                if (sch2.Point_XMKG != null && sch1.Point_XMKG != null&&((DateTime)sch2.Point_XMKG - (DateTime)sch1.Point_XMKG).TotalDays > 0)
+                if (sch2.Point_XMKG != null && sch1.Point_XMKG != null && ((DateTime)sch2.Point_XMKG - (DateTime)sch1.Point_XMKG).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_XMKG, PointName = "项目开工", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_XMKG - (DateTime)sch1.Point_XMKG).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_XMKG - (DateTime)sch1.Point_XMKG).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        baseword.Add(me);
+                        if (me.WeekInt != 0)
+                        {
+                            baseword.Add(me);
+                        }
                     }
                 }
-                if (sch2.Point_XMZPSJFAPF != null && sch1.Point_XMZPSJFAPF != null&&((DateTime)sch2.Point_XMZPSJFAPF - (DateTime)sch1.Point_XMZPSJFAPF).TotalDays > 0)
+                if (sch2.Point_XMZPSJFAPF != null && sch1.Point_XMZPSJFAPF != null && ((DateTime)sch2.Point_XMZPSJFAPF - (DateTime)sch1.Point_XMZPSJFAPF).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_XMZPSJFAPF, PointName = "项目总平设计方案批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_XMZPSJFAPF - (DateTime)sch1.Point_XMZPSJFAPF).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_XMZPSJFAPF - (DateTime)sch1.Point_XMZPSJFAPF).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        baseword.Add(me);
+                        if (me.WeekInt != 0)
+                        {
+                            baseword.Add(me);
+                        }
                     }
                 }
-                if (sch2.Point_YSBZWC != null && sch1.Point_YSBZWC != null&&((DateTime)sch2.Point_YSBZWC - (DateTime)sch1.Point_YSBZWC).TotalDays > 0)
+                if (sch2.Point_YSBZWC != null && sch1.Point_YSBZWC != null && ((DateTime)sch2.Point_YSBZWC - (DateTime)sch1.Point_YSBZWC).TotalDays > 0)
                 {
                     var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_YSBZWC, PointName = "预算编制完成", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_YSBZWC - (DateTime)sch1.Point_YSBZWC).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_YSBZWC - (DateTime)sch1.Point_YSBZWC).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        baseword.Add(me);
+                        if (me.WeekInt != 0)
+                        {
+                            baseword.Add(me);
+                        }
                     }
                 }
                 item.Timeouts = baseword;
-                if (baseword.Count()>0)
+                if (baseword.Count() > 0)
                 {
                     proview.Add(item);
                 }
             };
-            
+
 
             return new ActionResult<IEnumerable<ProjectSMS>>(proview);
         }
@@ -302,7 +370,7 @@ namespace ProJ.Bll
         {
             var info1 = _work.Repository<Model.DB.Project_Info>();
             var to = info1.GetModel(q => q.ID == Iss.ProjectID);
-            if (to.State != (int)PublicEnum.ProjState.Modified)
+            if (to.State != (int)PublicEnum.ProjState.Modified&& to.State != (int)PublicEnum.ProjState.Normal)
             {
                 throw new Exception("此项目状态不允许操作");
             }
@@ -310,8 +378,8 @@ namespace ProJ.Bll
             {
                 throw new Exception("开工不允许任何操作");
             }
-            to.State = (int)PublicEnum.ProjState.Normal;
-            info1.Update(to);
+            //to.State = (int)PublicEnum.ProjState.Normal;
+            //info1.Update(to);
             var Issue = _work.Repository<Model.DB.Project_Issue>();
             var re = Issue.GetModel(q => q.ID == Iss.ID);
             re.IssueContent = Iss.IssueContent;
@@ -367,7 +435,7 @@ namespace ProJ.Bll
         {
             var info1 = _work.Repository<Model.DB.Project_Info>();
             var to = info1.GetModel(q => q.ID == Con.ProjectID);
-            if (to.State != (int)PublicEnum.ProjState.Modified)
+            if (to.State != (int)PublicEnum.ProjState.Modified&& to.State != (int)PublicEnum.ProjState.Normal)
             {
                 throw new Exception("此项目状态不允许操作");
             }
@@ -375,8 +443,8 @@ namespace ProJ.Bll
             {
                 throw new Exception("开工不允许任何操作");
             }
-            to.State = (int)PublicEnum.ProjState.Normal;
-            info1.Update(to);
+            //to.State = (int)PublicEnum.ProjState.Normal;
+            //info1.Update(to);
             var Contact = _work.Repository<Model.DB.Project_Contacts>();
             var re = Contact.GetModel(q => q.ID == Con.ID);
             Con.Clone(re);
@@ -401,7 +469,7 @@ namespace ProJ.Bll
         {
             var info1 = _work.Repository<Model.DB.Project_Info>();
             var to = info1.GetModel(q => q.ID == pro.ID);
-            if (to.State != (int)PublicEnum.ProjState.Modified)
+            if (to.State != (int)PublicEnum.ProjState.Modified&& to.State != (int)PublicEnum.ProjState.Normal)
             {
                 throw new Exception("此项目状态不允许操作");
             }
@@ -410,7 +478,7 @@ namespace ProJ.Bll
                 throw new Exception("开工不允许任何操作");
             }
             pro.Clone(to);
-            to.State = (int)PublicEnum.ProjState.Normal;
+            //to.State = (int)PublicEnum.ProjState.Normal;
             info1.Update(to);
 
             var Log = _work.Repository<Project_Log>();
@@ -453,8 +521,9 @@ namespace ProJ.Bll
                              Project_Issue = from s in Issue.Where(q => q.ProjectID == ac.ID) select s,
                              Project_Log = from d in Log.Where(q => q.ProjectID == ac.ID) orderby d.CreateDate descending select d,
                              StateStr = ac.State == (int)PublicEnum.ProjState.Normal ? "正常" :
-                             ac.State == (int)PublicEnum.ProjState.Apply ? "申请" :
+                             ac.State == (int)PublicEnum.ProjState.Apply ? "待审" :
                              ac.State == (int)PublicEnum.ProjState.Modified ? "待修改" :
+                             ac.State == (int)PublicEnum.ProjState.Pick ? "提交审批" :
                              ac.State == (int)PublicEnum.ProjState.Start ? "开工" : "未知",
                              OwnerStr = owners == null ? null : owners.OwnerName,
                              ProjStr = dicts == null ? null : dicts.DictName,
@@ -526,7 +595,7 @@ namespace ProJ.Bll
             }
             owner.ProjectInfo.Clone(dbe);
             dbe.ID = ID;
-            dbe.State = (int)PublicEnum.GenericState.Normal;
+            dbe.State = (int)PublicEnum.ProjState.Apply;
             dbe.CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName;
             proj.Add(dbe);
 
@@ -571,8 +640,8 @@ namespace ProJ.Bll
             {
                 throw new Exception("开工不允许任何操作");
             }
-            to.State = (int)PublicEnum.ProjState.Normal;
-            info.Update(to);
+            //to.State = (int)PublicEnum.ProjState.Normal;
+            //info.Update(to);
             var Schedule = _work.Repository<Model.DB.Project_Schedule>();
             var re = Schedule.GetModel(q => q.ID == Sch.ID);
             Sch.Clone(re);
@@ -616,8 +685,8 @@ namespace ProJ.Bll
                         {
                             throw new Exception("此项目状态不允许操作");
                         }
-                        to.State = (int)PublicEnum.ProjState.Normal;
-                        info1.Update(to);
+                        //to.State = (int)PublicEnum.ProjState.Normal;
+                        //info1.Update(to);
                     }
                     info.Point_GCKXXYJBGPF = Sch.Value;
                     info.Point_GCKXXYJBGMemo = Sch.Memo;
@@ -630,8 +699,8 @@ namespace ProJ.Bll
                         {
                             throw new Exception("此项目状态不允许操作");
                         }
-                        to.State = (int)PublicEnum.ProjState.Normal;
-                        info1.Update(to);
+                        //to.State = (int)PublicEnum.ProjState.Normal;
+                        //info1.Update(to);
                     }
                     info.Point_JSYDGHXKZPF = Sch.Value;
                     info.Point_JSYDGHXKZMemo = Sch.Memo;
@@ -644,8 +713,8 @@ namespace ProJ.Bll
                         {
                             throw new Exception("此项目状态不允许操作");
                         }
-                        to.State = (int)PublicEnum.ProjState.Normal;
-                        info1.Update(to);
+                        //to.State = (int)PublicEnum.ProjState.Normal;
+                        //info1.Update(to);
                     }
                     info.Point_DKBGWC = Sch.Value;
                     info.Point_DKBGWCMemo = Sch.Memo;
@@ -658,8 +727,8 @@ namespace ProJ.Bll
                         {
                             throw new Exception("此项目状态不允许操作");
                         }
-                        to.State = (int)PublicEnum.ProjState.Normal;
-                        info1.Update(to);
+                        //to.State = (int)PublicEnum.ProjState.Normal;
+                        //info1.Update(to);
                     }
                     info.Point_CBSJJGSPF = Sch.Value;
                     info.Point_CBSJJGSMemo = Sch.Memo;
@@ -672,8 +741,8 @@ namespace ProJ.Bll
                         {
                             throw new Exception("此项目状态不允许操作");
                         }
-                        to.State = (int)PublicEnum.ProjState.Normal;
-                        info1.Update(to);
+                        //to.State = (int)PublicEnum.ProjState.Normal;
+                        //info1.Update(to);
                     }
                     info.Point_SGTBZHSC = Sch.Value;
                     info.Point_SGTBZHSCMemo = Sch.Memo;
@@ -686,8 +755,8 @@ namespace ProJ.Bll
                         {
                             throw new Exception("此项目状态不允许操作");
                         }
-                        to.State = (int)PublicEnum.ProjState.Normal;
-                        info1.Update(to);
+                        //to.State = (int)PublicEnum.ProjState.Normal;
+                        //info1.Update(to);
                     }
                     info.Point_YSBZWC = Sch.Value;
                     info.Point_YSBZWCMemo = Sch.Memo;
@@ -700,8 +769,8 @@ namespace ProJ.Bll
                         {
                             throw new Exception("此项目状态不允许操作");
                         }
-                        to.State = (int)PublicEnum.ProjState.Normal;
-                        info1.Update(to);
+                        //to.State = (int)PublicEnum.ProjState.Normal;
+                        //info1.Update(to);
                     }
                     info.Point_CSKZJPF = Sch.Value;
                     info.Point_CSKZJMemo = Sch.Memo;
@@ -714,8 +783,8 @@ namespace ProJ.Bll
                         {
                             throw new Exception("此项目状态不允许操作");
                         }
-                        to.State = (int)PublicEnum.ProjState.Normal;
-                        info1.Update(to);
+                        //to.State = (int)PublicEnum.ProjState.Normal;
+                        //info1.Update(to);
                     }
                     info.Point_SGJLZTP = Sch.Value;
                     info.Point_SGJLZTPMemo = Sch.Memo;
@@ -728,8 +797,8 @@ namespace ProJ.Bll
                         {
                             throw new Exception("此项目状态不允许操作");
                         }
-                        to.State = (int)PublicEnum.ProjState.Normal;
-                        info1.Update(to);
+                        //to.State = (int)PublicEnum.ProjState.Normal;
+                        //info1.Update(to);
                     }
                     info.Point_XMKG = Sch.Value;
                     info.Point_XMKGMemo = Sch.Memo;
@@ -742,8 +811,8 @@ namespace ProJ.Bll
                         {
                             throw new Exception("此项目状态不允许操作");
                         }
-                        to.State = (int)PublicEnum.ProjState.Normal;
-                        info1.Update(to);
+                        //to.State = (int)PublicEnum.ProjState.Normal;
+                        //info1.Update(to);
                     }
                     info.Point_JSGCGHXKZPF = Sch.Value;
                     info.Point_JSGSGHXKZMemo = Sch.Memo;
@@ -756,8 +825,8 @@ namespace ProJ.Bll
                         {
                             throw new Exception("此项目状态不允许操作");
                         }
-                        to.State = (int)PublicEnum.ProjState.Normal;
-                        info1.Update(to);
+                        //to.State = (int)PublicEnum.ProjState.Normal;
+                        //info1.Update(to);
                     }
                     info.Point_SGJLRYBA = Sch.Value;
                     info.Point_SGJLRYBAMemo = Sch.Memo;
@@ -770,8 +839,8 @@ namespace ProJ.Bll
                         {
                             throw new Exception("此项目状态不允许操作");
                         }
-                        to.State = (int)PublicEnum.ProjState.Normal;
-                        info1.Update(to);
+                        //to.State = (int)PublicEnum.ProjState.Normal;
+                        //info1.Update(to);
                     }
                     info.Point_SGXKZPF = Sch.Value;
                     info.Point_SGXKZMemo = Sch.Memo;
@@ -784,8 +853,8 @@ namespace ProJ.Bll
                         {
                             throw new Exception("此项目状态不允许操作");
                         }
-                        to.State = (int)PublicEnum.ProjState.Normal;
-                        info1.Update(to);
+                        //to.State = (int)PublicEnum.ProjState.Normal;
+                        //info1.Update(to);
                     }
                     info.Point_GHXZYDJYJSPF = Sch.Value;
                     info.Point_GHXZJYDYJSMemo = Sch.Memo;
@@ -798,8 +867,8 @@ namespace ProJ.Bll
                         {
                             throw new Exception("此项目状态不允许操作");
                         }
-                        to.State = (int)PublicEnum.ProjState.Normal;
-                        info1.Update(to);
+                        //to.State = (int)PublicEnum.ProjState.Normal;
+                        //info1.Update(to);
                     }
                     info.Point_LZYSXJGDPF = Sch.Value;
                     info.Point_LZYSXJGDMemo = Sch.Memo;
@@ -812,8 +881,8 @@ namespace ProJ.Bll
                         {
                             throw new Exception("此项目状态不允许操作");
                         }
-                        to.State = (int)PublicEnum.ProjState.Normal;
-                        info1.Update(to);
+                        //to.State = (int)PublicEnum.ProjState.Normal;
+                        //info1.Update(to);
                     }
                     info.Point_TDCRHT = Sch.Value;
                     info.Point_TDCRHTMemo = Sch.Memo;
@@ -826,8 +895,8 @@ namespace ProJ.Bll
                         {
                             throw new Exception("此项目状态不允许操作");
                         }
-                        to.State = (int)PublicEnum.ProjState.Normal;
-                        info1.Update(to);
+                        //to.State = (int)PublicEnum.ProjState.Normal;
+                        //info1.Update(to);
                     }
                     info.Point_TDSYQZ = Sch.Value;
                     info.Point_TDSYQZMemo = Sch.Memo;
@@ -840,8 +909,8 @@ namespace ProJ.Bll
                         {
                             throw new Exception("此项目状态不允许操作");
                         }
-                        to.State = (int)PublicEnum.ProjState.Normal;
-                        info1.Update(to);
+                        //to.State = (int)PublicEnum.ProjState.Normal;
+                        //info1.Update(to);
                     }
                     info.Point_XMZPSJFAPF = Sch.Value;
                     info.Point_XMZPSJFAMemo = Sch.Memo;
@@ -890,9 +959,6 @@ namespace ProJ.Bll
             {
                 throw new Exception("开工不允许任何操作");
             }
-            em.State = (int)state;
-            proj.Update(em);
-
             var Log = _work.Repository<Project_Log>();
             var logs = new Project_Log();
             logs.ProjectID = em.ID;
@@ -900,11 +966,19 @@ namespace ProJ.Bll
             logs.State = 1;
             if (state == PublicEnum.ProjState.Apply)
             {
+                if (em.State != (int)PublicEnum.ProjState.Normal)
+                {
+                    throw new Exception("申请修改需要正常状态");
+                }
                 logs.LogContent = "申请修改";
                 Log.Add(logs);
             }
             else if (state == PublicEnum.ProjState.Modified)
             {
+                if (em.State != (int)PublicEnum.ProjState.Apply)
+                {
+                    throw new Exception("审批通过需要待审状态");
+                }
                 AuthService hen = new AuthService(_work);
                 var be = hen.GetLoginMenu(AppUser.CurrentUserInfo.UserInfo.Login).data;
                 var me = be.Select(s => s.Menu33.FirstOrDefault(q => q.AuthKey == "project.project.check"));
@@ -913,7 +987,7 @@ namespace ProJ.Bll
                 {
                     throw new Exception("没有此功能的权限");
                 }
-                logs.LogContent = "同意申请修改";
+                logs.LogContent = "审批通过";
                 Log.Add(logs);
             }
             else if (state == PublicEnum.ProjState.Start)
@@ -921,6 +995,27 @@ namespace ProJ.Bll
                 logs.LogContent = "项目开工";
                 Log.Add(logs);
             }
+            else if (state == PublicEnum.ProjState.Pick)
+            {
+                if (em.State != (int)PublicEnum.ProjState.Modified)
+                {
+                    throw new Exception("提交审批需要待修改状态");
+                }
+                logs.LogContent = "提交审批";
+                Log.Add(logs);
+            }
+            else if (state == PublicEnum.ProjState.Normal)
+            {
+                if (em.State != (int)PublicEnum.ProjState.Pick&&em.State != (int)PublicEnum.ProjState.Apply)
+                {
+                    throw new Exception("审核通过需要提交审批或者待审状态");
+                }
+                logs.LogContent = "审核通过";
+                Log.Add(logs);
+            }
+            ///
+            em.State = (int)state;
+            proj.Update(em);
             _work.Commit();
             return new ActionResult<bool>(true);
         }

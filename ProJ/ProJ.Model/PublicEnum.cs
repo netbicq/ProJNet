@@ -136,7 +136,7 @@ namespace ProJ.Model
             /// </summary>
             Normal = 1,
             /// <summary>
-            /// 申请
+            /// 待审
             /// </summary>
             Apply = 2,
             /// <summary>
@@ -146,7 +146,11 @@ namespace ProJ.Model
             /// <summary>
             /// 开工
             /// </summary>
-            Start = 4
+            Start = 4,
+            /// <summary>
+            /// 提交审批
+            /// </summary>
+            Pick = 5,
         }
         /// <summary>
         /// 季度枚举

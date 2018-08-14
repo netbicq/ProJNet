@@ -9,6 +9,10 @@ namespace ProJ.Model.View
     public class Report
     {
         /// <summary>
+        /// 有一个超期项目名变红
+        /// </summary>
+        public bool ProJBool { get; set; }
+        /// <summary>
         /// 业主单位
         /// </summary>
         public DB.Basic_Owner ProjectOwner { get; set; }
@@ -92,7 +96,8 @@ namespace ProJ.Model.View
         /// <summary>
         /// 问题列表
         /// </summary>
-        public IEnumerable<Model.DB.Project_Issue> Issues { get; set; }
+        //public IEnumerable<Model.DB.Project_Issue> Issues { get; set; }
+        public Model.DB.Project_Issue Issues { get; set; }
         /// <summary>
         /// 问题Str
         /// </summary>
