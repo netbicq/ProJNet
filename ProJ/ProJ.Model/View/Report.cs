@@ -17,6 +17,10 @@ namespace ProJ.Model.View
         /// </summary>
         public DB.Basic_Owner ProjectOwner { get; set; }
         /// <summary>
+        /// 联系人
+        /// </summary>
+        public DB.Project_Contacts Project_Contacts { get; set; }
+        /// <summary>
         /// 项目名称
         /// </summary>
         public DB.Project_Info ProjectInfo { get; set; }

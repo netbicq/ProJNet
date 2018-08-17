@@ -151,6 +151,10 @@ namespace ProJ.Model
             /// 提交审批
             /// </summary>
             Pick = 5,
+            /// <summary>
+            /// 待审批
+            /// </summary>
+            ApplyPP = 6
         }
         /// <summary>
         /// 季度枚举

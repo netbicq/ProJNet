@@ -521,9 +521,10 @@ namespace ProJ.Bll
                              Project_Issue = from s in Issue.Where(q => q.ProjectID == ac.ID) select s,
                              Project_Log = from d in Log.Where(q => q.ProjectID == ac.ID) orderby d.CreateDate descending select d,
                              StateStr = ac.State == (int)PublicEnum.ProjState.Normal ? "正常" :
-                             ac.State == (int)PublicEnum.ProjState.Apply ? "待审" :
+                             ac.State == (int)PublicEnum.ProjState.Apply ? "项目待审核" :
                              ac.State == (int)PublicEnum.ProjState.Modified ? "待修改" :
                              ac.State == (int)PublicEnum.ProjState.Pick ? "提交审批" :
+                             ac.State == (int)PublicEnum.ProjState.ApplyPP ? "修改待审批" :
                              ac.State == (int)PublicEnum.ProjState.Start ? "开工" : "未知",
                              OwnerStr = owners == null ? null : owners.OwnerName,
                              ProjStr = dicts == null ? null : dicts.DictName,
@@ -964,7 +965,7 @@ namespace ProJ.Bll
             logs.ProjectID = em.ID;
             logs.CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName;
             logs.State = 1;
-            if (state == PublicEnum.ProjState.Apply)
+            if (state == PublicEnum.ProjState.ApplyPP)
             {
                 if (em.State != (int)PublicEnum.ProjState.Normal)
                 {
@@ -975,9 +976,9 @@ namespace ProJ.Bll
             }
             else if (state == PublicEnum.ProjState.Modified)
             {
-                if (em.State != (int)PublicEnum.ProjState.Apply)
+                if (em.State != (int)PublicEnum.ProjState.ApplyPP)
                 {
-                    throw new Exception("审批通过需要待审状态");
+                    throw new Exception("审批通过需要修改待审批状态");
                 }
                 AuthService hen = new AuthService(_work);
                 var be = hen.GetLoginMenu(AppUser.CurrentUserInfo.UserInfo.Login).data;
@@ -987,7 +988,7 @@ namespace ProJ.Bll
                 {
                     throw new Exception("没有此功能的权限");
                 }
-                logs.LogContent = "审批通过";
+                logs.LogContent = "修改审批通过";
                 Log.Add(logs);
             }
             else if (state == PublicEnum.ProjState.Start)
@@ -1008,9 +1009,9 @@ namespace ProJ.Bll
             {
                 if (em.State != (int)PublicEnum.ProjState.Pick&&em.State != (int)PublicEnum.ProjState.Apply)
                 {
-                    throw new Exception("审核通过需要提交审批或者待审状态");
+                    throw new Exception("审核通过需要提交审批或者项目待审核状态");
                 }
-                logs.LogContent = "审核通过";
+                logs.LogContent = "项目审核通过";
                 Log.Add(logs);
             }
             ///
