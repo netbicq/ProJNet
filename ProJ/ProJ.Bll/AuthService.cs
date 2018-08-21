@@ -108,11 +108,13 @@ namespace ProJ.Bll
             var user = _rpsuser.GetModel(q => q.ID == para.ID);
 
             if (user == null)
-
             {
                 throw new Exception("用户不存在");
             }
-
+            if (string.IsNullOrEmpty(para.Pwd))
+            {
+                throw new Exception("密码不能为空");
+            }
             if (string.Compare(user.Pwd, para.OldPwd, false) != 0)
             {
                 throw new Exception("原密码错误");
