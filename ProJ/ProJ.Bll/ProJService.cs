@@ -154,10 +154,10 @@ namespace ProJ.Bll
                 sch2.Point_YSBZWC = (DateTime?)((sch2.Point_YSBZWC == null && string.IsNullOrEmpty(sch2.Point_YSBZWCMemo)) ? DateTime.Now : sch2.Point_YSBZWC);
                 if (sch2.Point_CBSJJGSPF != null && sch1.Point_CBSJJGSPF != null && ((DateTime)sch2.Point_CBSJJGSPF - (DateTime)sch1.Point_CBSJJGSPF).TotalDays > 0)
                 {
-                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_CBSJJGSPF, PointName = "初步设计及概算批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_CBSJJGSPF - (DateTime)sch1.Point_CBSJJGSPF).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_CBSJJGSPF - (DateTime)sch1.Point_CBSJJGSPF).TotalDays / 7)) };
+                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_CBSJJGSPF, PointName = "初步设计及概算批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_CBSJJGSPF - (DateTime)sch1.Point_CBSJJGSPF).TotalDays / 7)) >= 1 ? 1 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_CBSJJGSPF - (DateTime)sch1.Point_CBSJJGSPF).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        if (me.WeekInt != 0)
+                        if (me.WeekInt >= 0)
                         {
                             baseword.Add(me);
                         }
@@ -165,10 +165,10 @@ namespace ProJ.Bll
                 }
                 if (sch2.Point_CSKZJPF != null && sch1.Point_CSKZJPF != null && ((DateTime)sch2.Point_CSKZJPF - (DateTime)sch1.Point_CSKZJPF).TotalDays > 0)
                 {
-                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_CSKZJPF, PointName = "财审控制价批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_CSKZJPF - (DateTime)sch1.Point_CSKZJPF).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_CSKZJPF - (DateTime)sch1.Point_CSKZJPF).TotalDays / 7)) };
+                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_CSKZJPF, PointName = "财审控制价批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_CSKZJPF - (DateTime)sch1.Point_CSKZJPF).TotalDays / 7)) >=1 ? 1 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_CSKZJPF - (DateTime)sch1.Point_CSKZJPF).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        if (me.WeekInt != 0)
+                        if (me.WeekInt >= 0)
                         {
                             baseword.Add(me);
                         }
@@ -176,10 +176,10 @@ namespace ProJ.Bll
                 }
                 if (sch2.Point_DKBGWC != null && sch1.Point_DKBGWC != null && ((DateTime)sch2.Point_DKBGWC - (DateTime)sch1.Point_DKBGWC).TotalDays > 0)
                 {
-                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_DKBGWC, PointName = "地勘报告完成", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_DKBGWC - (DateTime)sch1.Point_DKBGWC).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_DKBGWC - (DateTime)sch1.Point_DKBGWC).TotalDays / 7)) };
+                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_DKBGWC, PointName = "地勘报告完成", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_DKBGWC - (DateTime)sch1.Point_DKBGWC).TotalDays / 7)) >=1 ? 1 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_DKBGWC - (DateTime)sch1.Point_DKBGWC).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        if (me.WeekInt != 0)
+                        if (me.WeekInt >= 0)
                         {
                             baseword.Add(me);
                         }
@@ -187,10 +187,10 @@ namespace ProJ.Bll
                 }
                 if (sch2.Point_GCKXXYJBGPF != null && sch1.Point_GCKXXYJBGPF != null && ((DateTime)sch2.Point_GCKXXYJBGPF - (DateTime)sch1.Point_GCKXXYJBGPF).TotalDays > 0)
                 {
-                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_GCKXXYJBGPF, PointName = "工程可行性研究报告批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_GCKXXYJBGPF - (DateTime)sch1.Point_GCKXXYJBGPF).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_GCKXXYJBGPF - (DateTime)sch1.Point_GCKXXYJBGPF).TotalDays / 7)) };
+                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_GCKXXYJBGPF, PointName = "工程可行性研究报告批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_GCKXXYJBGPF - (DateTime)sch1.Point_GCKXXYJBGPF).TotalDays / 7)) >=1 ? 1 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_GCKXXYJBGPF - (DateTime)sch1.Point_GCKXXYJBGPF).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        if (me.WeekInt != 0)
+                        if (me.WeekInt >= 0)
                         {
                             baseword.Add(me);
                         }
@@ -198,10 +198,10 @@ namespace ProJ.Bll
                 }
                 if (sch2.Point_GHXZYDJYJSPF != null && sch1.Point_GHXZYDJYJSPF != null && ((DateTime)sch2.Point_GHXZYDJYJSPF - (DateTime)sch1.Point_GHXZYDJYJSPF).TotalDays > 0)
                 {
-                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_GHXZYDJYJSPF, PointName = "规划选址及用地意见书批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_GHXZYDJYJSPF - (DateTime)sch1.Point_GHXZYDJYJSPF).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_GHXZYDJYJSPF - (DateTime)sch1.Point_GHXZYDJYJSPF).TotalDays / 7)) };
+                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_GHXZYDJYJSPF, PointName = "规划选址及用地意见书批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_GHXZYDJYJSPF - (DateTime)sch1.Point_GHXZYDJYJSPF).TotalDays / 7)) >=1 ? 1 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_GHXZYDJYJSPF - (DateTime)sch1.Point_GHXZYDJYJSPF).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        if (me.WeekInt != 0)
+                        if (me.WeekInt >= 0)
                         {
                             baseword.Add(me);
                         }
@@ -209,10 +209,10 @@ namespace ProJ.Bll
                 }
                 if (sch2.Point_JSGCGHXKZPF != null && sch1.Point_JSGCGHXKZPF != null && ((DateTime)sch2.Point_JSGCGHXKZPF - (DateTime)sch1.Point_JSGCGHXKZPF).TotalDays > 0)
                 {
-                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_JSGCGHXKZPF, PointName = "建设工程规划许可证批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_JSGCGHXKZPF - (DateTime)sch1.Point_JSGCGHXKZPF).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_JSGCGHXKZPF - (DateTime)sch1.Point_JSGCGHXKZPF).TotalDays / 7)) };
+                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_JSGCGHXKZPF, PointName = "建设工程规划许可证批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_JSGCGHXKZPF - (DateTime)sch1.Point_JSGCGHXKZPF).TotalDays / 7)) >=1 ? 1 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_JSGCGHXKZPF - (DateTime)sch1.Point_JSGCGHXKZPF).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        if (me.WeekInt != 0)
+                        if (me.WeekInt >= 0)
                         {
                             baseword.Add(me);
                         }
@@ -220,10 +220,10 @@ namespace ProJ.Bll
                 }
                 if (sch2.Point_JSYDGHXKZPF != null && sch1.Point_JSYDGHXKZPF != null && ((DateTime)sch2.Point_JSYDGHXKZPF - (DateTime)sch1.Point_JSYDGHXKZPF).TotalDays > 0)
                 {
-                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_JSYDGHXKZPF, PointName = "建设用地规划许可证批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_JSYDGHXKZPF - (DateTime)sch1.Point_JSYDGHXKZPF).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_JSYDGHXKZPF - (DateTime)sch1.Point_JSYDGHXKZPF).TotalDays / 7)) };
+                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_JSYDGHXKZPF, PointName = "建设用地规划许可证批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_JSYDGHXKZPF - (DateTime)sch1.Point_JSYDGHXKZPF).TotalDays / 7)) >=1 ? 1 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_JSYDGHXKZPF - (DateTime)sch1.Point_JSYDGHXKZPF).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        if (me.WeekInt != 0)
+                        if (me.WeekInt >= 0)
                         {
                             baseword.Add(me);
                         }
@@ -231,10 +231,10 @@ namespace ProJ.Bll
                 }
                 if (sch2.Point_LZYSXJGDPF != null && sch1.Point_LZYSXJGDPF != null && ((DateTime)sch2.Point_LZYSXJGDPF - (DateTime)sch1.Point_LZYSXJGDPF).TotalDays > 0)
                 {
-                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_LZYSXJGDPF, PointName = "农转用手续及供地批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_LZYSXJGDPF - (DateTime)sch1.Point_LZYSXJGDPF).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_LZYSXJGDPF - (DateTime)sch1.Point_LZYSXJGDPF).TotalDays / 7)) };
+                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_LZYSXJGDPF, PointName = "农转用手续及供地批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_LZYSXJGDPF - (DateTime)sch1.Point_LZYSXJGDPF).TotalDays / 7)) >= 1 ? 1 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_LZYSXJGDPF - (DateTime)sch1.Point_LZYSXJGDPF).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        if (me.WeekInt != 0)
+                        if (me.WeekInt >= 0)
                         {
                             baseword.Add(me);
                         }
@@ -242,10 +242,10 @@ namespace ProJ.Bll
                 }
                 if (sch2.Point_SGJLRYBA != null && sch1.Point_SGJLRYBA != null && ((DateTime)sch2.Point_SGJLRYBA - (DateTime)sch1.Point_SGJLRYBA).TotalDays > 0)
                 {
-                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_SGJLRYBA, PointName = "施工监理人员备案", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGJLRYBA - (DateTime)sch1.Point_SGJLRYBA).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGJLRYBA - (DateTime)sch1.Point_SGJLRYBA).TotalDays / 7)) };
+                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_SGJLRYBA, PointName = "施工监理人员备案", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGJLRYBA - (DateTime)sch1.Point_SGJLRYBA).TotalDays / 7)) >= 1 ? 1 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGJLRYBA - (DateTime)sch1.Point_SGJLRYBA).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        if (me.WeekInt != 0)
+                        if (me.WeekInt >= 0)
                         {
                             baseword.Add(me);
                         }
@@ -253,10 +253,10 @@ namespace ProJ.Bll
                 }
                 if (sch2.Point_SGJLZTP != null && sch1.Point_SGJLZTP != null && ((DateTime)sch2.Point_SGJLZTP - (DateTime)sch1.Point_SGJLZTP).TotalDays > 0)
                 {
-                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_SGJLZTP, PointName = "施工监理招投标", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGJLZTP - (DateTime)sch1.Point_SGJLZTP).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGJLZTP - (DateTime)sch1.Point_SGJLZTP).TotalDays / 7)) };
+                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_SGJLZTP, PointName = "施工监理招投标", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGJLZTP - (DateTime)sch1.Point_SGJLZTP).TotalDays / 7)) >= 1 ? 1 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGJLZTP - (DateTime)sch1.Point_SGJLZTP).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        if (me.WeekInt != 0)
+                        if (me.WeekInt >= 0)
                         {
                             baseword.Add(me);
                         }
@@ -264,10 +264,10 @@ namespace ProJ.Bll
                 }
                 if (sch2.Point_SGTBZHSC != null && sch1.Point_SGTBZHSC != null && ((DateTime)sch2.Point_SGTBZHSC - (DateTime)sch1.Point_SGTBZHSC).TotalDays > 0)
                 {
-                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_SGTBZHSC, PointName = "施工图编制和审查", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGTBZHSC - (DateTime)sch1.Point_SGTBZHSC).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGTBZHSC - (DateTime)sch1.Point_SGTBZHSC).TotalDays / 7)) };
+                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_SGTBZHSC, PointName = "施工图编制和审查", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGTBZHSC - (DateTime)sch1.Point_SGTBZHSC).TotalDays / 7)) >= 1 ? 1 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGTBZHSC - (DateTime)sch1.Point_SGTBZHSC).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        if (me.WeekInt != 0)
+                        if (me.WeekInt >= 0)
                         {
                             baseword.Add(me);
                         }
@@ -275,10 +275,10 @@ namespace ProJ.Bll
                 }
                 if (sch2.Point_SGXKZPF != null && sch1.Point_SGXKZPF != null && ((DateTime)sch2.Point_SGXKZPF - (DateTime)sch1.Point_SGXKZPF).TotalDays > 0)
                 {
-                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_SGXKZPF, PointName = "施工许可证批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGXKZPF - (DateTime)sch1.Point_SGXKZPF).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGXKZPF - (DateTime)sch1.Point_SGXKZPF).TotalDays / 7)) };
+                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_SGXKZPF, PointName = "施工许可证批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGXKZPF - (DateTime)sch1.Point_SGXKZPF).TotalDays / 7)) >= 1 ? 1 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_SGXKZPF - (DateTime)sch1.Point_SGXKZPF).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        if (me.WeekInt != 0)
+                        if (me.WeekInt >= 0)
                         {
                             baseword.Add(me);
                         }
@@ -286,10 +286,10 @@ namespace ProJ.Bll
                 }
                 if (sch2.Point_TDCRHT != null && sch1.Point_TDCRHT != null && ((DateTime)sch2.Point_TDCRHT - (DateTime)sch1.Point_TDCRHT).TotalDays > 0)
                 {
-                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_TDCRHT, PointName = "土地出让合同", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_TDCRHT - (DateTime)sch1.Point_TDCRHT).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_TDCRHT - (DateTime)sch1.Point_TDCRHT).TotalDays / 7)) };
+                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_TDCRHT, PointName = "土地出让合同", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_TDCRHT - (DateTime)sch1.Point_TDCRHT).TotalDays / 7)) >= 1 ? 1 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_TDCRHT - (DateTime)sch1.Point_TDCRHT).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        if (me.WeekInt != 0)
+                        if (me.WeekInt >= 0)
                         {
                             baseword.Add(me);
                         }
@@ -297,10 +297,10 @@ namespace ProJ.Bll
                 }
                 if (sch2.Point_TDSYQZ != null && sch1.Point_TDSYQZ != null && ((DateTime)sch2.Point_TDSYQZ - (DateTime)sch1.Point_TDSYQZ).TotalDays > 0)
                 {
-                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_TDSYQZ, PointName = "土地使用权证", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_TDSYQZ - (DateTime)sch1.Point_TDSYQZ).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_TDSYQZ - (DateTime)sch1.Point_TDSYQZ).TotalDays / 7)) };
+                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_TDSYQZ, PointName = "土地使用权证", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_TDSYQZ - (DateTime)sch1.Point_TDSYQZ).TotalDays / 7)) >= 1 ? 1 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_TDSYQZ - (DateTime)sch1.Point_TDSYQZ).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        if (me.WeekInt != 0)
+                        if (me.WeekInt >= 0)
                         {
                             baseword.Add(me);
                         }
@@ -308,10 +308,10 @@ namespace ProJ.Bll
                 }
                 if (sch2.Point_XMKG != null && sch1.Point_XMKG != null && ((DateTime)sch2.Point_XMKG - (DateTime)sch1.Point_XMKG).TotalDays > 0)
                 {
-                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_XMKG, PointName = "项目开工", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_XMKG - (DateTime)sch1.Point_XMKG).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_XMKG - (DateTime)sch1.Point_XMKG).TotalDays / 7)) };
+                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_XMKG, PointName = "项目开工", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_XMKG - (DateTime)sch1.Point_XMKG).TotalDays / 7)) >= 1 ? 1 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_XMKG - (DateTime)sch1.Point_XMKG).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        if (me.WeekInt != 0)
+                        if (me.WeekInt >= 0)
                         {
                             baseword.Add(me);
                         }
@@ -319,10 +319,10 @@ namespace ProJ.Bll
                 }
                 if (sch2.Point_XMZPSJFAPF != null && sch1.Point_XMZPSJFAPF != null && ((DateTime)sch2.Point_XMZPSJFAPF - (DateTime)sch1.Point_XMZPSJFAPF).TotalDays > 0)
                 {
-                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_XMZPSJFAPF, PointName = "项目总平设计方案批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_XMZPSJFAPF - (DateTime)sch1.Point_XMZPSJFAPF).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_XMZPSJFAPF - (DateTime)sch1.Point_XMZPSJFAPF).TotalDays / 7)) };
+                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_XMZPSJFAPF, PointName = "项目总平设计方案批复", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_XMZPSJFAPF - (DateTime)sch1.Point_XMZPSJFAPF).TotalDays / 7)) >= 1 ? 1 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_XMZPSJFAPF - (DateTime)sch1.Point_XMZPSJFAPF).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        if (me.WeekInt != 0)
+                        if (me.WeekInt >= 0)
                         {
                             baseword.Add(me);
                         }
@@ -330,10 +330,10 @@ namespace ProJ.Bll
                 }
                 if (sch2.Point_YSBZWC != null && sch1.Point_YSBZWC != null && ((DateTime)sch2.Point_YSBZWC - (DateTime)sch1.Point_YSBZWC).TotalDays > 0)
                 {
-                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_YSBZWC, PointName = "预算编制完成", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_YSBZWC - (DateTime)sch1.Point_YSBZWC).TotalDays / 7)) > 3 ? 3 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_YSBZWC - (DateTime)sch1.Point_YSBZWC).TotalDays / 7)) };
+                    var me = new SMSBase { Exec = PublicEnum.PlanEnd.Point_YSBZWC, PointName = "预算编制完成", WeekInt = Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_YSBZWC - (DateTime)sch1.Point_YSBZWC).TotalDays / 7)) >= 1 ? 1 : Convert.ToInt32(Math.Floor(((DateTime)sch2.Point_YSBZWC - (DateTime)sch1.Point_YSBZWC).TotalDays / 7)) };
                     if (!sms.Any(q => q.PointName == me.PointName && q.WeekInt == me.WeekInt && q.ProjectID == item.ProjectInfo.ID))
                     {
-                        if (me.WeekInt != 0)
+                        if (me.WeekInt >= 0)
                         {
                             baseword.Add(me);
                         }
@@ -538,39 +538,39 @@ namespace ProJ.Bll
             {
                 item.Project_Schedule = item.Project_Schedule.OrderBy(q => q.ScheduleType);
                 var ye = item.Project_Schedule.FirstOrDefault(q => q.ScheduleType == 2);
-                if ((ye.Point_CBSJJGSMemo == null && ye.Point_CBSJJGSPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                if ((ye.Point_CBSJJGSPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
                     item.EditTable.Point_CBSJJGSPF = true;
-                if ((ye.Point_CSKZJMemo == null && ye.Point_CSKZJPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                if ((ye.Point_CSKZJPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
                     item.EditTable.Point_CSKZJPF = true;
-                if ((ye.Point_DKBGWC == null && ye.Point_DKBGWCMemo == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                if ((ye.Point_DKBGWC == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
                     item.EditTable.Point_DKBGWC = true;
-                if ((ye.Point_GCKXXYJBGMemo == null && ye.Point_GCKXXYJBGPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                if ((ye.Point_GCKXXYJBGPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
                     item.EditTable.Point_GCKXXYJBGPF = true;
-                if ((ye.Point_GHXZJYDYJSMemo == null && ye.Point_GHXZYDJYJSPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                if ((ye.Point_GHXZYDJYJSPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
                     item.EditTable.Point_GHXZYDJYJSPF = true;
-                if ((ye.Point_JSGCGHXKZPF == null && ye.Point_JSGSGHXKZMemo == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                if ((ye.Point_JSGCGHXKZPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
                     item.EditTable.Point_JSGCGHXKZPF = true;
-                if ((ye.Point_JSYDGHXKZMemo == null && ye.Point_JSYDGHXKZPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                if ((ye.Point_JSYDGHXKZPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
                     item.EditTable.Point_JSYDGHXKZPF = true;
-                if ((ye.Point_LZYSXJGDMemo == null && ye.Point_LZYSXJGDPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                if ((ye.Point_LZYSXJGDPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
                     item.EditTable.Point_LZYSXJGDPF = true;
-                if ((ye.Point_SGJLRYBA == null && ye.Point_SGJLRYBAMemo == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                if ((ye.Point_SGJLRYBA == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
                     item.EditTable.Point_SGJLRYBA = true;
-                if ((ye.Point_SGJLZTP == null && ye.Point_SGJLZTPMemo == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                if ((ye.Point_SGJLZTP == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
                     item.EditTable.Point_SGJLZTP = true;
-                if ((ye.Point_SGTBZHSC == null && ye.Point_SGTBZHSCMemo == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                if ((ye.Point_SGTBZHSC == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
                     item.EditTable.Point_SGTBZHSC = true;
-                if ((ye.Point_SGXKZMemo == null && ye.Point_SGXKZPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                if ((ye.Point_SGXKZPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
                     item.EditTable.Point_SGXKZPF = true;
-                if ((ye.Point_TDCRHT == null && ye.Point_TDCRHTMemo == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                if ((ye.Point_TDCRHT == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
                     item.EditTable.Point_TDCRHT = true;
-                if ((ye.Point_TDSYQZ == null && ye.Point_TDSYQZMemo == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                if ((ye.Point_TDSYQZ == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
                     item.EditTable.Point_TDSYQZ = true;
-                if ((ye.Point_XMKG == null && ye.Point_XMKGMemo == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                if ((ye.Point_XMKG == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
                     item.EditTable.Point_XMKG = true;
-                if ((ye.Point_XMZPSJFAMemo == null && ye.Point_XMZPSJFAPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                if ((ye.Point_XMZPSJFAPF == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
                     item.EditTable.Point_XMZPSJFAPF = true;
-                if ((ye.Point_YSBZWC == null && ye.Point_YSBZWCMemo == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
+                if ((ye.Point_YSBZWC == null) || item.Project_Info.State == (int)PublicEnum.ProjState.Modified)
                     item.EditTable.Point_YSBZWC = true;
             }
             re.Data = relist;
@@ -680,7 +680,7 @@ namespace ProJ.Bll
             switch (Sch.Quarter)
             {
                 case PublicEnum.PlanEnd.Point_GCKXXYJBGPF:
-                    if (info.Point_GCKXXYJBGPF != null || info.Point_GCKXXYJBGMemo != null)
+                    if (info.Point_GCKXXYJBGPF != null)
                     {
                         if (to.State != (int)PublicEnum.ProjState.Modified)
                         {
@@ -694,7 +694,7 @@ namespace ProJ.Bll
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_JSYDGHXKZPF:
-                    if (info.Point_JSYDGHXKZPF != null || info.Point_JSYDGHXKZMemo != null)
+                    if (info.Point_JSYDGHXKZPF != null)
                     {
                         if (to.State != (int)PublicEnum.ProjState.Modified)
                         {
@@ -708,7 +708,7 @@ namespace ProJ.Bll
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_DKBGWC:
-                    if (info.Point_DKBGWC != null || info.Point_DKBGWCMemo != null)
+                    if (info.Point_DKBGWC != null)
                     {
                         if (to.State != (int)PublicEnum.ProjState.Modified)
                         {
@@ -722,7 +722,7 @@ namespace ProJ.Bll
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_CBSJJGSPF:
-                    if (info.Point_CBSJJGSPF != null || info.Point_CBSJJGSMemo != null)
+                    if (info.Point_CBSJJGSPF != null)
                     {
                         if (to.State != (int)PublicEnum.ProjState.Modified)
                         {
@@ -736,7 +736,7 @@ namespace ProJ.Bll
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_SGTBZHSC:
-                    if (info.Point_SGTBZHSC != null || info.Point_SGTBZHSCMemo != null)
+                    if (info.Point_SGTBZHSC != null)
                     {
                         if (to.State != (int)PublicEnum.ProjState.Modified)
                         {
@@ -750,7 +750,7 @@ namespace ProJ.Bll
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_YSBZWC:
-                    if (info.Point_YSBZWC != null || info.Point_YSBZWCMemo != null)
+                    if (info.Point_YSBZWC != null)
                     {
                         if (to.State != (int)PublicEnum.ProjState.Modified)
                         {
@@ -764,7 +764,7 @@ namespace ProJ.Bll
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_CSKZJPF:
-                    if (info.Point_CSKZJPF != null || info.Point_CSKZJMemo != null)
+                    if (info.Point_CSKZJPF != null)
                     {
                         if (to.State != (int)PublicEnum.ProjState.Modified)
                         {
@@ -778,7 +778,7 @@ namespace ProJ.Bll
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_SGJLZTP:
-                    if (info.Point_SGJLZTP != null || info.Point_SGJLZTPMemo != null)
+                    if (info.Point_SGJLZTP != null)
                     {
                         if (to.State != (int)PublicEnum.ProjState.Modified)
                         {
@@ -792,7 +792,7 @@ namespace ProJ.Bll
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_XMKG:
-                    if (info.Point_XMKG != null || info.Point_XMKGMemo != null)
+                    if (info.Point_XMKG != null)
                     {
                         if (to.State != (int)PublicEnum.ProjState.Modified)
                         {
@@ -806,7 +806,7 @@ namespace ProJ.Bll
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_JSGCGHXKZPF:
-                    if (info.Point_JSGCGHXKZPF != null || info.Point_JSGSGHXKZMemo != null)
+                    if (info.Point_JSGCGHXKZPF != null)
                     {
                         if (to.State != (int)PublicEnum.ProjState.Modified)
                         {
@@ -820,7 +820,7 @@ namespace ProJ.Bll
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_SGJLRYBA:
-                    if (info.Point_SGJLRYBA != null || info.Point_SGJLRYBAMemo != null)
+                    if (info.Point_SGJLRYBA != null)
                     {
                         if (to.State != (int)PublicEnum.ProjState.Modified)
                         {
@@ -834,7 +834,7 @@ namespace ProJ.Bll
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_SGXKZPF:
-                    if (info.Point_SGXKZPF != null || info.Point_SGXKZMemo != null)
+                    if (info.Point_SGXKZPF != null)
                     {
                         if (to.State != (int)PublicEnum.ProjState.Modified)
                         {
@@ -848,7 +848,7 @@ namespace ProJ.Bll
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_GHXZYDJYJSPF:
-                    if (info.Point_GHXZYDJYJSPF != null || info.Point_GHXZJYDYJSMemo != null)
+                    if (info.Point_GHXZYDJYJSPF != null)
                     {
                         if (to.State != (int)PublicEnum.ProjState.Modified)
                         {
@@ -862,7 +862,7 @@ namespace ProJ.Bll
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_LZYSXJGDPF:
-                    if (info.Point_LZYSXJGDPF != null || info.Point_LZYSXJGDMemo != null)
+                    if (info.Point_LZYSXJGDPF != null)
                     {
                         if (to.State != (int)PublicEnum.ProjState.Modified)
                         {
@@ -876,7 +876,7 @@ namespace ProJ.Bll
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_TDCRHT:
-                    if (info.Point_TDCRHT != null || info.Point_TDCRHTMemo != null)
+                    if (info.Point_TDCRHT != null)
                     {
                         if (to.State != (int)PublicEnum.ProjState.Modified)
                         {
@@ -890,7 +890,7 @@ namespace ProJ.Bll
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_TDSYQZ:
-                    if (info.Point_TDSYQZ != null || info.Point_TDSYQZMemo != null)
+                    if (info.Point_TDSYQZ != null)
                     {
                         if (to.State != (int)PublicEnum.ProjState.Modified)
                         {
@@ -904,7 +904,7 @@ namespace ProJ.Bll
                     Schedule.Update(info);
                     break;
                 case PublicEnum.PlanEnd.Point_XMZPSJFAPF:
-                    if (info.Point_XMZPSJFAPF != null || info.Point_XMZPSJFAMemo != null)
+                    if (info.Point_XMZPSJFAPF != null)
                     {
                         if (to.State != (int)PublicEnum.ProjState.Modified)
                         {

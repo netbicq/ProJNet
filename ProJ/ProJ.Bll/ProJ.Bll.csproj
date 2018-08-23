@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthService.cs" />
+    <Compile Include="Basic_PointService.cs" />
     <Compile Include="DictService.cs" />
     <Compile Include="OwnerService.cs" />
     <Compile Include="ProJService.cs" />

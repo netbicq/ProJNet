@@ -46,6 +46,10 @@ namespace ProJ.ORM
 
         public virtual DbSet<Project_SMS> Project_SMS { get; set; }
 
+        public virtual DbSet<Basic_Point> Basic_Point { get; set; }
+
+        public virtual DbSet<Project_Point> Project_Point { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.PluralizingTableNameConvention>();

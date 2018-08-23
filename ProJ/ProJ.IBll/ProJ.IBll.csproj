@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAuth.cs" />
+    <Compile Include="IBasic_Point.cs" />
     <Compile Include="IDict.cs" />
     <Compile Include="IOwner.cs" />
     <Compile Include="IProJ.cs" />

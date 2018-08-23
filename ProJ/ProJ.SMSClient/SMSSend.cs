@@ -44,7 +44,7 @@ namespace ProJ.SMSClient
 
                                 switch (tsms.WeekInt)
                                 {
-                                    case 1:
+                                    case 0:
                                         var smspara = new SMSPara()
                                         {
                                             mobile = sms.ProjectContact.HandlerTEL,
@@ -58,10 +58,10 @@ namespace ProJ.SMSClient
                                             ID = Guid.NewGuid(),
                                             PointName = tsms.PointName,
                                             SendDate = DateTime.Now,
-                                            WeekInt = 1, ProjectID =sms.ProjectInfo.ID
+                                            WeekInt = 0, ProjectID =sms.ProjectInfo.ID
                                         };
                                         break;
-                                    case 2:
+                                    case 1:
                                         var smspara2 = new SMSPara()
                                         {
                                             mobile = sms.ProjectContact.PrincipalTEL,
@@ -75,7 +75,7 @@ namespace ProJ.SMSClient
                                             ID = Guid.NewGuid(),
                                             PointName = tsms.PointName,
                                             SendDate = DateTime.Now,
-                                            WeekInt = 2,ProjectID =sms.ProjectInfo.ID
+                                            WeekInt = 1,ProjectID =sms.ProjectInfo.ID
                                         };
                                         break; 
                                     default:
@@ -92,14 +92,14 @@ namespace ProJ.SMSClient
                                             ID = Guid.NewGuid(),
                                             PointName = tsms.PointName,
                                             SendDate = DateTime.Now,
-                                            WeekInt = 3,ProjectID =sms.ProjectInfo.ID
+                                            WeekInt = 1,ProjectID =sms.ProjectInfo.ID
                                         };
                                         break;
                                 }
                                 var db = _work.Repository<Model.DB.Project_SMS>();
-                                if (tsms.WeekInt>3)
+                                if (tsms.WeekInt>=1)
                                 {
-                                    tsms.WeekInt = 3;
+                                    tsms.WeekInt = 1;
                                 }
                                 if(!db.Any(q=>q.ProjectID == sms.ProjectInfo.ID && q.PointName == tsms.PointName && q.WeekInt == tsms.WeekInt))
                                 {
