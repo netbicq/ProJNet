@@ -72,6 +72,7 @@
     <Compile Include="View\Auth.cs" />
     <Compile Include="View\Dict.cs" />
     <Compile Include="View\Owner.cs" />
+    <Compile Include="View\Point.cs" />
     <Compile Include="View\Project.cs" />
     <Compile Include="View\ProjectSMS.cs" />
     <Compile Include="View\Report.cs" />

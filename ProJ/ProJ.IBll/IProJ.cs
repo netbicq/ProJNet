@@ -13,7 +13,11 @@ namespace ProJ.IBll
 {
     public interface IProJ
     {
+
+        
+
         ActionResult<bool> ProJNew(Model.Para.ProjectAdd owner);
+
         ActionResult<Pager<Model.View.ProjectView>> ProJList(PagerQuery<string> para);
         /// <summary>
         /// 获取超期工程项目列表
@@ -80,5 +84,47 @@ namespace ProJ.IBll
         /// <param name="owner"></param>
         /// <returns></returns>
         ActionResult<bool> ScheduleEdit(ScheduleEdit Sch);
+
+
+
+        #region "调整工程项目的节点自定义"
+
+        /// <summary>
+        /// 获取节点
+        /// </summary>
+        /// <returns></returns>
+        ActionResult<Model.View.ProjectPoint> GetPoints();
+        /// <summary>
+        /// 新增节点计划
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        ActionResult<bool> AddPoints(Model.Para.ProjectPointScheduleNew para);
+        /// <summary>
+        /// 修改节点计划
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        ActionResult<bool> EditPoint(Model.Para.ProjetPointScheduleEdit para);
+        /// <summary>
+        /// 新增节点执行
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        ActionResult<bool> AddPointExec(Model.Para.ProjectPointExecNew para);
+        /// <summary>
+        /// 修改节点执行
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        ActionResult<bool> EditPointExec(Model.Para.ProjectPointExecEdit para);
+        /// <summary>
+        /// 新增工程项目
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        ActionResult<bool> AddProjectByPoint(Model.Para.ProjectAdd para);
+
+        #endregion
     }
 }

@@ -14,9 +14,13 @@ namespace ProJ.Model.Para
         /// </summary>
         public ProjectNew ProjectInfo { get; set; }
         /// <summary>
-        /// 项目计划
+        /// 项目计划，弃用
         /// </summary>
         public ProjectScheduleNew Schedules { get; set; }
+        /// <summary>
+        /// 项目计划节点
+        /// </summary>
+        public IEnumerable <ProjectPointScheduleNew> PointSchedules { get; set; }
         /// <summary>
         /// 联系人
         /// </summary>
@@ -229,6 +233,64 @@ namespace ProJ.Model.Para
         /// 《施工许可证》批复
         /// </summary>
         public string Point_SGXKZMemo { get; set; }
+    }
+    /// <summary>
+    /// 项目节点基类
+    /// </summary>
+    public class ProjectPointBase
+    { 
+        /// <summary>
+        /// 项目ID
+        /// </summary>
+        public Guid ProjectID { get; set; }
+        /// <summary>
+        /// 节点ID
+        /// </summary>
+        public Guid PointID { get; set; }
+    }
+    /// <summary>
+    /// 项目节点计划
+    /// </summary>
+    public class ProjectPointScheduleNew:ProjectPointBase
+    {
+        /// <summary>
+        /// 计划时间
+        /// </summary>
+        public DateTime? Schedule { get; set; }
+    }
+    /// <summary>
+    /// 修改项目节点计划
+    /// </summary>
+    public class ProjetPointScheduleEdit:ProjectPointExecNew
+    {
+        /// <summary>
+        /// ID
+        /// </summary>
+        public Guid ID { get; set; }
+    }
+    /// <summary>
+    /// 项目执行修改
+    /// </summary>
+    public class ProjectPointExecEdit : ProjectPointExecNew
+    {
+        /// <summary>
+        /// ID
+        /// </summary>
+        public Guid ID { get; set; }
+    } 
+    /// <summary>
+    /// 项目节点执行
+    /// </summary>
+    public class ProjectPointExecNew : ProjectPointBase
+    {
+        /// <summary>
+        /// 执行时间
+        /// </summary>
+        public DateTime? Exec { get; set; }
+        /// <summary>
+        /// 执行备注
+        /// </summary>
+        public string ExecMem { get; set; }
     }
 
     public class ProjectContactNew

@@ -16,9 +16,13 @@ namespace ProJ.Model.View
         public IEnumerable<Project_Issue> Project_Issue { get; set; }
         public IEnumerable<Project_Log> Project_Log { get; set; }
         /// <summary>
-        /// 计划
+        /// 计划，弃用
         /// </summary>
         public IEnumerable<Project_Schedule> Project_Schedule { get; set; }
+        /// <summary>
+        /// 项目节点数据 
+        /// </summary>
+        public IEnumerable<ProjectPoint> Project_Points { get; set; }
         /// <summary>
         /// 联系人
         /// </summary>
@@ -44,6 +48,8 @@ namespace ProJ.Model.View
         /// </summary>
         public Schss EditTable { get; set; }
     }
+
+
     public class Schss
     {
         /// <summary>
