@@ -47,7 +47,7 @@ namespace ProJ.Bll
             var proj = _work.Repository<Project_Point>();
             if (proj.Any(q => q.PointID == id))
             {
-                throw new Exception("其他地方已用到，不能删除");
+                var mo = proj.Delete(q => q.PointID == id);
             }
             var bap = _bap.Delete(q => q.ID == id);
             return new ActionResult<bool>(bap > 0);

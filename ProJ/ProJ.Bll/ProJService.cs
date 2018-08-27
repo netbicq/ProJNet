@@ -1230,7 +1230,10 @@ namespace ProJ.Bll
                 dbs.PointID = item.PointID;
                 dbs.PointSchedule = item.Schedule;
                 dbs.ProjectID = ID;
-                kt.Add(dbs);
+                if (item.Schedule!=null)
+                {
+                    kt.Add(dbs);
+                }
             }
             //日志
             var logs = new Project_Log();
