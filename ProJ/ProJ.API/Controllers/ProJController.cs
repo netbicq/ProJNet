@@ -159,5 +159,72 @@ namespace ProJ.API.Controllers
         {
             return bll.Projedit(para);
         }
+        #region "调整工程项目的节点自定义"
+        /// <summary>
+        /// 获取节点
+        /// </summary>
+        /// <returns></returns>
+        [Route("getlistq")]
+        [HttpGet]
+        public ActionResult<IEnumerable<Model.View.ProjectPoint>> GetPoints()
+        {
+            return bll.GetPoints();
+        }
+        /// <summary>
+        /// 新增节点计划
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        [Route("editschq")]
+        [HttpPost]
+        public ActionResult<bool> AddPoints(ProjectPointScheduleNew para)
+        {
+            return bll.AddPoints(para);
+        }
+        /// <summary>
+        /// 修改节点计划
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <returns></returns>
+        [Route("editissq")]
+        [HttpPost]
+        public ActionResult<bool> EditPoint(ProjetPointScheduleEdit para)
+        {
+            return bll.EditPoint(para);
+        }
+        /// <summary>
+        /// 新增节点执行
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        [Route("addschqe")]
+        [HttpPost]
+        public ActionResult<bool> AddPointExec(ProjectPointExecNew para)
+        {
+            return bll.AddPointExec(para);
+        }
+        /// <summary>
+        /// 修改节点执行
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        [Route("editissqb")]
+        [HttpPost]
+        public ActionResult<bool> EditPointExec(ProjectPointExecEdit para)
+        {
+            return bll.EditPointExec(para);
+        }
+        /// <summary>
+        /// 新增工程项目
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        [Route("addprob")]
+        [HttpPost]
+        public ActionResult<bool> AddProjectByPoint(ProjectAdd para)
+        {
+            return bll.AddProjectByPoint(para);
+        }
+        #endregion
     }
 }

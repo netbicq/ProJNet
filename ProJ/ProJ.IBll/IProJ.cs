@@ -93,7 +93,7 @@ namespace ProJ.IBll
         /// 获取节点
         /// </summary>
         /// <returns></returns>
-        ActionResult<Model.View.ProjectPoint> GetPoints();
+        ActionResult<IEnumerable<Model.View.ProjectPoint>> GetPoints();
         /// <summary>
         /// 新增节点计划
         /// </summary>

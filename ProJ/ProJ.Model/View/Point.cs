@@ -24,8 +24,20 @@ namespace ProJ.Model.View
 
     public class ProjectPoint
     {
+        /// <summary>
+        /// 计划id
+        /// </summary>
+        public Guid? ID { get; set; }
+        /// <summary>
+        /// 执行id
+        /// </summary>
+        public Guid? UID { get; set; }
+        /// <summary>
+        /// 执行是否可修改
+        /// </summary>
+        public bool Check { get; set; }
 
-        public Guid ID { get; set; }
+        public Guid PointID { get; set; }
 
         public string PointName { get; set; }
 

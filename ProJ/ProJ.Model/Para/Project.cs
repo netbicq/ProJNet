@@ -261,7 +261,7 @@ namespace ProJ.Model.Para
     /// <summary>
     /// 修改项目节点计划
     /// </summary>
-    public class ProjetPointScheduleEdit:ProjectPointExecNew
+    public class ProjetPointScheduleEdit: ProjectPointScheduleNew
     {
         /// <summary>
         /// ID
