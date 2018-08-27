@@ -23,6 +23,22 @@ namespace ProJ.Bll
             _work = work;
             Unitwork = work;
         }
+
+        public ActionResult<bool> AddPointExec(ProjectPointExecNew para)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ActionResult<bool> AddPoints(ProjectPointScheduleNew para)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ActionResult<bool> AddProjectByPoint(ProjectAdd para)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// 后续计划修改
         /// </summary>
@@ -81,6 +97,21 @@ namespace ProJ.Bll
             Log.Add(logs);
             _work.Commit();
             return new ActionResult<bool>(true);
+        }
+
+        public ActionResult<bool> EditPoint(ProjetPointScheduleEdit para)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ActionResult<bool> EditPointExec(ProjectPointExecEdit para)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ActionResult<ProjectPoint> GetPoints()
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
