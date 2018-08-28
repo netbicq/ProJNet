@@ -520,19 +520,17 @@ namespace ProJ.Bll
                          {
                              Project_Info = ac,
                              Project_Points = from bc in points
-                                              let han = point.FirstOrDefault(q => q.PointID == bc.ID && q.ProjectID == ac.ID&&q.PointSchedule!=null)
-                                              let hanto = point.FirstOrDefault(q => q.PointID == bc.ID && q.ProjectID == ac.ID&&(q.PointExec!=null||q.PointExecMemo!=null))
+                                              let han = point.FirstOrDefault(q => q.PointID == bc.ID && q.ProjectID == ac.ID)
                                               select new ProjectPoint
                                               {
                                                   ID= han == null ? Guid.Empty : han.ID,
-                                                  UID= hanto == null ? Guid.Empty : hanto.ID,
                                                   PointID = bc.ID,
                                                   OrderIndex = bc.PointOrderIndex,
                                                   PointName = bc.PointName,
                                                   Schedule = han == null ? null: han.PointSchedule,
-                                                  Exec = hanto == null ? null : hanto.PointExec,
-                                                  ExecMemo = hanto == null ? null : hanto.PointExecMemo,
-                                                  Check=hanto==null?true:(ac.State==(int)PublicEnum.ProjState.Modified?true:false)
+                                                  Exec = han == null ? null : han.PointExec,
+                                                  ExecMemo = han == null ? null : han.PointExecMemo,
+                                                  Check= han == null?true:(ac.State==(int)PublicEnum.ProjState.Modified?true:false)
                                               },
                              //Project_Schedule = from a in Schedule.Where(q => q.ProjectID == ac.ID) select a,
                              Project_Issue = from s in Issue.Where(q => q.ProjectID == ac.ID) select s,
