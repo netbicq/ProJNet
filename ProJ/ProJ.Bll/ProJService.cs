@@ -530,7 +530,7 @@ namespace ProJ.Bll
                                                   Schedule = han == null ? null: han.PointSchedule,
                                                   Exec = han == null ? null : han.PointExec,
                                                   ExecMemo = han == null ? null : han.PointExecMemo,
-                                                  Check= han == null?true:(ac.State==(int)PublicEnum.ProjState.Modified?true:false)
+                                                  Check= han == null?true:(ac.State==(int)PublicEnum.ProjState.Modified||(han.PointExec==null&&han.PointExecMemo==null)?true:false)
                                               },
                              //Project_Schedule = from a in Schedule.Where(q => q.ProjectID == ac.ID) select a,
                              Project_Issue = from s in Issue.Where(q => q.ProjectID == ac.ID) select s,
@@ -1162,13 +1162,6 @@ namespace ProJ.Bll
         {
             var info = _work.Repository<Model.DB.Project_Info>();
             var to = info.GetModel(q => q.ID == para.ProjectID);
-            if (para.ExecMem!=null||para.Exec!=null)
-            {
-                if (to.State != (int)PublicEnum.ProjState.Modified)
-                {
-                    throw new Exception("此项目状态不允许操作");
-                }
-            }
             if (to.State == (int)PublicEnum.ProjState.Start)
             {
                 throw new Exception("开工不允许任何操作");
@@ -1178,6 +1171,13 @@ namespace ProJ.Bll
             if (db == null)
             {
                 throw new Exception("执行计划不存在");
+            }
+            if (db.PointExecMemo != null || db.PointExec != null)
+            {
+                if (to.State != (int)PublicEnum.ProjState.Modified)
+                {
+                    throw new Exception("此项目状态不允许操作");
+                }
             }
             db.PointExec = para.Exec;
             db.PointExecMemo = para.ExecMem;
