@@ -207,5 +207,11 @@ namespace ProJ.Bll
             re.ExcelResult = excel;
             return new ActionResult<Pager<Report>>(re);
         }
+
+        public ActionResult<Pager<ReportDyn>> GetReportDyn(PagerQuery<ReportQuery> para)
+        {
+            //实现方法
+            throw new NotImplementedException();
+        }
     }
 }

@@ -126,4 +126,47 @@ namespace ProJ.Model.View
         /// </summary>
         public bool Execeed { get; set; }
     }
+    /// <summary>
+    /// 动态报表模型
+    /// </summary>
+    public class ReportDyn
+    {
+        /// <summary>
+        /// 业主单位
+        /// </summary>
+        public DB.Basic_Owner ProjectOwner { get; set; }
+        /// <summary>
+        /// 联系人
+        /// </summary>
+        public DB.Project_Contacts Project_Contacts { get; set; }
+        /// <summary>
+        /// 项目名称
+        /// </summary>
+        public DB.Project_Info ProjectInfo { get; set; }
+        /// <summary>
+        /// 动态列集合，返回结果集要按OrderIndex排序
+        /// </summary>
+        public IEnumerable<ReportColumn> ReportCols { get; set; }
+        /// <summary>
+        /// 动态数据,每个节点会提供3个属性
+        /// sch_+ colname 计划
+        /// exc_+ colname 执行
+        /// tot_+ colnmae 逾期 大于0表示逾期  否则不逾期
+        /// </summary>
+        public dynamic PointData { get; set; }
+    }
+    /// <summary>
+    /// 动态列
+    /// </summary>
+    public class ReportColumn
+    {
+        /// <summary>
+        /// 列名，来自Basic_Point的ColName
+        /// </summary>
+        public string ColName { get; set; }
+        /// <summary>
+        /// 列标题，来自Basic_Point的PointName
+        /// </summary>
+        public string Caption { get; set; }
+    }
 }
