@@ -12,6 +12,6 @@ namespace ProJ.IBll
 
         ActionResult<Pager<Model.View.Report>> GetReport(PagerQuery<Model.Para.ReportQuery> para);
 
-        ActionResult<Pager<Model.View.ReportDyn>> GetReportDyn(PagerQuery<Model.Para.ReportQuery> para);
+        ActionResult<Model.View.ReportDyn> GetReportDyn(PagerQuery<Model.Para.ReportQuery> para);
     }
 }

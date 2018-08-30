@@ -53,7 +53,7 @@ namespace ProJ.Bll
                q => proids.Contains(q.ProjectID));
 
             var reme = from proj in projects
-                       let issues = issu.Where(q => q.ProjectID == proj.ID).OrderByDescending(q=>q.CreateDate).FirstOrDefault()
+                       let issues = issu.Where(q => q.ProjectID == proj.ID).OrderByDescending(q => q.CreateDate).FirstOrDefault()
                        let owner = own.FirstOrDefault(q => q.ID == proj.OwnerID)
                        let con = Cons.FirstOrDefault(q => q.ProjectID == proj.ID)
                        select new Model.View.Report
@@ -61,7 +61,7 @@ namespace ProJ.Bll
                            Issues = issues,
                            ProjectOwner = owner,
                            ProjectInfo = proj,
-                           Project_Contacts= con
+                           Project_Contacts = con
                        };
             var retemp = reme.ToList();
             foreach (var item in retemp)
@@ -208,10 +208,101 @@ namespace ProJ.Bll
             return new ActionResult<Pager<Report>>(re);
         }
 
-        public ActionResult<Pager<ReportDyn>> GetReportDyn(PagerQuery<ReportQuery> para)
+        public ActionResult<ReportDyn> GetReportDyn(PagerQuery<ReportQuery> para)
         {
-            //实现方法
-            throw new NotImplementedException();
+            //根据参数选出项目
+            ReportDyn getlistpro = new ReportDyn();
+            var projects = _work.Repository<Model.DB.Project_Info>().Queryable(
+                q =>
+                //行业
+                (para.Query.ProjectIndustry.Contains(q.IndustryID) || para.Query.ProjectIndustry.Count() == 0)
+                &&
+                //级别
+                (para.Query.ProjectLevel.Contains(q.LevelID) || para.Query.ProjectLevel.Count() == 0)
+                //
+                &&
+                (para.Query.ProjectOwner.Contains(q.OwnerID) || para.Query.ProjectOwner.Count() == 0)
+                &&
+                (para.KeyWord == "" || q.ProjectName.Contains(para.KeyWord))
+                &&
+                (q.OwnerID == AppUser.CurrentUserInfo.UserInfo.OwnerID || AppUser.CurrentUserInfo.UserInfo.OwnerID == Guid.Empty)
+                );
+            var proids = projects.Select(s => s.ID);
+            var proidsid = projects.Select(s => s.OwnerID);
+
+            //var sch = _work.Repository<Model.DB.Project_Point>().Queryable(
+            //    q => proids.Contains(q.ProjectID)
+            //    );
+            var issu = _work.Repository<Model.DB.Project_Issue>().Queryable(
+                q => proids.Contains(q.ProjectID));
+            var own = _work.Repository<Model.DB.Basic_Owner>().Queryable(
+               q => proidsid.Contains(q.ID));
+            var Cons = _work.Repository<Model.DB.Project_Contacts>().Queryable(
+               q => proids.Contains(q.ProjectID));
+            var point = _work.Repository<Model.DB.Basic_Point>().Queryable();
+            //存储过程
+            var exc = _work.ExecProcedre("Exec " + "ProjectReport");
+            var data = exc.Read();
+            //报表列
+            getlistpro.ReportCols = from bc in point
+                                    orderby bc.PointOrderIndex
+                                    select new ReportColumn
+                                    {
+                                        Caption = bc.PointName,
+                                        ColName = bc.ColName
+                                    };
+            var reme = from proj in projects
+                       let issues = issu.Where(q => q.ProjectID == proj.ID).OrderByDescending(q => q.CreateDate).FirstOrDefault()
+                       let owner = own.FirstOrDefault(q => q.ID == proj.OwnerID)
+                       let con = Cons.FirstOrDefault(q => q.ProjectID == proj.ID)
+                       select new Model.View.ReporDynlist
+                       {
+                           Issues = issues,
+                           ProjectOwner = owner,
+                           ProjectInfo = proj,
+                           Project_Contacts = con,
+                       };
+            var getdata = reme.ToList();
+            //逾期
+            List<ReporDynlist> bin = new List<ReporDynlist>();
+            foreach (var item in getdata)
+            {
+                //item.PointData = data;
+                foreach (var item1 in data)
+                {
+                    foreach (var item2 in item1)
+                    {
+                        if (item2.Key == "ProjectID" && item.ProjectInfo.ID == item2.Value)
+                        {
+                            item.PointData = item1;
+                        }
+                    }
+                }
+                //逾期
+                int i = 0;
+                foreach (var item5 in item.PointData)
+                {
+                    if (item5.Key.Contains("tot") && item5.Value > 0)
+                    {
+                        i = 1;
+                    }
+                }
+                if (i==1)
+                {
+                    item.ProJBool = true;
+                    bin.Add(item);
+                }
+            }
+            var dal = para.Query.ExeceedType == PublicEnum.ExeceedType.Normal ? getdata : bin;
+            string excel = "";
+            if (para.ToExcel)
+            {
+                excel = Command.CreateExcel(dal, getlistpro.ReportCols, AppUser.OutPutPaht);
+            }
+            var re = new Pager<Model.View.ReporDynlist>().GetCurrentPage(dal, para.PageSize, para.PageIndex);
+            re.ExcelResult = excel;
+            getlistpro.ReporDynlist = re;
+            return new ActionResult<ReportDyn>(getlistpro);
         }
     }
 }

@@ -33,6 +33,10 @@ namespace ProJ.Bll
             {
                 throw new Exception("不能有相同名称");
             }
+            if (_bap.Any(q => q.ColName == Bap.ColName))
+            {
+                throw new Exception("不能有相同列名");
+            }
             Bap.Clone(dbbap);
             dbbap.State = (int)PublicEnum.GenericState.Normal;
             dbbap.CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName;
@@ -63,6 +67,10 @@ namespace ProJ.Bll
             if (_bap.Any(q => q.PointName == updater.PointName && updater.PointName != bap.PointName))
             {
                 throw new Exception("不能有相同名称");
+            }
+            if (_bap.Any(q => q.ColName == updater.ColName && updater.ColName != bap.ColName))
+            {
+                throw new Exception("不能有相同列名");
             }
             updater.Clone(bap);
             _bap.Update(bap);

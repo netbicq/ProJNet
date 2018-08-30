@@ -129,8 +129,16 @@ namespace ProJ.Model.View
     /// <summary>
     /// 动态报表模型
     /// </summary>
-    public class ReportDyn
+    public class ReporDynlist
     {
+        /// <summary>
+        /// 有一个超期项目名变红
+        /// </summary>
+        public bool ProJBool { get; set; }
+        /// <summary>
+        /// 问题列表
+        /// </summary>
+        public Model.DB.Project_Issue Issues { get; set; }
         /// <summary>
         /// 业主单位
         /// </summary>
@@ -144,16 +152,20 @@ namespace ProJ.Model.View
         /// </summary>
         public DB.Project_Info ProjectInfo { get; set; }
         /// <summary>
-        /// 动态列集合，返回结果集要按OrderIndex排序
-        /// </summary>
-        public IEnumerable<ReportColumn> ReportCols { get; set; }
-        /// <summary>
         /// 动态数据,每个节点会提供3个属性
         /// sch_+ colname 计划
         /// exc_+ colname 执行
         /// tot_+ colnmae 逾期 大于0表示逾期  否则不逾期
         /// </summary>
         public dynamic PointData { get; set; }
+    }
+    public class ReportDyn
+    {
+        /// <summary>
+        /// 动态列集合，返回结果集要按OrderIndex排序
+        /// </summary>
+        public IEnumerable<ReportColumn> ReportCols { get; set; }
+        public Pager<Model.View.ReporDynlist> ReporDynlist { get; set; }
     }
     /// <summary>
     /// 动态列

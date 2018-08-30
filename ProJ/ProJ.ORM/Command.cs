@@ -164,7 +164,7 @@ namespace ProJ.ORM
                 {
                     //创建行
                     NPOI.SS.UserModel.IRow drow = sheet.CreateRow(j);
-                    NPOI.SS.UserModel.IRow drowsec = sheet.CreateRow(j+1);
+                    NPOI.SS.UserModel.IRow drowsec = sheet.CreateRow(j + 1);
                     drow.CreateCell(0).SetCellValue(obj.ProjectInfo.ProjectName);
                     drowsec.CreateCell(0).SetCellValue(obj.ProjectInfo.ProjectName);
                     drow.CreateCell(1).SetCellValue("计划");
@@ -223,7 +223,7 @@ namespace ProJ.ORM
                     drowsec.CreateCell(27).SetCellValue(obj.ProjectOwner.Handler);
                     drow.CreateCell(28).SetCellValue(obj.ProjectOwner.Principal);
                     drowsec.CreateCell(28).SetCellValue(obj.ProjectOwner.Principal);
-                    j +=2;
+                    j += 2;
                 }
                 string re = Guid.NewGuid().ToString() + ".xls";
 
@@ -259,6 +259,142 @@ namespace ProJ.ORM
             {
                 return ex.Message;
             }
+        }
+        /// <summary>
+        /// 创建excel
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static string CreateExcel(IEnumerable<ReporDynlist> source, IEnumerable<ReportColumn> list, string filePath)
+        {
+            try
+            {
+                var tb = new DataTable();
+
+                var file = filePath;// System.Web.Hosting.HostingEnvironment.MapPath(@"~/Template/");
+                                    //操作excel
+                NPOI.HSSF.UserModel.HSSFWorkbook book = new NPOI.HSSF.UserModel.HSSFWorkbook();
+                NPOI.SS.UserModel.ISheet sheet = book.CreateSheet("project");
+                //标题行
+                NPOI.SS.UserModel.IRow trow = sheet.CreateRow(0);
+                trow.CreateCell(0).SetCellValue("项目名称");
+                trow.CreateCell(1).SetCellValue("计划/执行");
+                trow.CreateCell(2).SetCellValue("年度计划");
+                trow.CreateCell(3).SetCellValue("计划开工");
+                int t = 4;
+                foreach (var item in list)
+                {
+                    trow.CreateCell(t).SetCellValue(item.Caption);
+                    t += 1;
+                }
+                trow.CreateCell(t + 1).SetCellValue("项目问题");
+                trow.CreateCell(t + 2).SetCellValue("第一季度完成投资");
+                trow.CreateCell(t + 3).SetCellValue("第一季度期末形象进度");
+                trow.CreateCell(t + 4).SetCellValue("第二季度完成投资");
+                trow.CreateCell(t + 5).SetCellValue("第二季度期末形象进度");
+                trow.CreateCell(t + 6).SetCellValue("第三季度完成投资");
+                trow.CreateCell(t + 7).SetCellValue("第三季度期末形象进度");
+                trow.CreateCell(t + 8).SetCellValue("第四季度完成投资");
+                trow.CreateCell(t + 9).SetCellValue("第四季度期末形象进度");
+                trow.CreateCell(t + 10).SetCellValue("业主单位");
+                trow.CreateCell(t + 11).SetCellValue("项目负责人");
+                trow.CreateCell(t + 12).SetCellValue("具体负责人");
+                if (source == null)
+                    throw new Exception("参数为空");
+                if (source.Count() == 0)
+                    throw new Exception("参数没有数据");
+                //创建数据行
+                int j = 1;
+                foreach (var obj in source)
+                {
+                    int x = 4;
+                    int y = 4;
+                    //创建行
+                    NPOI.SS.UserModel.IRow drow = sheet.CreateRow(j);
+                    NPOI.SS.UserModel.IRow drowsec = sheet.CreateRow(j + 1);
+                    drow.CreateCell(0).SetCellValue(obj.ProjectInfo.ProjectName);
+                    drowsec.CreateCell(0).SetCellValue(obj.ProjectInfo.ProjectName);
+                    drow.CreateCell(1).SetCellValue("计划");
+                    drowsec.CreateCell(1).SetCellValue("执行");
+                    drow.CreateCell(2).SetCellValue(obj.ProjectInfo.InvestMoney.ToString());
+                    drowsec.CreateCell(2).SetCellValue(obj.ProjectInfo.InvestMoney.ToString());
+                    drow.CreateCell(3).SetCellValue(obj.ProjectInfo.ComemenceDate.ToString());
+                    drowsec.CreateCell(3).SetCellValue(obj.ProjectInfo.ComemenceDate.ToString());
+                    List<string> obj1 = new List<string>();
+                    foreach (var item in obj.PointData)
+                    {
+                        if (item.Key.Contains("sch"))
+                        {
+                            drow.CreateCell(x).SetCellValue(item.Value.ToString());
+                            x++;
+                        }
+                        if (item.Key.Contains("exc"))
+                        {
+                            drowsec.CreateCell(y).SetCellValue(item.Value.ToString());
+                            y++;
+                        }
+                    };
+                    drow.CreateCell(x + 1).SetCellValue(obj.Issues==null?"": obj.Issues.IssueContent.ToString());
+                    drowsec.CreateCell(x + 1).SetCellValue(obj.Issues== null ? "" : obj.Issues.IssueContent.ToString());
+                    drow.CreateCell(x + 2).SetCellValue(obj.ProjectInfo.Q1Invest.ToString());
+                    drowsec.CreateCell(x + 2).SetCellValue(obj.ProjectInfo.Q1Invest.ToString());
+                    drow.CreateCell(x + 3).SetCellValue(obj.ProjectInfo.Q1Memo);
+                    drowsec.CreateCell(x + 3).SetCellValue(obj.ProjectInfo.Q1Memo);
+                    drow.CreateCell(x + 4).SetCellValue(obj.ProjectInfo.Q2Invest.ToString());
+                    drowsec.CreateCell(x + 4).SetCellValue(obj.ProjectInfo.Q2Invest.ToString());
+                    drow.CreateCell(x + 5).SetCellValue(obj.ProjectInfo.Q2Memo);
+                    drowsec.CreateCell(x + 5).SetCellValue(obj.ProjectInfo.Q2Memo);
+                    drow.CreateCell(x + 6).SetCellValue(obj.ProjectInfo.Q3Invest.ToString());
+                    drowsec.CreateCell(x + 6).SetCellValue(obj.ProjectInfo.Q3Invest.ToString());
+                    drow.CreateCell(x + 7).SetCellValue(obj.ProjectInfo.Q3Memo);
+                    drowsec.CreateCell(x + 7).SetCellValue(obj.ProjectInfo.Q3Memo);
+                    drow.CreateCell(x + 8).SetCellValue(obj.ProjectInfo.Q4Invest.ToString());
+                    drowsec.CreateCell(x + 8).SetCellValue(obj.ProjectInfo.Q4Invest.ToString());
+                    drow.CreateCell(x + 9).SetCellValue(obj.ProjectInfo.Q4Memo);
+                    drowsec.CreateCell(x + 9).SetCellValue(obj.ProjectInfo.Q4Memo);
+                    drow.CreateCell(x + 10).SetCellValue(obj.ProjectOwner.OwnerName);
+                    drowsec.CreateCell(x + 10).SetCellValue(obj.ProjectOwner.OwnerName);
+                    drow.CreateCell(x + 11).SetCellValue(obj.ProjectOwner.Handler);
+                    drowsec.CreateCell(x + 11).SetCellValue(obj.ProjectOwner.Handler);
+                    drow.CreateCell(x + 12).SetCellValue(obj.ProjectOwner.Principal);
+                    drowsec.CreateCell(x + 12).SetCellValue(obj.ProjectOwner.Principal);
+                    j += 2;
+                }
+                string re = Guid.NewGuid().ToString() + ".xls";
+
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                {
+                    book.Write(ms);
+                    using (System.IO.FileStream fs = new System.IO.FileStream(file + re, System.IO.FileMode.Create, System.IO.FileAccess.Write))
+                    {
+                        byte[] data = ms.ToArray();
+                        fs.Write(data, 0, data.Length);
+                        fs.Flush();
+                    }
+                    book = null;
+                }
+
+                //删除 10分钟之前的数据
+                foreach (var f in System.IO.Directory.GetFileSystemEntries(file, "*.xls"))
+                {
+                    if (File.Exists(f))
+                    {
+                        if ((DateTime.Now - File.GetCreationTime(f)).TotalMinutes > 10)//10分钟前的数据清掉
+                        {
+
+                            File.Delete(f);
+                        }
+                    }
+                }
+
+                return "OutPutTemp/" + re;
+
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+
         }
     }
 }

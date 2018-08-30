@@ -9,9 +9,13 @@ namespace ProJ.Model.DB
     public class Basic_Point : ModelBaseEx
     {
         /// <summary>
-        /// 名称
+        /// 标题
         /// </summary>
         public string PointName { get; set; }
+        /// <summary>
+        /// 列名
+        /// </summary>
+        public string ColName { get; set; }
         /// <summary>
         /// 排序
         /// </summary>

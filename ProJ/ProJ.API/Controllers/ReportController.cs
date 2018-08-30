@@ -26,9 +26,9 @@ namespace ProJ.API.Controllers
         /// <returns></returns>[
         [Route("getdata")]
         [HttpPost]
-        public Model.ActionResult<Pager<Model.View.Report>>GetReport(PagerQuery<Model.Para.ReportQuery> para)
+        public Model.ActionResult<Model.View.ReportDyn> GetReportDyn(PagerQuery<Model.Para.ReportQuery> para)
         {
-            return bll.GetReport(para);
+            return bll.GetReportDyn(para);
         }
 
     }

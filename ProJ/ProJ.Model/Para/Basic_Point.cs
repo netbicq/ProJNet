@@ -12,9 +12,13 @@ namespace ProJ.Model.Para
     public class BapNew
     {
         /// <summary>
-        /// 名称
+        /// 标题
         /// </summary>
         public string PointName { get; set; }
+        /// <summary>
+        /// 列名
+        /// </summary>
+        public string ColName { get; set; }
         /// <summary>
         /// 值
         /// </summary>
