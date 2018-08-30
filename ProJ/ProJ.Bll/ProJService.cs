@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -376,15 +377,16 @@ namespace ProJ.Bll
                              ProjectInfo = ac,
                              Timeouts = from bc in pon.Where(q=>q.PointExecMemo==null&&q.PointSchedule!=null)
                                         let bpoint = BaPoint.FirstOrDefault(q => q.ID == bc.PointID)
-                                        //let a=Convert.ToInt32(Math.Floor(((DateTime)DateTime.Now - (DateTime)bc.PointSchedule).TotalDays / 7)) > 1 ? 1 : Convert.ToInt32(Math.Floor(((DateTime)DateTime.Now - (DateTime)bc.PointSchedule).TotalDays / 7))
-                                        //let b=Convert.ToInt32(Math.Floor(((DateTime)bc.PointExec - (DateTime)bc.PointSchedule).TotalDays / 7)) > 1 ? 1 : Convert.ToInt32(Math.Floor(((DateTime)bc.PointExec - (DateTime)bc.PointSchedule).TotalDays / 7))
+                                        //DbFunctions.DiffDays表示后面减去前面的数  用于linq时间计算 转int在linq用（int）
+                                        let a =(int)(Math.Floor((decimal)DbFunctions.DiffDays((DateTime)bc.PointSchedule,(DateTime)DateTime.Now) / 7)) >= 1 ? 1 : (int)(Math.Floor((decimal)DbFunctions.DiffDays((DateTime)bc.PointSchedule, (DateTime)DateTime.Now) / 7))
+                                        let b=(int)(Math.Floor((decimal)DbFunctions.DiffDays((DateTime)bc.PointSchedule,(DateTime)bc.PointExec) / 7)) >= 1 ? 1 : (int)(Math.Floor((decimal)DbFunctions.DiffDays((DateTime)bc.PointSchedule,(DateTime)bc.PointExec) / 7))
                                         select new SMSBase
                                         { 
                                             PointName = bpoint.PointName,
-                                            //WeekInt = bc.PointExec == null ? a:b
+                                            WeekInt = bc.PointExec==null?a:b
                                         }
                          };
-            return new ActionResult<IEnumerable<ProjectSMS>>(retemp);
+            return new ActionResult<IEnumerable<ProjectSMS>>(retemp.ToList());
         }
         /// <summary>
         /// 删除问题
