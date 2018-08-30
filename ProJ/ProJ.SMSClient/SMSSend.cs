@@ -35,9 +35,29 @@ namespace ProJ.SMSClient
                     var url = System.Configuration.ConfigurationManager.AppSettings["smsurl"];
                     foreach (var sms in smscontent.data)
                     {
-                        if(sms.Timeouts!=null)
+                        if (string.IsNullOrEmpty(sms.ProjectContact.HandlerTEL))
                         {
-                            foreach(var tsms in sms.Timeouts)
+                            sms.ProjectContact.HandlerTEL = sms.OwerInfo.HandlerTEL;
+                        }
+                        if (string.IsNullOrEmpty(sms.ProjectContact.LeaderTEL))
+                        {
+                            sms.ProjectContact.LeaderTEL = sms.OwerInfo.HandlerTEL;
+                        }
+                        if (string.IsNullOrEmpty(sms.ProjectContact.PrincipalTEL))
+                        {
+                            sms.ProjectContact.PrincipalTEL = sms.OwerInfo.HandlerTEL;
+                        }
+                        if (string.IsNullOrEmpty(sms.ProjectContact.SiteLinkTEL))
+                        {
+                            sms.ProjectContact.SiteLinkTEL = sms.OwerInfo.HandlerTEL;
+                        }
+                        if (string.IsNullOrEmpty(sms.ProjectContact.SitePrincipalTEL))
+                        {
+                            sms.ProjectContact.SitePrincipalTEL = sms.OwerInfo.HandlerTEL;
+                        }
+                        if (sms.Timeouts.Count()>0)
+                        {
+                            foreach(var tsms in sms.Timeouts.Where(q=>q.WeekInt>=0))
                             {
                                 StringContent para;
                                 Model.DB.Project_SMS dbsms;
@@ -97,10 +117,6 @@ namespace ProJ.SMSClient
                                         break;
                                 }
                                 var db = _work.Repository<Model.DB.Project_SMS>();
-                                if (tsms.WeekInt>=1)
-                                {
-                                    tsms.WeekInt = 1;
-                                }
                                 if(!db.Any(q=>q.ProjectID == sms.ProjectInfo.ID && q.PointName == tsms.PointName && q.WeekInt == tsms.WeekInt))
                                 {
                                     db.Add(dbsms);

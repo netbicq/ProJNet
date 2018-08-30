@@ -14,7 +14,12 @@ namespace ProJ.IBll
     public interface IProJ
     {
 
-        
+        /// <summary>
+        /// 删除工程项目
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <returns></returns>
+        ActionResult<bool> DeletePro(Guid ID);
 
         ActionResult<bool> ProJNew(Model.Para.ProjectAdd owner);
 

@@ -26,6 +26,17 @@ namespace ProJ.API.Controllers
 
         }
         /// <summary>
+        /// 删除项目
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("deletepro/{id:Guid}")]
+        [HttpGet]
+        public ActionResult<bool> DelePro(Guid id)
+        {
+            return bll.DeletePro(id);
+        }
+        /// <summary>
         /// 新建项目
         /// </summary>
         /// <param name="dict"></param>
