@@ -569,7 +569,7 @@ namespace ProJ.Bll
                                                   Schedule = han == null ? null: han.PointSchedule,
                                                   Exec = han == null ? null : han.PointExec,
                                                   ExecMemo = han == null ? null : han.PointExecMemo,
-                                                  Check= han == null?true:(ac.State==(int)PublicEnum.ProjState.Modified||(han.PointExec==null&&han.PointExecMemo==null)?true:false)
+                                                  Check= han == null?true:((ac.State==(int)PublicEnum.ProjState.Modified||han.PointExec==null)?true:false)
                                               },
                              //Project_Schedule = from a in Schedule.Where(q => q.ProjectID == ac.ID) select a,
                              Project_Issue = from s in Issue.Where(q => q.ProjectID == ac.ID) select s,
@@ -1211,7 +1211,7 @@ namespace ProJ.Bll
             {
                 throw new Exception("执行计划不存在");
             }
-            if (db.PointExecMemo != null || db.PointExec != null)
+            if (db.PointExec != null)
             {
                 if (to.State != (int)PublicEnum.ProjState.Modified)
                 {
