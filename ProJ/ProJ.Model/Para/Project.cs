@@ -84,6 +84,10 @@ namespace ProJ.Model.Para
         /// 第四季度末形象进度
         /// </summary>
         public string Q4Memo { get; set; }
+        /// <summary>
+        /// 下一周工作计划
+        /// </summary>
+        public string NextPlan { get; set; }
 
     }
 
@@ -406,6 +410,10 @@ namespace ProJ.Model.Para
         /// 第四季度末形象进度
         /// </summary>
         public string Q4Memo { get; set; }
+        /// <summary>
+        /// 下一周工作计划
+        /// </summary>
+        public string NextPlan { get; set; }
         ///// <summary>
         ///// 季度
         ///// </summary>

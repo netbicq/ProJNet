@@ -287,7 +287,8 @@ namespace ProJ.ORM
                     trow.CreateCell(t).SetCellValue(item.Caption);
                     t += 1;
                 }
-                trow.CreateCell(t + 1).SetCellValue("项目问题");
+                trow.CreateCell(t).SetCellValue("当前进展情况及存在问题");
+                trow.CreateCell(t + 1).SetCellValue("下一周工作计划");
                 trow.CreateCell(t + 2).SetCellValue("第一季度完成投资");
                 trow.CreateCell(t + 3).SetCellValue("第一季度期末形象进度");
                 trow.CreateCell(t + 4).SetCellValue("第二季度完成投资");
@@ -318,24 +319,46 @@ namespace ProJ.ORM
                     drowsec.CreateCell(1).SetCellValue("执行");
                     drow.CreateCell(2).SetCellValue(obj.ProjectInfo.InvestMoney.ToString());
                     drowsec.CreateCell(2).SetCellValue(obj.ProjectInfo.InvestMoney.ToString());
-                    drow.CreateCell(3).SetCellValue(obj.ProjectInfo.ComemenceDate.ToString());
-                    drowsec.CreateCell(3).SetCellValue(obj.ProjectInfo.ComemenceDate.ToString());
+                    drow.CreateCell(3).SetCellValue(((DateTime)obj.ProjectInfo.ComemenceDate).ToString("yyyy.MM.dd"));
+                    drowsec.CreateCell(3).SetCellValue(((DateTime)obj.ProjectInfo.ComemenceDate).ToString("yyyy.MM.dd"));
                     List<string> obj1 = new List<string>();
                     foreach (var item in obj.PointData)
                     {
                         if (item.Key.Contains("sch"))
                         {
                             drow.CreateCell(x).SetCellValue(item.Value.ToString());
+                            //if (item.Value.ToString()== "/")
+                            //{
+                            //    drow.CreateCell(x).SetCellValue(item.Value.ToString());
+                            //}
+                            //else
+                            //{
+                            //    var date = Convert.ToDateTime(item.Value.ToString());
+                            //    drow.CreateCell(x).SetCellValue(date.ToString("yyyy.MM.dd"));
+                            //}
                             x++;
                         }
                         if (item.Key.Contains("exc"))
                         {
                             drowsec.CreateCell(y).SetCellValue(item.Value.ToString());
+                            //DateTime dt;
+                            //var ni = DateTime.TryParse(item.Value.ToString(), out dt);
+                            //if (item.Value.ToString()== "/" ||ni==false )
+                            //{
+                            //    drowsec.CreateCell(y).SetCellValue(item.Value.ToString());
+                            //}
+                            //else
+                            //{
+                            //    var date = Convert.ToDateTime(item.Value.ToString());
+                            //    drowsec.CreateCell(y).SetCellValue(date.ToString("yyyy.MM.dd"));
+                            //}
                             y++;
                         }
                     };
-                    drow.CreateCell(x + 1).SetCellValue(obj.Issues==null?"": obj.Issues.IssueContent.ToString());
-                    drowsec.CreateCell(x + 1).SetCellValue(obj.Issues== null ? "" : obj.Issues.IssueContent.ToString());
+                    drow.CreateCell(x).SetCellValue(obj.Issues==null?"": obj.Issues.IssueContent.ToString());
+                    drowsec.CreateCell(x).SetCellValue(obj.Issues== null ? "" : obj.Issues.IssueContent.ToString());
+                    drow.CreateCell(x + 1).SetCellValue(obj.ProjectInfo.NextPlan.ToString());
+                    drowsec.CreateCell(x + 1).SetCellValue(obj.ProjectInfo.NextPlan.ToString());
                     drow.CreateCell(x + 2).SetCellValue(obj.ProjectInfo.Q1Invest.ToString());
                     drowsec.CreateCell(x + 2).SetCellValue(obj.ProjectInfo.Q1Invest.ToString());
                     drow.CreateCell(x + 3).SetCellValue(obj.ProjectInfo.Q1Memo);
