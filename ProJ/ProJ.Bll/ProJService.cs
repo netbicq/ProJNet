@@ -33,10 +33,10 @@ namespace ProJ.Bll
         {
             var info1 = _work.Repository<Model.DB.Project_Info>();
             var to = info1.GetModel(q => q.ID == After.ID);
-            if (to.State != (int)PublicEnum.ProjState.Modified && to.State != (int)PublicEnum.ProjState.Normal)
-            {
-                throw new Exception("此项目状态不允许操作");
-            }
+            //if (to.State != (int)PublicEnum.ProjState.Modified && to.State != (int)PublicEnum.ProjState.Normal)
+            //{
+            //    throw new Exception("此项目状态不允许操作");
+            //}
             if (to.State == (int)PublicEnum.ProjState.Start)
             {
                 throw new Exception("开工不允许任何操作");
@@ -408,10 +408,10 @@ namespace ProJ.Bll
         {
             var info1 = _work.Repository<Model.DB.Project_Info>();
             var to = info1.GetModel(q => q.ID == Iss.ProjectID);
-            if (to.State != (int)PublicEnum.ProjState.Modified && to.State != (int)PublicEnum.ProjState.Normal)
-            {
-                throw new Exception("此项目状态不允许操作");
-            }
+            //if (to.State != (int)PublicEnum.ProjState.Modified && to.State != (int)PublicEnum.ProjState.Normal)
+            //{
+            //    throw new Exception("此项目状态不允许操作");
+            //}
             if (to.State == (int)PublicEnum.ProjState.Start)
             {
                 throw new Exception("开工不允许任何操作");
@@ -473,7 +473,7 @@ namespace ProJ.Bll
         {
             var info1 = _work.Repository<Model.DB.Project_Info>();
             var to = info1.GetModel(q => q.ID == Con.ProjectID);
-            if (to.State != (int)PublicEnum.ProjState.Modified && to.State != (int)PublicEnum.ProjState.Normal)
+            if (to.State != (int)PublicEnum.ProjState.Modified)
             {
                 throw new Exception("此项目状态不允许操作");
             }
@@ -507,7 +507,7 @@ namespace ProJ.Bll
         {
             var info1 = _work.Repository<Model.DB.Project_Info>();
             var to = info1.GetModel(q => q.ID == pro.ID);
-            if (to.State != (int)PublicEnum.ProjState.Modified && to.State != (int)PublicEnum.ProjState.Normal)
+            if (to.State != (int)PublicEnum.ProjState.Modified)
             {
                 throw new Exception("此项目状态不允许操作");
             }
