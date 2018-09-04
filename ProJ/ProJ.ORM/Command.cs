@@ -357,8 +357,8 @@ namespace ProJ.ORM
                     };
                     drow.CreateCell(x).SetCellValue(obj.Issues==null?"": obj.Issues.IssueContent.ToString());
                     drowsec.CreateCell(x).SetCellValue(obj.Issues== null ? "" : obj.Issues.IssueContent.ToString());
-                    drow.CreateCell(x + 1).SetCellValue(obj.ProjectInfo.NextPlan.ToString());
-                    drowsec.CreateCell(x + 1).SetCellValue(obj.ProjectInfo.NextPlan.ToString());
+                    drow.CreateCell(x + 1).SetCellValue(obj.ProjectInfo.NextPlan);
+                    drowsec.CreateCell(x + 1).SetCellValue(obj.ProjectInfo.NextPlan);
                     drow.CreateCell(x + 2).SetCellValue(obj.ProjectInfo.Q1Invest.ToString());
                     drowsec.CreateCell(x + 2).SetCellValue(obj.ProjectInfo.Q1Invest.ToString());
                     drow.CreateCell(x + 3).SetCellValue(obj.ProjectInfo.Q1Memo);
@@ -415,7 +415,7 @@ namespace ProJ.ORM
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                throw new Exception(ex.Message);
             }
 
         }
