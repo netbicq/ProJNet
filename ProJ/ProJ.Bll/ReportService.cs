@@ -244,13 +244,52 @@ namespace ProJ.Bll
             var exc = _work.ExecProcedre("Exec " + "ProjectReport");
             var data = exc.Read();
             //报表列
-            getlistpro.ReportCols = from bc in point
-                                    orderby bc.PointOrderIndex
+            var LeftColumns = new List<ReportColumn>();
+            int leftorder = 100;
+
+            var RightColumns = new List<ReportColumn>();
+            int rightorder = 1000;
+            //增加节点左边按钮
+            
+            LeftColumns.Add(new ReportColumn
+            {
+                Caption = "项目名称",
+                ColumnFixed = true,
+                IsClass = true,
+                IsPoint = false,
+                MultiColumn = false, OrderIndex =leftorder+1,
+                ShowModal = false,
+                ColName = "ProjectInfo.ProjectName"
+            });
+
+
+            //增加节点右边
+            RightColumns.Add(new ReportColumn
+            {
+                Caption = "当前进度情况及存在问题",  
+                IsPoint = false,
+                MultiColumn = false,
+                OrderIndex = rightorder + 1,
+                ShowModal = true,
+                ColName = "Issues.IssueContent"
+            });
+             
+            // getlistpro.ReportCols
+            var PointColums= from bc in point
+                                    orderby bc.PointOrderIndex 
                                     select new ReportColumn
                                     {
                                         Caption = bc.PointName,
-                                        ColName = bc.ColName
+                                        ColName = bc.ColName,
+                                        OrderIndex=200 +bc.PointOrderIndex
                                     };
+
+            LeftColumns.AddRange(PointColums.ToList());
+            LeftColumns.AddRange(RightColumns);
+
+            getlistpro.ReportCols = LeftColumns;
+
+
             var reme = from proj in projects
                        let issues = issu.Where(q => q.ProjectID == proj.ID).OrderByDescending(q => q.CreateDate).FirstOrDefault()
                        let owner = own.FirstOrDefault(q => q.ID == proj.OwnerID)

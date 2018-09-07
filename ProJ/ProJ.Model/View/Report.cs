@@ -199,11 +199,21 @@ namespace ProJ.Model.View
         /// </summary>
         public string PThree { get; set; }
     }
+     
     /// <summary>
     /// 动态列
     /// </summary>
     public class ReportColumn
     {
+
+        public ReportColumn()
+        {
+            IsPoint = true;
+            IsClass = true;
+            MultiColumn = false;
+            ShowModal = false;
+            Children = new List<ReportColumn>();
+        }
         /// <summary>
         /// 列名，来自Basic_Point的ColName
         /// </summary>
@@ -211,6 +221,34 @@ namespace ProJ.Model.View
         /// <summary>
         /// 列标题，来自Basic_Point的PointName
         /// </summary>
-        public string Caption { get; set; }
+        public string Caption { get; set; } 
+        /// <summary>
+        /// 排序值
+        /// </summary>
+        public int OrderIndex { get; set; }
+        /// <summary>
+        /// 是否多列表头
+        /// </summary>
+        public bool MultiColumn { get; set; }
+        /// <summary>
+        /// 是否class样式
+        /// </summary>
+        public bool IsClass { get; set; }
+        /// <summary>
+        /// 是否节点
+        /// </summary>
+        public bool IsPoint { get; set; }
+        /// <summary>
+        /// 列固定
+        /// </summary>
+        public bool ColumnFixed { get; set; }
+        /// <summary>
+        /// 是否点击弹出Modal
+        /// </summary>
+        public bool ShowModal { get; set; }
+        /// <summary>
+        /// 多列表头明细
+        /// </summary>
+        public IEnumerable<ReportColumn> Children { get; set; }
     }
 }
