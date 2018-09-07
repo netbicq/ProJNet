@@ -300,7 +300,7 @@ namespace ProJ.Bll
             {
                 Caption = "当前进度情况及存在问题",
                 IsClass = false,
-                ColumnFixed=true,
+                ColumnFixed= false,
                 IsPoint = false,
                 MultiColumn = false,
                 OrderIndex = rightorder + 1,
@@ -311,7 +311,7 @@ namespace ProJ.Bll
             {
                 Caption = "下一周工作计划",
                 IsClass = false,
-                ColumnFixed = true,
+                ColumnFixed = false,
                 IsPoint = false,
                 MultiColumn = false,
                 OrderIndex = rightorder + 2,
@@ -323,7 +323,7 @@ namespace ProJ.Bll
             {
                 Caption = "后续在建工作计划",
                 IsClass = false,
-                ColumnFixed = true,
+                ColumnFixed = false,
                 IsPoint = false,
                 MultiColumn = true,
                 OrderIndex = rightorder + 3,
@@ -335,7 +335,7 @@ namespace ProJ.Bll
             {
                 Caption = "第一季度完成投资",
                 IsClass = false,
-                ColumnFixed = true,
+                ColumnFixed = false,
                 IsPoint = false,
                 MultiColumn = true,
                 OrderIndex = rightorder + 3,
@@ -346,7 +346,7 @@ namespace ProJ.Bll
             {
                 Caption = "第一季度期末形象进度",
                 IsClass = false,
-                ColumnFixed = true,
+                ColumnFixed = false,
                 IsPoint = false,
                 MultiColumn = true,
                 OrderIndex = rightorder + 4,
@@ -357,7 +357,7 @@ namespace ProJ.Bll
             {
                 Caption = "第二季度完成投资",
                 IsClass = false,
-                ColumnFixed = true,
+                ColumnFixed = false,
                 IsPoint = false,
                 MultiColumn = true,
                 OrderIndex = rightorder + 5,
@@ -368,7 +368,7 @@ namespace ProJ.Bll
             {
                 Caption = "第二季度期末形象进度",
                 IsClass = false,
-                ColumnFixed = true,
+                ColumnFixed = false,
                 IsPoint = false,
                 MultiColumn = true,
                 OrderIndex = rightorder + 6,
@@ -379,7 +379,7 @@ namespace ProJ.Bll
             {
                 Caption = "第三季度完成投资",
                 IsClass = false,
-                ColumnFixed = true,
+                ColumnFixed = false,
                 IsPoint = false,
                 MultiColumn = false,
                 OrderIndex = rightorder + 7,
@@ -390,7 +390,7 @@ namespace ProJ.Bll
             {
                 Caption = "第三季度期末形象进度",
                 IsClass = false,
-                ColumnFixed = true,
+                ColumnFixed = false,
                 IsPoint = false,
                 MultiColumn = true,
                 OrderIndex = rightorder + 8,
@@ -401,7 +401,7 @@ namespace ProJ.Bll
             {
                 Caption = "第四季度完成投资",
                 IsClass = false,
-                ColumnFixed = true,
+                ColumnFixed = false,
                 IsPoint = false,
                 MultiColumn = true,
                 OrderIndex = rightorder + 9,
@@ -412,7 +412,7 @@ namespace ProJ.Bll
             {
                 Caption = "第四季度期末形象进度",
                 IsClass = false,
-                ColumnFixed = true,
+                ColumnFixed = false,
                 IsPoint = false,
                 MultiColumn = true,
                 OrderIndex = rightorder + 10,
@@ -424,7 +424,7 @@ namespace ProJ.Bll
             {
                 Caption = "责任管理部门",
                 IsClass = false,
-                ColumnFixed = true,
+                ColumnFixed = false,
                 IsPoint = false,
                 MultiColumn = true,
                 OrderIndex = rightorder + 11,
@@ -436,7 +436,7 @@ namespace ProJ.Bll
             {
                 Caption = "单位名称",
                 IsClass = false,
-                ColumnFixed = true,
+                ColumnFixed = false,
                 IsPoint = false,
                 MultiColumn = true,
                 OrderIndex = rightorder + 11,
@@ -447,7 +447,7 @@ namespace ProJ.Bll
             {
                 Caption = "项目负责人",
                 IsClass = false,
-                ColumnFixed = true,
+                ColumnFixed = false,
                 IsPoint = false,
                 MultiColumn = true,
                 OrderIndex = rightorder + 12,
@@ -458,7 +458,7 @@ namespace ProJ.Bll
             {
                 Caption = "具体负责人",
                 IsClass = false,
-                ColumnFixed = true,
+                ColumnFixed = false,
                 IsPoint = false,
                 MultiColumn = false,
                 OrderIndex = rightorder + 13,
@@ -470,7 +470,7 @@ namespace ProJ.Bll
             {
                 Caption = "业主单位",
                 IsClass = false,
-                ColumnFixed = true,
+                ColumnFixed = false,
                 IsPoint = false,
                 MultiColumn = true,
                 OrderIndex = rightorder + 14,
@@ -482,7 +482,7 @@ namespace ProJ.Bll
             {
                 Caption = "单位名称",
                 IsClass = false,
-                ColumnFixed = true,
+                ColumnFixed = false,
                 IsPoint = false,
                 MultiColumn = true,
                 OrderIndex = rightorder + 14,
@@ -493,7 +493,7 @@ namespace ProJ.Bll
             {
                 Caption = "项目负责人",
                 IsClass = false,
-                ColumnFixed = true,
+                ColumnFixed = false,
                 IsPoint = false,
                 MultiColumn = true,
                 OrderIndex = rightorder + 15,
@@ -504,7 +504,7 @@ namespace ProJ.Bll
             {
                 Caption = "具体负责人",
                 IsClass = false,
-                ColumnFixed = true,
+                ColumnFixed = false,
                 IsPoint = false,
                 MultiColumn = true,
                 OrderIndex = rightorder + 16,
@@ -540,6 +540,7 @@ namespace ProJ.Bll
                        };
             var getdata = reme.ToList();
             //逾期
+            int z = 0; int x = 0; int c = 0;
             List<ReporDynlist> bin = new List<ReporDynlist>();
             foreach (var item in getdata)
             {
@@ -555,12 +556,16 @@ namespace ProJ.Bll
                     }
                 }
                 //逾期
-                int i = 0;
+                int i = 0;int g = 0;
                 foreach (var item5 in item.PointData)
                 {
                     if (item5.Key.Contains("tot") && item5.Value > 0)
                     {
                         i = 1;
+                        if (item5.Value>g)
+                        {
+                            g = item5.Value;
+                        };
                     }
                 }
                 if (i==1)
@@ -568,6 +573,12 @@ namespace ProJ.Bll
                     item.ProJBool = true;
                     bin.Add(item);
                 }
+                if (g>=30&&g<60)
+                    z += 1;
+                if (g >= 60 && g < 90)
+                    x += 1;
+                if (g >= 90)
+                    c += 1;
             }
             var dal = para.Query.ExeceedType == PublicEnum.ExeceedType.Normal ? getdata : bin;
             string excel = "";
@@ -587,7 +598,6 @@ namespace ProJ.Bll
                 }
                 
             }
-            int z = 0;int x = 0;int c = 0;
             getlistpro.Pank = new Pank
             {
                 Moth = Convert.ToDateTime(moth),
