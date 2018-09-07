@@ -271,7 +271,7 @@ namespace ProJ.Bll
                 MultiColumn = false,
                 OrderIndex = leftorder + 2,
                 ShowModal = false,
-                ColName = ""
+                ColName = "SchExe"
             });
              LeftColumns.Add(new ReportColumn
              {

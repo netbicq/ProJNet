@@ -35,12 +35,12 @@ namespace ProJ.Bll
         {
             var id = Guid.NewGuid();
             var tem = new Proiect_Teamwork();
-            var en = new Project_Enclosure();
             para.Clone(tem);
             tem.ID = id;
             _team.Add(tem);
             foreach (var item in para.Teams)
             {
+                var en = new Project_Enclosure();
                 en.TeamID = id;
                 en.Enclosure = item;
                 _enc.Add(en);
