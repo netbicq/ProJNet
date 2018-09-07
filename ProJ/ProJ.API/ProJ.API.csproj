@@ -206,10 +206,12 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\BasicPointController.cs" />
     <Compile Include="Controllers\DictController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OwnerController.cs" />
     <Compile Include="Controllers\ProJController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

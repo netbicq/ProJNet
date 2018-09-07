@@ -50,6 +50,10 @@ namespace ProJ.ORM
 
         public virtual DbSet<Project_Point> Project_Point { get; set; }
 
+        public virtual DbSet<Project_Enclosure> Project_Enclosure { get; set; }
+
+        public virtual DbSet<Proiect_Teamwork> Proiect_Teamwork { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.PluralizingTableNameConvention>();

@@ -47,4 +47,12 @@ namespace ProJ.Model.Para
         /// </summary>
         public PublicEnum.DictType DictType { get; set; }
     }
+    /// <summary>
+    /// 时间查询
+    /// </summary>
+    public class TimeQuery
+    {
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
+    }
 }

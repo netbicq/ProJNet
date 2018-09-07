@@ -340,6 +340,22 @@ namespace ProJ.Model.Para
         /// 主要领导电话
         /// </summary>
         public string LeaderTEL { get; set; }
+        /// <summary>
+        /// 集团公司分管领导
+        /// </summary>
+        public string ComLead { get; set; }
+        /// <summary>
+        /// 集团公司分管领导电话
+        /// </summary>
+        public string ComLeadTEL { get; set; }
+        /// <summary>
+        /// 集团公司主要负责人
+        /// </summary>
+        public string ComPrincipal { get; set; }
+        /// <summary>
+        /// 集团公司主要负责人电话
+        /// </summary>
+        public string ComPrincipalTEL { get; set; }
     }
     /// <summary>
     /// 问题发布
