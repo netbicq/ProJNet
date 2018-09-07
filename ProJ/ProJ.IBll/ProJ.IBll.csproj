@@ -47,6 +47,7 @@
     <Compile Include="IOwner.cs" />
     <Compile Include="IProJ.cs" />
     <Compile Include="IReport.cs" />
+    <Compile Include="ITeam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

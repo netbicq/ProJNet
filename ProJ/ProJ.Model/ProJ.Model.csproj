@@ -53,7 +53,9 @@
     <Compile Include="DB\Basic_Owner.cs" />
     <Compile Include="DB\Basic_Point.cs" />
     <Compile Include="DB\ModelBase.cs" />
+    <Compile Include="DB\Proiect_Teamwork.cs" />
     <Compile Include="DB\Project_Contacts.cs" />
+    <Compile Include="DB\Project_Enclosure.cs" />
     <Compile Include="DB\Project_Info.cs" />
     <Compile Include="DB\Project_Issue.cs" />
     <Compile Include="DB\Project_Log.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="Para\Owner.cs" />
     <Compile Include="Para\Project.cs" />
     <Compile Include="Para\Report.cs" />
+    <Compile Include="Para\Team.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublicEnum.cs" />
     <Compile Include="View\Auth.cs" />

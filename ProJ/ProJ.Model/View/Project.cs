@@ -121,4 +121,13 @@ namespace ProJ.Model.View
         /// </summary>
         public bool Point_XMZPSJFAPF { get; set; }
     }
+
+    public class TemaView
+    {
+        public Proiect_Teamwork Proiect_Teamwork { get; set; }
+        /// <summary>
+        /// 附件
+        /// </summary>
+        public IEnumerable<string> Encolos { get; set; }
+    }
 }
