@@ -271,7 +271,7 @@ namespace ProJ.Bll
                 MultiColumn = false,
                 OrderIndex = leftorder + 2,
                 ShowModal = false,
-                ColName = "计划/实际"
+                ColName = ""
             });
              LeftColumns.Add(new ReportColumn
              {
@@ -282,7 +282,7 @@ namespace ProJ.Bll
                  MultiColumn = false,
                  OrderIndex = leftorder + 4,
                  ShowModal = false,
-                 ColName = "计划开工月份"
+                 ColName = "ProjectInfo.ComemenceDate"
              });
             LeftColumns.Add(new ReportColumn
             {
@@ -293,7 +293,7 @@ namespace ProJ.Bll
                 MultiColumn = false,
                 OrderIndex = leftorder + 3,
                 ShowModal = false,
-                ColName = "年度计划投资"
+                ColName = "ProjectInfo.InvestMoney"
             });
             //增加节点右边
             RightColumns.Add(new ReportColumn
@@ -316,7 +316,7 @@ namespace ProJ.Bll
                 MultiColumn = false,
                 OrderIndex = rightorder + 2,
                 ShowModal = true,
-                ColName = "下一周工作计划"
+                ColName = "ProjectInfo.NextPlan"
             });
             List<ReportColumn> h1 = new List<ReportColumn>();
             RightColumns.Add(new ReportColumn
@@ -328,7 +328,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 3,
                 ShowModal = false,
-                ColName = "后续在建工作计划",
+                ColName = "",
                 Children=h1
             });
             h1.Add(new ReportColumn
@@ -340,7 +340,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 3,
                 ShowModal = false,
-                ColName = "第一季度完成投资"
+                ColName = "ProjectInfo.Q1Invest"
             });
             h1.Add(new ReportColumn
             {
@@ -351,7 +351,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 4,
                 ShowModal = false,
-                ColName = "第一季度期末形象进度"
+                ColName = "ProjectInfo.Q1Memo"
             });
             h1.Add(new ReportColumn
             {
@@ -362,7 +362,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 5,
                 ShowModal = false,
-                ColName = "第二季度完成投资"
+                ColName = "ProjectInfo.Q2Invest"
             });
             h1.Add(new ReportColumn
             {
@@ -373,7 +373,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 6,
                 ShowModal = false,
-                ColName = "第二季度期末形象进度"
+                ColName = "ProjectInfo.Q2Memo"
             });
             h1.Add(new ReportColumn
             {
@@ -384,7 +384,7 @@ namespace ProJ.Bll
                 MultiColumn = false,
                 OrderIndex = rightorder + 7,
                 ShowModal = false,
-                ColName = "第三季度完成投资"
+                ColName = "ProjectInfo.Q3Invest"
             });
             h1.Add(new ReportColumn
             {
@@ -395,7 +395,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 8,
                 ShowModal = false,
-                ColName = "第三季度期末形象进度"
+                ColName = "ProjectInfo.Q3Memo"
             });
             h1.Add(new ReportColumn
             {
@@ -406,7 +406,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 9,
                 ShowModal = false,
-                ColName = "第四季度完成投资"
+                ColName = "ProjectInfo.Q4Invest"
             });
             h1.Add(new ReportColumn
             {
@@ -417,7 +417,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 10,
                 ShowModal = false,
-                ColName = "第四季度期末形象进度"
+                ColName = "ProjectInfo.Q4Memo"
             });
             List<ReportColumn> h2 = new List<ReportColumn>();
             RightColumns.Add(new ReportColumn
@@ -429,7 +429,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 11,
                 ShowModal = false,
-                ColName = "责任管理部门",
+                ColName = "",
                 Children=h2
             });
             h2.Add(new ReportColumn
@@ -441,7 +441,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 11,
                 ShowModal = false,
-                ColName = "单位名称"
+                ColName = "ProjectOwner.OwnerName"
             });
             h2.Add(new ReportColumn
             {
@@ -452,7 +452,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 12,
                 ShowModal = false,
-                ColName = "项目负责人"
+                ColName = "Project_Contacts.SitePrincipal"
             });
             h2.Add(new ReportColumn
             {
@@ -463,7 +463,7 @@ namespace ProJ.Bll
                 MultiColumn = false,
                 OrderIndex = rightorder + 13,
                 ShowModal = false,
-                ColName = "具体负责人"
+                ColName = "Project_Contacts.Leader"
             });
             List<ReportColumn> h3 = new List<ReportColumn>();
             RightColumns.Add(new ReportColumn
@@ -475,7 +475,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 14,
                 ShowModal = false,
-                ColName = "业主单位",
+                ColName = "",
                 Children=h3
             });
             h3.Add(new ReportColumn
@@ -487,7 +487,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 14,
                 ShowModal = false,
-                ColName = "单位名称"
+                ColName = "ProjectOwner.OwnerName"
             });
             h3.Add(new ReportColumn
             {
@@ -498,7 +498,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 15,
                 ShowModal = false,
-                ColName = "项目负责人"
+                ColName = "ProjectOwner.SitePrincipal"
             });
             h3.Add(new ReportColumn
             {
@@ -509,7 +509,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 16,
                 ShowModal = false,
-                ColName = "具体负责人"
+                ColName = "ProjectOwner.Leader"
             });
             // getlistpro.ReportCols
             var PointColums = from bc in point
