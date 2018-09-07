@@ -166,6 +166,38 @@ namespace ProJ.Model.View
         /// </summary>
         public IEnumerable<ReportColumn> ReportCols { get; set; }
         public Pager<Model.View.ReporDynlist> ReporDynlist { get; set; }
+        public Pank Pank { get; set; }
+    }
+    public class Pank
+    {
+        /// <summary>
+        /// xx月份
+        /// </summary>
+        public DateTime Moth { get; set; }
+        /// <summary>
+        /// xx个前期项目
+        /// </summary>
+        public string Prophase { get; set; }
+        /// <summary>
+        /// xx个项目正常推进
+        /// </summary>
+        public string Normal { get; set; }
+        /// <summary>
+        /// xx个项目未按序时推进
+        /// </summary>
+        public string Exec { get; set; }
+        /// <summary>
+        /// xx个项目滞后1个月
+        /// </summary>
+        public string POne { get; set; }
+        /// <summary>
+        /// xx个项目滞后2个月
+        /// </summary>
+        public string PTwo { get; set; }
+        /// <summary>
+        /// xx个项目滞后3个月以上
+        /// </summary>
+        public string PThree { get; set; }
     }
     /// <summary>
     /// 动态列

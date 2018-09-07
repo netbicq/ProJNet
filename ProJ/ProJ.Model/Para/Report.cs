@@ -24,6 +24,9 @@ namespace ProJ.Model.Para
         /// 执行状态
         /// </summary>
         public PublicEnum.ExeceedType ExeceedType { get; set; }
-        
+        /// <summary>
+        /// 月份
+        /// </summary>
+        public DateTime Month { get; set; }
     }
 }

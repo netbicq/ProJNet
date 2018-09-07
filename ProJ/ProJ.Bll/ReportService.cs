@@ -299,6 +299,26 @@ namespace ProJ.Bll
             {
                 excel = Command.CreateExcel(dal, getlistpro.ReportCols, AppUser.OutPutPaht);
             }
+            //新增内容
+            var moth = para.Query.Month.ToString("yyyy-MM");
+            var prokl = _work.Repository<Model.DB.Project_Info>().Queryable(q=>q.CreateDate.Year==para.Query.Month.Year&& q.CreateDate.Month == para.Query.Month.Month);
+            int o = 0;
+            foreach (var item in bin)
+            {
+                if (item.ProjectInfo.CreateDate.Year == para.Query.Month.Year && item.ProjectInfo.CreateDate.Month == para.Query.Month.Month)
+                {
+                    o += 1;
+                }
+                
+            }
+            var yuqi = getdata.Except(bin);
+            getlistpro.Pank = new Pank
+            {
+                Moth = Convert.ToDateTime(moth),
+                Prophase = prokl.Count().ToString(),
+                Normal = (prokl.Count() - o).ToString(),
+                Exec = o.ToString(),
+            };
             var re = new Pager<Model.View.ReporDynlist>().GetCurrentPage(dal, para.PageSize, para.PageIndex);
             re.ExcelResult = excel;
             getlistpro.ReporDynlist = re;
