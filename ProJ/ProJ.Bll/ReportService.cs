@@ -265,6 +265,7 @@ namespace ProJ.Bll
             LeftColumns.Add(new ReportColumn
             {
                 Caption = "计划/实际",
+                Isbool=true,
                 ColumnFixed = true,
                 IsClass = false,
                 IsPoint = false,

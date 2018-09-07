@@ -212,6 +212,7 @@ namespace ProJ.Model.View
 
         public ReportColumn()
         {
+            Isbool = false;
             IsColumn = true;
             IsPoint = true;
             IsClass = true;
@@ -219,6 +220,10 @@ namespace ProJ.Model.View
             ShowModal = false;
             Children = new List<ReportColumn>();
         }
+        /// <summary>
+        /// 判断计划
+        /// </summary>
+        public bool Isbool { get; set; }
         /// <summary>
         /// 是否显示列
         /// </summary>
