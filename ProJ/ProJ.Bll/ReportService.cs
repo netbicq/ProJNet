@@ -441,7 +441,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 11,
                 ShowModal = false,
-                ColName = "ProjectOwner.OwnerName"
+                ColName = "Project_Contacts.SitePrincipal"
             });
             h2.Add(new ReportColumn
             {
@@ -452,7 +452,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 12,
                 ShowModal = false,
-                ColName = "Project_Contacts.SitePrincipal"
+                ColName = "Project_Contacts.SiteLink"
             });
             h2.Add(new ReportColumn
             {
@@ -463,7 +463,7 @@ namespace ProJ.Bll
                 MultiColumn = false,
                 OrderIndex = rightorder + 13,
                 ShowModal = false,
-                ColName = "Project_Contacts.Leader"
+                ColName = "Project_Contacts.Handler"
             });
             List<ReportColumn> h3 = new List<ReportColumn>();
             RightColumns.Add(new ReportColumn
@@ -498,7 +498,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 15,
                 ShowModal = false,
-                ColName = "ProjectOwner.SitePrincipal"
+                ColName = "ProjectOwner.Handler"
             });
             h3.Add(new ReportColumn
             {
@@ -509,7 +509,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 16,
                 ShowModal = false,
-                ColName = "ProjectOwner.Leader"
+                ColName = "ProjectOwner.Principal"
             });
             // getlistpro.ReportCols
             var PointColums = from bc in point
