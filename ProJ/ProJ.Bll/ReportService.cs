@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -261,21 +262,257 @@ namespace ProJ.Bll
                 ShowModal = false,
                 ColName = "ProjectInfo.ProjectName"
             });
-
-
+            LeftColumns.Add(new ReportColumn
+            {
+                Caption = "计划/实际",
+                ColumnFixed = true,
+                IsClass = false,
+                IsPoint = false,
+                MultiColumn = false,
+                OrderIndex = leftorder + 2,
+                ShowModal = false,
+                ColName = "计划/实际"
+            });
+             LeftColumns.Add(new ReportColumn
+             {
+                 Caption = "计划开工月份",
+                 ColumnFixed = true,
+                 IsClass = false,
+                 IsPoint = false,
+                 MultiColumn = false,
+                 OrderIndex = leftorder + 4,
+                 ShowModal = false,
+                 ColName = "计划开工月份"
+             });
+            LeftColumns.Add(new ReportColumn
+            {
+                Caption = "年度计划投资",
+                ColumnFixed = true,
+                IsClass = false,
+                IsPoint = false,
+                MultiColumn = false,
+                OrderIndex = leftorder + 3,
+                ShowModal = false,
+                ColName = "年度计划投资"
+            });
             //增加节点右边
             RightColumns.Add(new ReportColumn
             {
-                Caption = "当前进度情况及存在问题",  
+                Caption = "当前进度情况及存在问题",
+                IsClass = false,
+                ColumnFixed=true,
                 IsPoint = false,
                 MultiColumn = false,
                 OrderIndex = rightorder + 1,
                 ShowModal = true,
                 ColName = "Issues.IssueContent"
             });
-             
+            RightColumns.Add(new ReportColumn
+            {
+                Caption = "下一周工作计划",
+                IsClass = false,
+                ColumnFixed = true,
+                IsPoint = false,
+                MultiColumn = false,
+                OrderIndex = rightorder + 2,
+                ShowModal = true,
+                ColName = "下一周工作计划"
+            });
+            List<ReportColumn> h1 = new List<ReportColumn>();
+            RightColumns.Add(new ReportColumn
+            {
+                Caption = "后续在建工作计划",
+                IsClass = false,
+                ColumnFixed = true,
+                IsPoint = false,
+                MultiColumn = true,
+                OrderIndex = rightorder + 3,
+                ShowModal = false,
+                ColName = "后续在建工作计划",
+                Children=h1
+            });
+            h1.Add(new ReportColumn
+            {
+                Caption = "第一季度完成投资",
+                IsClass = false,
+                ColumnFixed = true,
+                IsPoint = false,
+                MultiColumn = true,
+                OrderIndex = rightorder + 3,
+                ShowModal = false,
+                ColName = "第一季度完成投资"
+            });
+            h1.Add(new ReportColumn
+            {
+                Caption = "第一季度期末形象进度",
+                IsClass = false,
+                ColumnFixed = true,
+                IsPoint = false,
+                MultiColumn = true,
+                OrderIndex = rightorder + 4,
+                ShowModal = false,
+                ColName = "第一季度期末形象进度"
+            });
+            h1.Add(new ReportColumn
+            {
+                Caption = "第二季度完成投资",
+                IsClass = false,
+                ColumnFixed = true,
+                IsPoint = false,
+                MultiColumn = true,
+                OrderIndex = rightorder + 5,
+                ShowModal = false,
+                ColName = "第二季度完成投资"
+            });
+            h1.Add(new ReportColumn
+            {
+                Caption = "第二季度期末形象进度",
+                IsClass = false,
+                ColumnFixed = true,
+                IsPoint = false,
+                MultiColumn = true,
+                OrderIndex = rightorder + 6,
+                ShowModal = false,
+                ColName = "第二季度期末形象进度"
+            });
+            h1.Add(new ReportColumn
+            {
+                Caption = "第三季度完成投资",
+                IsClass = false,
+                ColumnFixed = true,
+                IsPoint = false,
+                MultiColumn = false,
+                OrderIndex = rightorder + 7,
+                ShowModal = false,
+                ColName = "第三季度完成投资"
+            });
+            h1.Add(new ReportColumn
+            {
+                Caption = "第三季度期末形象进度",
+                IsClass = false,
+                ColumnFixed = true,
+                IsPoint = false,
+                MultiColumn = true,
+                OrderIndex = rightorder + 8,
+                ShowModal = false,
+                ColName = "第三季度期末形象进度"
+            });
+            h1.Add(new ReportColumn
+            {
+                Caption = "第四季度完成投资",
+                IsClass = false,
+                ColumnFixed = true,
+                IsPoint = false,
+                MultiColumn = true,
+                OrderIndex = rightorder + 9,
+                ShowModal = false,
+                ColName = "第四季度完成投资"
+            });
+            h1.Add(new ReportColumn
+            {
+                Caption = "第四季度期末形象进度",
+                IsClass = false,
+                ColumnFixed = true,
+                IsPoint = false,
+                MultiColumn = true,
+                OrderIndex = rightorder + 10,
+                ShowModal = false,
+                ColName = "第四季度期末形象进度"
+            });
+            List<ReportColumn> h2 = new List<ReportColumn>();
+            RightColumns.Add(new ReportColumn
+            {
+                Caption = "责任管理部门",
+                IsClass = false,
+                ColumnFixed = true,
+                IsPoint = false,
+                MultiColumn = true,
+                OrderIndex = rightorder + 11,
+                ShowModal = false,
+                ColName = "责任管理部门",
+                Children=h2
+            });
+            h2.Add(new ReportColumn
+            {
+                Caption = "单位名称",
+                IsClass = false,
+                ColumnFixed = true,
+                IsPoint = false,
+                MultiColumn = true,
+                OrderIndex = rightorder + 11,
+                ShowModal = false,
+                ColName = "单位名称"
+            });
+            h2.Add(new ReportColumn
+            {
+                Caption = "项目负责人",
+                IsClass = false,
+                ColumnFixed = true,
+                IsPoint = false,
+                MultiColumn = true,
+                OrderIndex = rightorder + 12,
+                ShowModal = false,
+                ColName = "项目负责人"
+            });
+            h2.Add(new ReportColumn
+            {
+                Caption = "具体负责人",
+                IsClass = false,
+                ColumnFixed = true,
+                IsPoint = false,
+                MultiColumn = false,
+                OrderIndex = rightorder + 13,
+                ShowModal = false,
+                ColName = "具体负责人"
+            });
+            List<ReportColumn> h3 = new List<ReportColumn>();
+            RightColumns.Add(new ReportColumn
+            {
+                Caption = "业主单位",
+                IsClass = false,
+                ColumnFixed = true,
+                IsPoint = false,
+                MultiColumn = true,
+                OrderIndex = rightorder + 14,
+                ShowModal = false,
+                ColName = "业主单位",
+                Children=h3
+            });
+            h3.Add(new ReportColumn
+            {
+                Caption = "单位名称",
+                IsClass = false,
+                ColumnFixed = true,
+                IsPoint = false,
+                MultiColumn = true,
+                OrderIndex = rightorder + 14,
+                ShowModal = false,
+                ColName = "单位名称"
+            });
+            h3.Add(new ReportColumn
+            {
+                Caption = "项目负责人",
+                IsClass = false,
+                ColumnFixed = true,
+                IsPoint = false,
+                MultiColumn = true,
+                OrderIndex = rightorder + 15,
+                ShowModal = false,
+                ColName = "项目负责人"
+            });
+            h3.Add(new ReportColumn
+            {
+                Caption = "具体负责人",
+                IsClass = false,
+                ColumnFixed = true,
+                IsPoint = false,
+                MultiColumn = true,
+                OrderIndex = rightorder + 16,
+                ShowModal = false,
+                ColName = "具体负责人"
+            });
             // getlistpro.ReportCols
-            var PointColums= from bc in point
+            var PointColums = from bc in point
                                     orderby bc.PointOrderIndex 
                                     select new ReportColumn
                                     {
@@ -350,13 +587,16 @@ namespace ProJ.Bll
                 }
                 
             }
-            var yuqi = getdata.Except(bin);
+            int z = 0;int x = 0;int c = 0;
             getlistpro.Pank = new Pank
             {
                 Moth = Convert.ToDateTime(moth),
                 Prophase = prokl.Count().ToString(),
                 Normal = (prokl.Count() - o).ToString(),
                 Exec = o.ToString(),
+                POne=z.ToString(),
+                PThree=c.ToString(),
+                PTwo=x.ToString()
             };
             var re = new Pager<Model.View.ReporDynlist>().GetCurrentPage(dal, para.PageSize, para.PageIndex);
             re.ExcelResult = excel;

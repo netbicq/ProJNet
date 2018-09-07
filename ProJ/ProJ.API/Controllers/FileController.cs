@@ -24,7 +24,7 @@ namespace ProJ.API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("post")]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public async Task<ActionResult<FilePath>> Post()
         {
             try

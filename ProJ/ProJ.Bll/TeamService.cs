@@ -12,16 +12,16 @@ using System.Threading.Tasks;
 namespace ProJ.Bll
 {
     /// <summary>
-    /// 词典Service
+    /// Service
     /// </summary>
-    public class TeamSerivce : ServiceBase, IBll.ITeam
+    public class TeamService : ServiceBase, IBll.ITeam
     {
         private IUnitwork _work = null;
 
         private IRepository<Proiect_Teamwork> _team = null;
         private IRepository<Project_Enclosure> _enc = null;
 
-        public TeamSerivce(IUnitwork work)
+        public TeamService(IUnitwork work)
         {
             _work = work;
             Unitwork = work;
