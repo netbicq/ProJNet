@@ -171,6 +171,10 @@ namespace ProJ.Model.View
     public class Pank
     {
         /// <summary>
+        /// 是否显示
+        /// </summary>
+        public bool IsOv { get; set; }
+        /// <summary>
         /// xx月份
         /// </summary>
         public DateTime Moth { get; set; }
@@ -208,12 +212,17 @@ namespace ProJ.Model.View
 
         public ReportColumn()
         {
+            IsColumn = true;
             IsPoint = true;
             IsClass = true;
             MultiColumn = false;
             ShowModal = false;
             Children = new List<ReportColumn>();
         }
+        /// <summary>
+        /// 是否显示列
+        /// </summary>
+        public bool IsColumn { get; set; }
         /// <summary>
         /// 列名，来自Basic_Point的ColName
         /// </summary>

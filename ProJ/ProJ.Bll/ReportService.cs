@@ -600,6 +600,7 @@ namespace ProJ.Bll
             }
             getlistpro.Pank = new Pank
             {
+                IsOv=AppUser.CurrentUserInfo.UserInfo.OwnerID==Guid.Empty?true:false,
                 Moth = Convert.ToDateTime(moth),
                 Prophase = prokl.Count().ToString(),
                 Normal = (prokl.Count() - o).ToString(),
