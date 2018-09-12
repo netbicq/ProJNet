@@ -545,6 +545,7 @@ namespace ProJ.Bll
             List<ReporDynlist> bin = new List<ReporDynlist>();
             foreach (var item in getdata)
             {
+                item.isssum =true;
                 //item.PointData = data;
                 foreach (var item1 in data)
                 {

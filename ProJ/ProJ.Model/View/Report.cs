@@ -132,6 +132,10 @@ namespace ProJ.Model.View
     public class ReporDynlist
     {
         /// <summary>
+        /// true
+        /// </summary>
+        public bool isssum { get; set; }
+        /// <summary>
         /// 有一个超期项目名变红
         /// </summary>
         public bool ProJBool { get; set; }
