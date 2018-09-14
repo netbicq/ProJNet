@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using ProJ.Model;
@@ -125,7 +127,80 @@ namespace ProJ.Bll
 
             return new ActionResult<bool>(true);
         }
+        /// <summary>
+        /// 群发短信
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
+        public ActionResult<bool> AllSend(DateTime dt)
+        {
+            var proj = _work.Repository<Model.DB.Project_Info>().Queryable(q => q.CreateDate.Year == dt.Year && q.CreateDate.Month == dt.Month);
+            var Point = _work.Repository<Model.DB.Project_Point>().Queryable();
+            var Contacts = _work.Repository<Model.DB.Project_Contacts>().Queryable();
+            var sms = _work.Repository<Model.DB.Project_SMS>().Queryable();
+            var retemp = from ac in proj
+                         let pon = Point.Where(q => q.ProjectID == ac.ID)
+                         let con = Contacts.FirstOrDefault(q => q.ProjectID == ac.ID)
+                         select new ProjectSMS
+                         {
+                             ProjectContact=con,
+                             Timeouts = from bc in pon.Where(q => q.PointExecMemo == null && q.PointSchedule != null && q.IsSend == true)
+                                        let a = (int)(Math.Floor((decimal)DbFunctions.DiffDays((DateTime)bc.PointSchedule, (DateTime)DateTime.Now)))
+                                        let b = (int)(Math.Floor((decimal)DbFunctions.DiffDays((DateTime)bc.PointSchedule, (DateTime)bc.PointExec)))
+                                        select new SMSBase
+                                        {
+                                            WeekInt = bc.PointExec == null ? a : b
+                                        }
+                         };
+            //前期项目
+            HttpClient http = new HttpClient();
+            var url = System.Configuration.ConfigurationManager.AppSettings["smsurl"];
+            var moth = dt.ToString("yyyy.MM");
+            //正常推进 未按序时推进 滞后１个月 滞后２个月 滞后３个月
+            var Prophase = proj.Count(); int z = 0;int x = 0;int c = 0;int v = 0;
+            foreach (var item in retemp)
+            {
+                if (item.Timeouts.Count() > 0)
+                {
+                    var bae = item.Timeouts.Max(s => s.WeekInt);
+                    if (bae > 0) z += 1; if (bae>= 30 && bae < 60) x += 1; if (bae >=60 && bae < 90) c += 1; if (bae > 90) v += 1;
+                }
+            }
+            foreach (var item in retemp)
+            {
+                var smspara = new SMSPara()
+                {
+                    mobile = item.ProjectContact.ComLeadTEL + "," + item.ProjectContact.ComPrincipalTEL + ",",
+                    tpl_id = int.Parse(System.Configuration.ConfigurationManager.AppSettings["smsw1id"]),
+                    tpl_value = System.Web.HttpUtility.UrlEncode($"#proname#={""}&#pointname#={""}")
+                };
+                var smsstr = Newtonsoft.Json.JsonConvert.SerializeObject(smspara);
+                StringContent para = new StringContent(smsstr, System.Text.Encoding.UTF8);
+                http.PostAsync(url, para);
+            }
+            return new ActionResult<bool>(true);
+        }
+        /// <summary>
+        /// 发送参数
+        /// </summary>
+        public class SMSPara
+        {
 
+            public string mobile { get; set; }
+
+            public int tpl_id { get; set; }
+
+            public string tpl_value { get; set; }
+            public string key
+            {
+                get
+                {
+                    return System.Configuration.ConfigurationManager.AppSettings["smskey"];
+                }
+            }
+
+            public string dtype { get { return "json"; } }
+        }
         public ActionResult<bool> ApplyOwner(OwnerNew owner)
         {
             if (string.IsNullOrEmpty(owner.Handler)

@@ -111,26 +111,31 @@ namespace ProJ.SMSClient
                                 //发送1周
                                 var smspara = new SMSPara()
                                 {
-                                    mobile = sms.ProjectContact.HandlerTEL,
+                                    mobile = "15523213827",
+                                    //mobile = sms.ProjectContact.HandlerTEL+","+ sms.ProjectContact.PrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL,
                                     tpl_id = int.Parse(System.Configuration.ConfigurationManager.AppSettings["smsw1id"]),
-                                    tpl_value = System.Web.HttpUtility.UrlEncode($"#proname#={sms.ProjectInfo.ProjectName}&#pointname#={points}")
+                                    tpl_value = System.Web.HttpUtility.UrlEncode($"#projectname#={sms.ProjectInfo.ProjectName}&#pointname#={points}")
                                 };
-                                var smsstr = Newtonsoft.Json.JsonConvert.SerializeObject(smspara);
-                                para = new StringContent(smsstr, System.Text.Encoding.UTF8);
-                                await http.PostAsync(url, para);
+                                //var smsstr = Newtonsoft.Json.JsonConvert.SerializeObject(smspara);
+                                //para = new StringContent(smsstr, System.Text.Encoding.UTF8);
+                                //await http.PostAsync(url, para);
+                                await http.GetAsync(url + "?" + "mobile=" + smspara.mobile + "&tpl_id=" + smspara.tpl_id + "&tpl_value=" + smspara.tpl_value + "&key=" + smspara.key);
                             }
                             if (points2!="")
                             {
                                 //发送2周
                                 var smspara = new SMSPara()
                                 {
-                                    mobile = sms.ProjectContact.HandlerTEL,
+                                    mobile= "15523213827",
+                                    //mobile = sms.ProjectContact.SitePrincipalTEL + "," + sms.ProjectContact.PrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL + "," + sms.ProjectContact.LeaderTEL
+                                    //+ "," + sms.ProjectContact.DeptPrincipalTEL + "," + sms.ProjectContact.ComPrincipalTEL + "," + sms.ProjectContact.ComLeadTEL,
                                     tpl_id = int.Parse(System.Configuration.ConfigurationManager.AppSettings["smsw2id"]),
-                                    tpl_value = System.Web.HttpUtility.UrlEncode($"#proname#={sms.ProjectInfo.ProjectName}&#pointname#={points2}")
+                                    tpl_value = System.Web.HttpUtility.UrlEncode($"#projectname#={sms.ProjectInfo.ProjectName}&#pointname#={points2}")
                                 };
-                                var smsstr = Newtonsoft.Json.JsonConvert.SerializeObject(smspara);
-                                para = new StringContent(smsstr, System.Text.Encoding.UTF8);
-                                await http.PostAsync(url, para);
+                                //var smsstr = Newtonsoft.Json.JsonConvert.SerializeObject(smspara);
+                                //para = new StringContent(smsstr, System.Text.Encoding.UTF8);
+                                //await http.PostAsync(url, para);
+                                await http.GetAsync(url + "?" + "mobile=" + smspara.mobile + "&tpl_id=" + smspara.tpl_id + "&tpl_value=" + smspara.tpl_value + "&key=" + smspara.key);
                             }
                             
                         }

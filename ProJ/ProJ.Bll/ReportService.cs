@@ -575,11 +575,11 @@ namespace ProJ.Bll
                     item.ProJBool = true;
                     bin.Add(item);
                 }
-                if (g>=30&&g<60)
+                if (g>=30&&g<60&&item.ProjectInfo.CreateDate.Year == para.Query.Month.Year && item.ProjectInfo.CreateDate.Month == para.Query.Month.Month)
                     z += 1;
-                if (g >= 60 && g < 90)
+                if (g >= 60 && g < 90 && item.ProjectInfo.CreateDate.Year == para.Query.Month.Year && item.ProjectInfo.CreateDate.Month == para.Query.Month.Month)
                     x += 1;
-                if (g >= 90)
+                if (g >= 90 && item.ProjectInfo.CreateDate.Year == para.Query.Month.Year && item.ProjectInfo.CreateDate.Month == para.Query.Month.Month)
                     c += 1;
             }
             var dal = para.Query.ExeceedType == PublicEnum.ExeceedType.Normal ? getdata : bin;

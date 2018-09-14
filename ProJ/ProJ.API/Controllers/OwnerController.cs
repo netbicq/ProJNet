@@ -24,7 +24,17 @@ namespace ProJ.API.Controllers
             bll = owner;
             BusinessService = bll;
         }
-
+        /// <summary>
+        /// 群发短信
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("allsend/{dt:DateTime}")]
+        [HttpGet]
+        public ActionResult<bool> AllSend(DateTime dt)
+        {
+            return bll.AllSend(dt);
+        }
         /// <summary>
         /// 新建 业主
         /// </summary>

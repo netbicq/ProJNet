@@ -10,7 +10,12 @@ namespace ProJ.IBll
 {
     public interface IOwner
     {
-
+        /// <summary>
+        /// 群发短信
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <returns></returns>
+        ActionResult<bool> AllSend(DateTime dt);
         ActionResult<bool> ApplyOwner(Model.Para.OwnerNew owner);
 
         ActionResult<bool> AddOwner(Model.Para.OwnerEdit owner);
