@@ -25,7 +25,7 @@ namespace ProJ.SMSClient
             LogHelper.WriteLog(typeof(frmSMS), "SMS Service Start");
             _smstimer = new Timer();
             SMSSend.SendHour = DateTime.Now.Hour+1;//运行时设置为晚于一小时发送
-            SMSSend.SendLastTime = DateTime.Now.AddDays(-1);//设置为昨天，确何第一次运行的当天可以发送一次
+            SMSSend.SendLastTime = DateTime.Now.AddDays(-7);//设置为昨天，确何第一次运行的当天可以发送一次
 
             _smstimer.Interval = 600000;
             _smstimer.Tick += _smstimer_Tick;
@@ -46,7 +46,7 @@ namespace ProJ.SMSClient
 
                 var dt = DateTime.Now;
                 //非当天就发送
-                bool send = Microsoft.VisualBasic.DateAndTime.DateDiff(Microsoft.VisualBasic.DateInterval.Day, dt, SMSSend.SendLastTime) != 0;
+                bool send = Microsoft.VisualBasic.DateAndTime.DateDiff(Microsoft.VisualBasic.DateInterval.Day, SMSSend.SendLastTime, dt ) >= 7;
                 ///如果当天未发送，且当前时间为发送时间
                 if(send && dt.Hour ==SMSSend.SendHour)
                 {
