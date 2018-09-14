@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using ProJ.Model;
@@ -152,11 +153,8 @@ namespace ProJ.Bll
                                             WeekInt = bc.PointExec == null ? a : b
                                         }
                          };
-            //前期项目
-            HttpClient http = new HttpClient();
-            var url = System.Configuration.ConfigurationManager.AppSettings["smsurl"];
             var moth = dt.ToString("yyyy.MM");
-            //正常推进 未按序时推进 滞后１个月 滞后２个月 滞后３个月
+            //前期项目 未按序时推进 滞后１个月 滞后２个月 滞后３个月
             var Prophase = proj.Count(); int z = 0;int x = 0;int c = 0;int v = 0;
             foreach (var item in retemp)
             {
@@ -166,42 +164,89 @@ namespace ProJ.Bll
                     if (bae > 0) z += 1; if (bae>= 30 && bae < 60) x += 1; if (bae >=60 && bae < 90) c += 1; if (bae > 90) v += 1;
                 }
             }
+            //正常推进
+            var baea = Prophase-z;
             foreach (var item in retemp)
             {
-                var smspara = new SMSPara()
-                {
-                    mobile = item.ProjectContact.ComLeadTEL + "," + item.ProjectContact.ComPrincipalTEL + ",",
-                    tpl_id = int.Parse(System.Configuration.ConfigurationManager.AppSettings["smsw1id"]),
-                    tpl_value = System.Web.HttpUtility.UrlEncode($"#proname#={""}&#pointname#={""}")
-                };
-                var smsstr = Newtonsoft.Json.JsonConvert.SerializeObject(smspara);
-                StringContent para = new StringContent(smsstr, System.Text.Encoding.UTF8);
-                http.PostAsync(url, para);
+                SMSPacket jj = new SMSPacket();
+                List<string> ss = new List<string>();
+                ss.Add(moth); ss.Add(Prophase.ToString()); ss.Add(baea.ToString());
+                ss.Add(z.ToString()); ss.Add(x.ToString()); ss.Add(c.ToString()); ss.Add(v.ToString());
+                jj.mobile = item.ProjectContact.SitePrincipalTEL + "," + item.ProjectContact.PrincipalTEL + "," + item.ProjectContact.SiteLinkTEL + "," + item.ProjectContact.LeaderTEL
+                + "," + item.ProjectContact.DeptPrincipalTEL + "," + item.ProjectContact.ComPrincipalTEL + "," + item.ProjectContact.ComLeadTEL + "," + item.ProjectContact.HandlerTEL;
+                jj.templateno = System.Configuration.ConfigurationManager.AppSettings["smsmu3"];
+                jj.variables = ss;
+                SendTelMSG(jj);
             }
             return new ActionResult<bool>(true);
         }
-        /// <summary>
-        /// 发送参数
-        /// </summary>
-        public class SMSPara
+        public static void SendTelMSG(SMSPacket pack)
         {
+                string smsur = System.Configuration.ConfigurationManager.AppSettings["smsmulturl"];//短信地址
+                string smsui = System.Configuration.ConfigurationManager.AppSettings["smsuid"];//短信平台用户名
+                string smspwd = System.Configuration.ConfigurationManager.AppSettings["smspwd"];//短信平台密码
 
-            public string mobile { get; set; }
+                pack.uid = smsui;
+                pack.userpwd = smspwd;
 
-            public int tpl_id { get; set; }
-
-            public string tpl_value { get; set; }
-            public string key
+            var parastr = Newtonsoft.Json.JsonConvert.SerializeObject(pack);
+            System.Net.WebRequest request = (System.Net.WebRequest)System.Net.HttpWebRequest.Create(smsur);
+            request.Method = "POST";
+            Byte[] postbytes = System.Text.Encoding.GetEncoding("UTF-8").GetBytes(parastr);
+            request.ContentType = "application/json";
+            request.ContentLength = postbytes.Length;
+            using (System.IO.Stream stream = request.GetRequestStream())
             {
-                get
+                stream.Write(postbytes, 0, postbytes.Length);
+                stream.Close();
+            }
+            string re = "";
+            using (System.Net.WebResponse response = request.GetResponse())
+            {
+                if (response == null)
                 {
-                    return System.Configuration.ConfigurationManager.AppSettings["smskey"];
+                    throw new Exception("Response is not Created");
+                }
+                using (System.IO.Stream restream = response.GetResponseStream())
+                {
+                    using (System.IO.StreamReader getrd = new System.IO.StreamReader(restream, System.Text.Encoding.UTF8))
+                    {
+                        re = getrd.ReadToEnd();
+                        getrd.Close();
+                    }
+                    restream.Close();
                 }
             }
 
-            public string dtype { get { return "json"; } }
         }
-        public ActionResult<bool> ApplyOwner(OwnerNew owner)
+    public class SMSPacket
+    {
+        /// <summary>
+        /// 用户名，不赋值
+        /// </summary>
+        public string uid { get; set; }
+        /// <summary>
+        /// 密码，不赋值
+        /// </summary>
+        public string userpwd { get; set; }
+        /// <summary>
+        /// 多号码用英文逗号
+        /// </summary>
+        public string mobile { get; set; }
+        /// <summary>
+        /// 签名可以不传
+        /// </summary>
+        public string signature { get; set; }
+        /// <summary>
+        /// 变理值集合，传入的值顺序与变理顺序对应
+        /// </summary>
+        public IEnumerable<string> variables { get; set; }
+        /// <summary>
+        /// 模板ID
+        /// </summary>
+        public string templateno { get; set; }
+    }
+    public ActionResult<bool> ApplyOwner(OwnerNew owner)
         {
             if (string.IsNullOrEmpty(owner.Handler)
     || string.IsNullOrEmpty(owner.HandlerTEL)

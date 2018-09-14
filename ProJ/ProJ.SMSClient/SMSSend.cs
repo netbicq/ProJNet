@@ -110,33 +110,50 @@ namespace ProJ.SMSClient
                             if (points!="")
                             {
                                 //发送1周
-                                var smspara = new SMSPara()
-                                {
-                                    mobile = "15523213827",
-                                    //mobile = sms.ProjectContact.HandlerTEL+","+ sms.ProjectContact.PrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL,
-                                    tpl_id = int.Parse(System.Configuration.ConfigurationManager.AppSettings["smsw1id"]),
-                                    tpl_value = System.Web.HttpUtility.UrlEncode($"#projectname#={sms.ProjectInfo.ProjectName}&#pointname#={points}")
-                                };
-                                //var smsstr = Newtonsoft.Json.JsonConvert.SerializeObject(smspara);
-                                //para = new StringContent(smsstr, System.Text.Encoding.UTF8);
-                                //await http.PostAsync(url, para);
-                                await http.GetAsync(url + "?" + "mobile=" + smspara.mobile + "&tpl_id=" + smspara.tpl_id + "&tpl_value=" + smspara.tpl_value + "&key=" + smspara.key);
+                                SMSPacket jj = new SMSPacket();
+                                List<string> ss = new List<string>();
+                                ss.Add(sms.ProjectInfo.ProjectName);
+                                ss.Add(points);
+                                jj.mobile = sms.ProjectContact.HandlerTEL + "," + sms.ProjectContact.PrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL;
+                                jj.templateno = System.Configuration.ConfigurationManager.AppSettings["smsmu1"];
+                                jj.variables = ss;
+                                SendTelMSG(jj);
+                                //var smspara = new SMSPara()
+                                //{
+                                //    mobile = "15523213827",
+                                //    //mobile = sms.ProjectContact.HandlerTEL+","+ sms.ProjectContact.PrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL,
+                                //    tpl_id = int.Parse(System.Configuration.ConfigurationManager.AppSettings["smsw1id"]),
+                                //    tpl_value = System.Web.HttpUtility.UrlEncode($"#projectname#={sms.ProjectInfo.ProjectName}&#pointname#={points}")
+                                //};
+                                ////var smsstr = Newtonsoft.Json.JsonConvert.SerializeObject(smspara);
+                                ////para = new StringContent(smsstr, System.Text.Encoding.UTF8);
+                                ////await http.PostAsync(url, para);
+                                //await http.GetAsync(url + "?" + "mobile=" + smspara.mobile + "&tpl_id=" + smspara.tpl_id + "&tpl_value=" + smspara.tpl_value + "&key=" + smspara.key);
                             }
                             if (points2!="")
                             {
                                 //发送2周
-                                var smspara = new SMSPara()
-                                {
-                                    mobile= "15523213827",
-                                    //mobile = sms.ProjectContact.SitePrincipalTEL + "," + sms.ProjectContact.PrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL + "," + sms.ProjectContact.LeaderTEL
-                                    //+ "," + sms.ProjectContact.DeptPrincipalTEL + "," + sms.ProjectContact.ComPrincipalTEL + "," + sms.ProjectContact.ComLeadTEL,
-                                    tpl_id = int.Parse(System.Configuration.ConfigurationManager.AppSettings["smsw2id"]),
-                                    tpl_value = System.Web.HttpUtility.UrlEncode($"#projectname#={sms.ProjectInfo.ProjectName}&#pointname#={points2}")
-                                };
-                                //var smsstr = Newtonsoft.Json.JsonConvert.SerializeObject(smspara);
-                                //para = new StringContent(smsstr, System.Text.Encoding.UTF8);
-                                //await http.PostAsync(url, para);
-                                await http.GetAsync(url + "?" + "mobile=" + smspara.mobile + "&tpl_id=" + smspara.tpl_id + "&tpl_value=" + smspara.tpl_value + "&key=" + smspara.key);
+                                SMSPacket jj = new SMSPacket();
+                                List<string> ss = new List<string>();
+                                ss.Add(sms.ProjectInfo.ProjectName);
+                                ss.Add(points);
+                                jj.mobile = sms.ProjectContact.SitePrincipalTEL + "," + sms.ProjectContact.PrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL + "," + sms.ProjectContact.LeaderTEL
+                                + "," + sms.ProjectContact.DeptPrincipalTEL + "," + sms.ProjectContact.ComPrincipalTEL + "," + sms.ProjectContact.ComLeadTEL;
+                                jj.templateno = System.Configuration.ConfigurationManager.AppSettings["smsmu2"];
+                                jj.variables = ss;
+                                SendTelMSG(jj);
+                                //var smspara = new SMSPara()
+                                //{
+                                //    mobile= "15523213827",
+                                //    //mobile = sms.ProjectContact.SitePrincipalTEL + "," + sms.ProjectContact.PrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL + "," + sms.ProjectContact.LeaderTEL
+                                //    //+ "," + sms.ProjectContact.DeptPrincipalTEL + "," + sms.ProjectContact.ComPrincipalTEL + "," + sms.ProjectContact.ComLeadTEL,
+                                //    tpl_id = int.Parse(System.Configuration.ConfigurationManager.AppSettings["smsw2id"]),
+                                //    tpl_value = System.Web.HttpUtility.UrlEncode($"#projectname#={sms.ProjectInfo.ProjectName}&#pointname#={points2}")
+                                //};
+                                ////var smsstr = Newtonsoft.Json.JsonConvert.SerializeObject(smspara);
+                                ////para = new StringContent(smsstr, System.Text.Encoding.UTF8);
+                                ////await http.PostAsync(url, para);
+                                //await http.GetAsync(url + "?" + "mobile=" + smspara.mobile + "&tpl_id=" + smspara.tpl_id + "&tpl_value=" + smspara.tpl_value + "&key=" + smspara.key);
                             }
                             
                         }
@@ -164,19 +181,46 @@ namespace ProJ.SMSClient
 
 
 
-                System.Net.Http.HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri(smsur);
+                //System.Net.Http.HttpClient client = new HttpClient();
+                //client.BaseAddress = new Uri(smsur);
 
                 pack.uid = smsui;
                 pack.userpwd = smspwd;
 
-
+                
                 var parastr = Newtonsoft.Json.JsonConvert.SerializeObject(pack);
-                var para = new StringContent(parastr, System.Text.Encoding.UTF8);
-
-                client.DefaultRequestHeaders.Accept.Add(
-                    new MediaTypeWithQualityHeaderValue("application/json"));
-                var result = client.PostAsync("multisend", para).Result;
+                System.Net.WebRequest request = (System.Net.WebRequest)System.Net.HttpWebRequest.Create(smsur);
+                request.Method = "POST";
+                Byte[] postbytes = System.Text.Encoding.GetEncoding("UTF-8").GetBytes(parastr);
+                request.ContentType = "application/json";
+                request.ContentLength = postbytes.Length;
+                using (System.IO.Stream stream = request.GetRequestStream())
+                {
+                    stream.Write(postbytes, 0, postbytes.Length);
+                    stream.Close();
+                }
+                string re = "";
+                using (System.Net.WebResponse response = request.GetResponse())
+                {
+                    if (response == null)
+                    {
+                        throw new Exception("Response is not Created");
+                    }
+                    using (System.IO.Stream restream = response.GetResponseStream())
+                    {
+                        using (System.IO.StreamReader getrd = new System.IO.StreamReader(restream, System.Text.Encoding.UTF8))
+                        {
+                            re = getrd.ReadToEnd();
+                            getrd.Close();
+                        }
+                        restream.Close();
+                    }
+                }
+                //var para = new StringContent(parastr, System.Text.Encoding.UTF8);
+                //client.DefaultRequestHeaders.Add("Content-Type", "application/json");
+                //client.DefaultRequestHeaders.Accept.Add(
+                //    new MediaTypeWithQualityHeaderValue("application/json"));
+                //var result = client.PostAsync("multisend", para).Result;
 
             }
             catch (Exception ex)
