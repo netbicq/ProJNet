@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -147,8 +148,44 @@ namespace ProJ.SMSClient
                  LogHelper.WriteLog(typeof(SMSSend), ex);
             }
 
-        }        
-         
+        }
+
+
+
+
+        public static void SendTelMSG(SMSPacket pack)
+        {
+
+            try
+            {
+                string smsur = System.Configuration.ConfigurationManager.AppSettings["smsmulturl"];//短信地址
+                string smsui = System.Configuration.ConfigurationManager.AppSettings["smsuid"];//短信平台用户名
+                string smspwd = System.Configuration.ConfigurationManager.AppSettings["smspwd"];//短信平台密码
+
+
+
+                System.Net.Http.HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(smsur);
+
+                pack.uid = smsui;
+                pack.userpwd = smspwd;
+
+
+                var parastr = Newtonsoft.Json.JsonConvert.SerializeObject(pack);
+                var para = new StringContent(parastr, System.Text.Encoding.UTF8);
+
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+                var result = client.PostAsync("multisend", para).Result;
+
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(typeof(SMSSend), ex);
+            }
+
+        }
+
     }
     /// <summary>
     /// 发送参数
@@ -169,5 +206,38 @@ namespace ProJ.SMSClient
         public string dtype { get { return "json"; } }
     }
 
-   
+
+
+
+    public class SMSPacket
+    {
+        /// <summary>
+        /// 用户名，不赋值
+        /// </summary>
+        public string uid { get; set; }
+        /// <summary>
+        /// 密码，不赋值
+        /// </summary>
+        public string userpwd { get; set; }
+        /// <summary>
+        /// 多号码用英文逗号
+        /// </summary>
+        public string mobile { get; set; }
+        /// <summary>
+        /// 签名可以不传
+        /// </summary>
+        public string signature { get; set; }
+        /// <summary>
+        /// 变理值集合，传入的值顺序与变理顺序对应
+        /// </summary>
+        public IEnumerable<string> variables { get; set; }
+        /// <summary>
+        /// 模板ID
+        /// </summary>
+        public string templateno { get; set; }
+    }
+
+
+
+
 }
