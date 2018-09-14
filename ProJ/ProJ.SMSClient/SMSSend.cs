@@ -57,22 +57,19 @@ namespace ProJ.SMSClient
                         }
                         if (sms.Timeouts.Count()>0)
                         {
-                            foreach(var tsms in sms.Timeouts.Where(q=>q.WeekInt>=1))
+                            StringContent para;
+                            //节点1周
+                            var points = "";
+                            //节点2周
+                            var points2 = "";
+                            foreach (var tsms in sms.Timeouts.Where(q=>q.WeekInt>=1))
                             {
-                                StringContent para;
                                 Model.DB.Project_SMS dbsms;
 
                                 switch (tsms.WeekInt)
                                 {
                                     case 1:
-                                        var smspara = new SMSPara()
-                                        {
-                                            mobile = sms.ProjectContact.HandlerTEL,
-                                            tpl_id = int.Parse(System.Configuration.ConfigurationManager.AppSettings["smsw1id"]),
-                                            tpl_value = System.Web.HttpUtility.UrlEncode($"#proname#={sms.ProjectInfo.ProjectName}&#pointname#={tsms.PointName}")
-                                        };
-                                        var smsstr = Newtonsoft.Json.JsonConvert.SerializeObject(smspara);
-                                        para = new StringContent(smsstr, System.Text.Encoding.UTF8);
+                                        points = points + "_" + tsms.PointName;
                                         dbsms = new Model.DB.Project_SMS
                                         {
                                             ID = Guid.NewGuid(),
@@ -82,14 +79,7 @@ namespace ProJ.SMSClient
                                         };
                                         break;
                                     case 2:
-                                        var smspara2 = new SMSPara()
-                                        {
-                                            mobile = sms.ProjectContact.PrincipalTEL,
-                                            tpl_id = int.Parse(System.Configuration.ConfigurationManager.AppSettings["smsw2id"]),
-                                            tpl_value = System.Web.HttpUtility.UrlEncode($"#proname#={sms.ProjectInfo.ProjectName}&#pointname#={tsms.PointName}")
-                                        };
-                                        var smsstr2 = Newtonsoft.Json.JsonConvert.SerializeObject(smspara2);
-                                        para = new StringContent(smsstr2, System.Text.Encoding.UTF8);
+                                        points2 = points2 + "_" + tsms.PointName;
                                         dbsms = new Model.DB.Project_SMS
                                         {
                                             ID = Guid.NewGuid(),
@@ -99,14 +89,7 @@ namespace ProJ.SMSClient
                                         };
                                         break; 
                                     default:
-                                        var smspara3 = new SMSPara()
-                                        {
-                                            mobile = sms.ProjectContact.LeaderTEL,
-                                            tpl_id = int.Parse(System.Configuration.ConfigurationManager.AppSettings["smsw3id"]),
-                                            tpl_value = System.Web.HttpUtility.UrlEncode($"#proname#={sms.ProjectInfo.ProjectName}&#pointname#={tsms.PointName}")
-                                        };
-                                        var smsstr3 = Newtonsoft.Json.JsonConvert.SerializeObject(smspara3);
-                                        para = new StringContent(smsstr3, System.Text.Encoding.UTF8);
+                                        points2 = points2 + "_" + tsms.PointName;
                                         dbsms = new Model.DB.Project_SMS
                                         {
                                             ID = Guid.NewGuid(),
@@ -122,8 +105,34 @@ namespace ProJ.SMSClient
                                     db.Add(dbsms);
                                     _work.Commit();
                                 }
-                               await http.PostAsync(url,para);
                             }
+                            if (points!="")
+                            {
+                                //发送1周
+                                var smspara = new SMSPara()
+                                {
+                                    mobile = sms.ProjectContact.HandlerTEL,
+                                    tpl_id = int.Parse(System.Configuration.ConfigurationManager.AppSettings["smsw1id"]),
+                                    tpl_value = System.Web.HttpUtility.UrlEncode($"#proname#={sms.ProjectInfo.ProjectName}&#pointname#={points}")
+                                };
+                                var smsstr = Newtonsoft.Json.JsonConvert.SerializeObject(smspara);
+                                para = new StringContent(smsstr, System.Text.Encoding.UTF8);
+                                await http.PostAsync(url, para);
+                            }
+                            if (points2!="")
+                            {
+                                //发送2周
+                                var smspara = new SMSPara()
+                                {
+                                    mobile = sms.ProjectContact.HandlerTEL,
+                                    tpl_id = int.Parse(System.Configuration.ConfigurationManager.AppSettings["smsw2id"]),
+                                    tpl_value = System.Web.HttpUtility.UrlEncode($"#proname#={sms.ProjectInfo.ProjectName}&#pointname#={points2}")
+                                };
+                                var smsstr = Newtonsoft.Json.JsonConvert.SerializeObject(smspara);
+                                para = new StringContent(smsstr, System.Text.Encoding.UTF8);
+                                await http.PostAsync(url, para);
+                            }
+                            
                         }
                     }
                 }
