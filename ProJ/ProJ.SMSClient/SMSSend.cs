@@ -57,14 +57,14 @@ namespace ProJ.SMSClient
                         }
                         if (sms.Timeouts.Count()>0)
                         {
-                            foreach(var tsms in sms.Timeouts.Where(q=>q.WeekInt>=0))
+                            foreach(var tsms in sms.Timeouts.Where(q=>q.WeekInt>=1))
                             {
                                 StringContent para;
                                 Model.DB.Project_SMS dbsms;
 
                                 switch (tsms.WeekInt)
                                 {
-                                    case 0:
+                                    case 1:
                                         var smspara = new SMSPara()
                                         {
                                             mobile = sms.ProjectContact.HandlerTEL,
@@ -78,10 +78,10 @@ namespace ProJ.SMSClient
                                             ID = Guid.NewGuid(),
                                             PointName = tsms.PointName,
                                             SendDate = DateTime.Now,
-                                            WeekInt = 0, ProjectID =sms.ProjectInfo.ID
+                                            WeekInt = 1, ProjectID =sms.ProjectInfo.ID
                                         };
                                         break;
-                                    case 1:
+                                    case 2:
                                         var smspara2 = new SMSPara()
                                         {
                                             mobile = sms.ProjectContact.PrincipalTEL,
@@ -95,7 +95,7 @@ namespace ProJ.SMSClient
                                             ID = Guid.NewGuid(),
                                             PointName = tsms.PointName,
                                             SendDate = DateTime.Now,
-                                            WeekInt = 1,ProjectID =sms.ProjectInfo.ID
+                                            WeekInt = 2,ProjectID =sms.ProjectInfo.ID
                                         };
                                         break; 
                                     default:
@@ -112,7 +112,7 @@ namespace ProJ.SMSClient
                                             ID = Guid.NewGuid(),
                                             PointName = tsms.PointName,
                                             SendDate = DateTime.Now,
-                                            WeekInt = 1,ProjectID =sms.ProjectInfo.ID
+                                            WeekInt = 2,ProjectID =sms.ProjectInfo.ID
                                         };
                                         break;
                                 }

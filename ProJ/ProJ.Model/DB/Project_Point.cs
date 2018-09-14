@@ -25,5 +25,9 @@ namespace ProJ.Model.DB
         /// 备注
         /// </summary>
         public string PointExecMemo { get; set; }
+        /// <summary>
+        /// 是否发送短信
+        /// </summary>
+        public bool IsSend { get; set; }
     }
 }

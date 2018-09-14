@@ -93,7 +93,17 @@ namespace ProJ.IBll
 
 
         #region "调整工程项目的节点自定义"
-
+        /// <summary>
+        /// 修改是否发送短信
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        ActionResult<bool> ProjSMS(Model.View.PJont para);
+        /// <summary>
+        /// 获取是否发送短信节点
+        /// </summary>
+        /// <returns></returns>
+        ActionResult<IEnumerable<Model.View.ProjectPoint>> GetISPoints(Guid ProjectID);
         /// <summary>
         /// 获取节点
         /// </summary>

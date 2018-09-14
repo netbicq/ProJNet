@@ -21,7 +21,19 @@ namespace ProJ.Model.View
         /// </summary>
         public int OrderIndex { get; set; }
     }
-
+    public class PJont
+    {
+        public IEnumerable<PJontse> PJontse { get; set; }
+    }
+    public class PJontse
+    {
+        /// <summary>
+        /// id
+        /// </summary>
+        public Guid ID { get; set; }
+        public Guid ProjectID { get; set; }
+        public bool IsSend { get; set; }
+    }
     public class ProjectPoint
     {
         /// <summary>
@@ -44,5 +56,9 @@ namespace ProJ.Model.View
         public DateTime? Exec { get; set; }
 
         public string ExecMemo { get; set; }
+        /// <summary>
+        /// 是否发送短信
+        /// </summary>
+        public bool IsSend { get; set; }
     }
 }

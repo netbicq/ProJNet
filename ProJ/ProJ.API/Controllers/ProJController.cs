@@ -172,6 +172,27 @@ namespace ProJ.API.Controllers
         }
         #region "调整工程项目的节点自定义"
         /// <summary>
+        /// 修改是否发送短信
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <returns></returns>
+        [Route("editsmss")]
+        [HttpPost]
+        public ActionResult<bool> ProjSMS(Model.View.PJont para)
+        {
+            return bll.ProjSMS(para);
+        }
+        /// <summary>
+        /// 获取是否发送短信节点
+        /// </summary>
+        /// <returns></returns>
+        [Route("getlistq/{ProjectID:Guid}")]
+        [HttpGet]
+        public ActionResult<IEnumerable<Model.View.ProjectPoint>> GetISPoints(Guid ProjectID)
+        {
+            return bll.GetISPoints(ProjectID);
+        }
+        /// <summary>
         /// 获取节点
         /// </summary>
         /// <returns></returns>

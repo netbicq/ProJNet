@@ -375,11 +375,13 @@ namespace ProJ.Bll
                              OwerInfo = owners,
                              ProjectContact = con,
                              ProjectInfo = ac,
-                             Timeouts = from bc in pon.Where(q=>q.PointExecMemo==null&&q.PointSchedule!=null)
+                             Timeouts = from bc in pon.Where(q=>q.PointExecMemo==null&&q.PointSchedule!=null&&q.IsSend==true)
                                         let bpoint = BaPoint.FirstOrDefault(q => q.ID == bc.PointID)
                                         //DbFunctions.DiffDays表示后面减去前面的数  用于linq时间计算 转int在linq用（int）
-                                        let a =(int)(Math.Floor((decimal)DbFunctions.DiffDays((DateTime)bc.PointSchedule,(DateTime)DateTime.Now) / 7)) >= 1 ? 1 : (int)(Math.Floor((decimal)DbFunctions.DiffDays((DateTime)bc.PointSchedule, (DateTime)DateTime.Now) / 7))
-                                        let b=(int)(Math.Floor((decimal)DbFunctions.DiffDays((DateTime)bc.PointSchedule,(DateTime)bc.PointExec) / 7)) >= 1 ? 1 : (int)(Math.Floor((decimal)DbFunctions.DiffDays((DateTime)bc.PointSchedule,(DateTime)bc.PointExec) / 7))
+                                        let a = ((int)(Math.Floor((decimal)DbFunctions.DiffDays((DateTime)bc.PointSchedule, (DateTime)DateTime.Now) / 7))>=1&& (int)(Math.Floor((decimal)DbFunctions.DiffDays((DateTime)bc.PointSchedule, (DateTime)DateTime.Now) / 7))<2)?1:
+                                        (int)(Math.Floor((decimal)DbFunctions.DiffDays((DateTime)bc.PointSchedule,(DateTime)DateTime.Now) / 7)) >= 2 ? 2 : (int)(Math.Floor((decimal)DbFunctions.DiffDays((DateTime)bc.PointSchedule, (DateTime)DateTime.Now) / 7))
+                                        let b= ((int)(Math.Floor((decimal)DbFunctions.DiffDays((DateTime)bc.PointSchedule, (DateTime)bc.PointExec) / 7)) >= 1 && (int)(Math.Floor((decimal)DbFunctions.DiffDays((DateTime)bc.PointSchedule, (DateTime)bc.PointExec) / 7)) < 2) ? 1 :
+                                        (int)(Math.Floor((decimal)DbFunctions.DiffDays((DateTime)bc.PointSchedule,(DateTime)bc.PointExec) / 7)) >= 2 ? 2 : (int)(Math.Floor((decimal)DbFunctions.DiffDays((DateTime)bc.PointSchedule,(DateTime)bc.PointExec) / 7))
                                         select new SMSBase
                                         { 
                                             PointName = bpoint.PointName,
@@ -548,7 +550,7 @@ namespace ProJ.Bll
             var points = _work.Repository<Model.DB.Basic_Point>().Queryable();
             var retemp = from ac in proj.Where(q =>
                         (q.OwnerID == AppUser.CurrentUserInfo.UserInfo.OwnerID || AppUser.CurrentUserInfo.UserInfo.OwnerID == Guid.Empty)
-                        && (para.KeyWord.Contains(q.ProjectName) || string.IsNullOrEmpty(para.KeyWord))
+                       // && (para.KeyWord.Contains(q.ProjectName) || string.IsNullOrEmpty(para.KeyWord))
                          )
                          let owners = owner.FirstOrDefault(q => q.ID == ac.OwnerID)
                          let dicts = dict.FirstOrDefault(q => q.ID == ac.IndustryID)
@@ -586,6 +588,7 @@ namespace ProJ.Bll
                              Project_Contacts = con,
                              //EditTable = new Schss()
                          };
+            retemp = retemp.Where(q=>para.KeyWord.Contains(q.OwnerStr)|| para.KeyWord.Contains(q.Project_Info.ProjectName) || para.KeyWord.Contains(q.ProJLeveStr) || string.IsNullOrEmpty(para.KeyWord));
             var re = new Pager<ProjectView>().GetCurrentPage(retemp, para.PageSize, para.PageIndex);
             //var relist = re.Data.ToList();
             //foreach (var item in relist)
@@ -1302,6 +1305,58 @@ namespace ProJ.Bll
             var sms = _work.Repository<Model.DB.Project_SMS>().Delete(q => q.ProjectID == ID);
             _work.Commit();
 
+            return new ActionResult<bool>(true);
+        }
+        /// <summary>
+        /// 获取是否发送短信节点
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult<IEnumerable<ProjectPoint>> GetISPoints(Guid ProjectID)
+        {
+            var re = _work.Repository<Model.DB.Project_Point>().Queryable();
+            var reme = _work.Repository<Model.DB.Basic_Point>().Queryable();
+            var retmp = from ac in re.Where(q => q.ProjectID == ProjectID)
+                        let bas = reme.FirstOrDefault(q => q.ID == ac.PointID)
+                        select new Model.View.ProjectPoint
+                        {
+                            ID = ac.ID,
+                            PointName = bas.PointName,
+                            IsSend = ac.IsSend
+                        };
+            //var bin = from bc in reme
+            //          let han = re.FirstOrDefault(q => q.PointID == bc.ID && q.ProjectID == ProjectID)
+            //          select new ProjectPoint
+            //          {
+            //              ID = han.ID,
+            //              PointName = bc.PointName,
+            //              IsSend = han.IsSend
+            //          };
+            return new ActionResult<IEnumerable<ProjectPoint>>(retmp);
+        }
+        /// <summary>
+        /// 修改是否发送短信
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        public ActionResult<bool> ProjSMS(PJont para)
+        {
+            var re = _work.Repository<Model.DB.Project_Point>();
+            foreach (var item in para.PJontse)
+            {
+                var reme = re.GetModel(q => q.ID == item.ID && q.ProjectID == item.ProjectID);
+                reme.IsSend = item.IsSend;
+                re.Update(reme);
+            }
+            
+
+            var Log = _work.Repository<Project_Log>();
+            var logs = new Project_Log();
+            logs.ProjectID = para.PJontse.FirstOrDefault().ProjectID;
+            logs.LogContent = "修改了是否发送短信";
+            logs.CreateMan = AppUser.CurrentUserInfo.UserProfile.CNName;
+            logs.State = 1;
+            Log.Add(logs);
+            _work.Commit();
             return new ActionResult<bool>(true);
         }
         #endregion

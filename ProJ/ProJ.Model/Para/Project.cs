@@ -356,6 +356,14 @@ namespace ProJ.Model.Para
         /// 集团公司主要负责人电话
         /// </summary>
         public string ComPrincipalTEL { get; set; }
+        /// <summary>
+        /// 责任管理部门责任领导
+        /// </summary>
+        public string DeptPrincipal { get; set; }
+        /// <summary>
+        /// 责任管理部门责任领导
+        /// </summary>
+        public string DeptPrincipalTEL { get; set; }
     }
     /// <summary>
     /// 问题发布
