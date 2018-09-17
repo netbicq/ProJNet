@@ -297,9 +297,12 @@ namespace ProJ.ORM
                 trow.CreateCell(t + 7).SetCellValue("第三季度期末形象进度");
                 trow.CreateCell(t + 8).SetCellValue("第四季度完成投资");
                 trow.CreateCell(t + 9).SetCellValue("第四季度期末形象进度");
-                trow.CreateCell(t + 10).SetCellValue("业主单位");
+                trow.CreateCell(t + 10).SetCellValue("责任管理部单位名称");
                 trow.CreateCell(t + 11).SetCellValue("项目负责人");
-                trow.CreateCell(t + 12).SetCellValue("具体负责人");
+                trow.CreateCell(t + 12).SetCellValue("具体责任人");
+                trow.CreateCell(t + 13).SetCellValue("业主单位名称");
+                trow.CreateCell(t + 14).SetCellValue("项目负责人");
+                trow.CreateCell(t + 15).SetCellValue("具体责任人");
                 if (source == null)
                     throw new Exception("参数为空");
                 if (source.Count() == 0)
@@ -319,8 +322,8 @@ namespace ProJ.ORM
                     drowsec.CreateCell(1).SetCellValue("执行");
                     drow.CreateCell(2).SetCellValue(obj.ProjectInfo.InvestMoney.ToString());
                     drowsec.CreateCell(2).SetCellValue(obj.ProjectInfo.InvestMoney.ToString());
-                    drow.CreateCell(3).SetCellValue(((DateTime)obj.ProjectInfo.ComemenceDate).ToString("yyyy.MM.dd"));
-                    drowsec.CreateCell(3).SetCellValue(((DateTime)obj.ProjectInfo.ComemenceDate).ToString("yyyy.MM.dd"));
+                    drow.CreateCell(3).SetCellValue(obj.ProjectInfo.ComemenceDate.ToString());
+                    drowsec.CreateCell(3).SetCellValue(obj.ProjectInfo.ComemenceDate.ToString());
                     List<string> obj1 = new List<string>();
                     foreach (var item in obj.PointData)
                     {
@@ -375,12 +378,18 @@ namespace ProJ.ORM
                     drowsec.CreateCell(x + 8).SetCellValue(obj.ProjectInfo.Q4Invest.ToString());
                     drow.CreateCell(x + 9).SetCellValue(obj.ProjectInfo.Q4Memo);
                     drowsec.CreateCell(x + 9).SetCellValue(obj.ProjectInfo.Q4Memo);
-                    drow.CreateCell(x + 10).SetCellValue(obj.ProjectOwner.OwnerName);
-                    drowsec.CreateCell(x + 10).SetCellValue(obj.ProjectOwner.OwnerName);
-                    drow.CreateCell(x + 11).SetCellValue(obj.ProjectOwner.Handler);
-                    drowsec.CreateCell(x + 11).SetCellValue(obj.ProjectOwner.Handler);
-                    drow.CreateCell(x + 12).SetCellValue(obj.ProjectOwner.Principal);
-                    drowsec.CreateCell(x + 12).SetCellValue(obj.ProjectOwner.Principal);
+                    drow.CreateCell(x + 10).SetCellValue(obj.Project_Contacts.SitePrincipal);
+                    drowsec.CreateCell(x + 10).SetCellValue(obj.Project_Contacts.SitePrincipal);
+                    drow.CreateCell(x + 11).SetCellValue(obj.Project_Contacts.SiteLink);
+                    drowsec.CreateCell(x + 11).SetCellValue(obj.Project_Contacts.SiteLink);
+                    drow.CreateCell(x + 12).SetCellValue(obj.Project_Contacts.Handler);
+                    drowsec.CreateCell(x + 12).SetCellValue(obj.Project_Contacts.Handler);
+                    drow.CreateCell(x + 13).SetCellValue(obj.ProjectOwner.OwnerName);
+                    drowsec.CreateCell(x + 13).SetCellValue(obj.ProjectOwner.OwnerName);
+                    drow.CreateCell(x + 14).SetCellValue(obj.ProjectOwner.Handler);
+                    drowsec.CreateCell(x + 14).SetCellValue(obj.ProjectOwner.Handler);
+                    drow.CreateCell(x + 15).SetCellValue(obj.ProjectOwner.Principal);
+                    drowsec.CreateCell(x + 15).SetCellValue(obj.ProjectOwner.Principal);
                     j += 2;
                 }
                 string re = Guid.NewGuid().ToString() + ".xls";

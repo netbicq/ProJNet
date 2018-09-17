@@ -562,6 +562,7 @@ namespace ProJ.Bll
                              Project_Info = ac,
                              Project_Points = from bc in points
                                               let han = point.FirstOrDefault(q => q.PointID == bc.ID && q.ProjectID == ac.ID)
+                                              orderby bc.PointOrderIndex
                                               select new ProjectPoint
                                               {
                                                   ID= han == null ? Guid.Empty : han.ID,
@@ -588,7 +589,7 @@ namespace ProJ.Bll
                              Project_Contacts = con,
                              //EditTable = new Schss()
                          };
-            retemp = retemp.Where(q=>para.KeyWord.Contains(q.OwnerStr)|| para.KeyWord.Contains(q.Project_Info.ProjectName) || para.KeyWord.Contains(q.ProJLeveStr) || string.IsNullOrEmpty(para.KeyWord));
+            retemp = retemp.Where(q=>q.OwnerStr.Contains(para.KeyWord)||q.Project_Info.ProjectName.Contains(para.KeyWord) || q.ProJLeveStr.Contains(para.KeyWord) || string.IsNullOrEmpty(para.KeyWord));
             var re = new Pager<ProjectView>().GetCurrentPage(retemp, para.PageSize, para.PageIndex);
             //var relist = re.Data.ToList();
             //foreach (var item in relist)

@@ -31,6 +31,10 @@ namespace ProJ.Model.View
         /// 开工
         /// </summary>
         public bool Start { get; set; }
+        /// <summary>
+        /// 群发短信
+        /// </summary>
+        public bool Messagew { get; set; }
     }
 
     /// <summary>

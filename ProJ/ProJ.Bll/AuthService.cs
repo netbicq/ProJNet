@@ -622,12 +622,18 @@ namespace ProJ.Bll
             {
                 sta = true;
             }
+            bool mesg = false;
+            if (user.OwnerID==Guid.Empty)
+            {
+                mesg = true;
+            }
             return new ActionResult<UserView>(new UserView
             {
                 UserInfo = user,
                 UserProfile = profile,
                 Check=lg,
-                Start=sta
+                Start=sta,
+                Messagew=mesg
             });
 
 

@@ -114,7 +114,7 @@ namespace ProJ.SMSClient
                                 List<string> ss = new List<string>();
                                 ss.Add(sms.ProjectInfo.ProjectName);
                                 ss.Add(points);
-                                jj.mobile = sms.ProjectContact.HandlerTEL + "," + sms.ProjectContact.PrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL;
+                                jj.mobile = sms.ProjectContact.HandlerTEL + "," + sms.ProjectContact.PrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL + "," + sms.ProjectContact.ComLeadTEL;
                                 jj.templateno = System.Configuration.ConfigurationManager.AppSettings["smsmu1"];
                                 jj.variables = ss;
                                 SendTelMSG(jj);

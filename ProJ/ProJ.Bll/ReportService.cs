@@ -457,7 +457,7 @@ namespace ProJ.Bll
             });
             h2.Add(new ReportColumn
             {
-                Caption = "具体负责人",
+                Caption = "具体责任人",
                 IsClass = false,
                 ColumnFixed = false,
                 IsPoint = false,
@@ -503,7 +503,7 @@ namespace ProJ.Bll
             });
             h3.Add(new ReportColumn
             {
-                Caption = "具体负责人",
+                Caption = "具体责任人",
                 IsClass = false,
                 ColumnFixed = false,
                 IsPoint = false,
@@ -536,7 +536,27 @@ namespace ProJ.Bll
                        {
                            Issues = issues,
                            ProjectOwner = owner,
-                           ProjectInfo = proj,
+                           ProjectInfo =new Projinfo {test=proj.ComemenceDate,
+                           ComemenceDate="",
+                           IndustryID= proj.IndustryID,
+                               InvestMoney = proj.InvestMoney,
+                               LevelID = proj.LevelID,
+                               NextPlan = proj.NextPlan,
+                               OwnerID = proj.OwnerID,
+                               ProjectName = proj.ProjectName,
+                               Q1Invest = proj.Q1Invest,
+                               Q1Memo = proj.Q1Memo,
+                               Q2Invest = proj.Q2Invest,
+                               Q2Memo = proj.Q2Memo,
+                               Q3Invest = proj.Q3Invest,
+                               Q3Memo = proj.Q3Memo,
+                               Q4Invest = proj.Q4Invest,
+                               Q4Memo = proj.Q4Memo,
+                               ID=proj.ID,
+                               State= proj.State,
+                               CreateDate= proj.CreateDate,
+                               CreateMan= proj.CreateMan,
+                           },
                            Project_Contacts = con,
                        };
             var getdata = reme.ToList();
@@ -545,6 +565,7 @@ namespace ProJ.Bll
             List<ReporDynlist> bin = new List<ReporDynlist>();
             foreach (var item in getdata)
             {
+                item.ProjectInfo.ComemenceDate = ((DateTime)item.ProjectInfo.test).ToString("yyyy.MM");
                 item.isssum =true;
                 //item.PointData = data;
                 foreach (var item1 in data)
@@ -586,7 +607,7 @@ namespace ProJ.Bll
             string excel = "";
             if (para.ToExcel)
             {
-                excel = Command.CreateExcel(dal, getlistpro.ReportCols, AppUser.OutPutPaht);
+                excel = Command.CreateExcel(dal, PointColums, AppUser.OutPutPaht);
             }
             //新增内容
             var moth = para.Query.Month.ToString("yyyy-MM");
