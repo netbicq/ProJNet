@@ -76,5 +76,13 @@ namespace ProJ.Model.DB
         /// 责任管理部门责任领导
         /// </summary>
         public string DeptPrincipalTEL { get; set; }
+        /// <summary>
+        /// 业主具体责任人
+        /// </summary>
+        public string OwnerPrinci { get; set; }
+        /// <summary>
+        /// 业主具体责任人电话
+        /// </summary>
+        public string OwnerTEL { get; set; }
     }
 }

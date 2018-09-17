@@ -71,5 +71,9 @@ namespace ProJ.Model.DB
         /// 下一周工作计划
         /// </summary>
         public string NextPlan { get; set; }
+        /// <summary>
+        /// 责任管理部门名称
+        /// </summary>
+        public string Department { get; set; }
     }
 }

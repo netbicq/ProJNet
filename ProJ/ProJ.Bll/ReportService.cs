@@ -442,7 +442,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 11,
                 ShowModal = false,
-                ColName = "Project_Contacts.SitePrincipal"
+                ColName = "ProjectInfo.Department"
             });
             h2.Add(new ReportColumn
             {
@@ -453,7 +453,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 12,
                 ShowModal = false,
-                ColName = "Project_Contacts.SiteLink"
+                ColName = "Project_Contacts.SitePrincipal"
             });
             h2.Add(new ReportColumn
             {
@@ -464,7 +464,7 @@ namespace ProJ.Bll
                 MultiColumn = false,
                 OrderIndex = rightorder + 13,
                 ShowModal = false,
-                ColName = "Project_Contacts.Handler"
+                ColName = "Project_Contacts.SiteLink"
             });
             List<ReportColumn> h3 = new List<ReportColumn>();
             RightColumns.Add(new ReportColumn
@@ -499,7 +499,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 15,
                 ShowModal = false,
-                ColName = "ProjectOwner.Handler"
+                ColName = "Project_Contacts.Handler"
             });
             h3.Add(new ReportColumn
             {
@@ -510,7 +510,7 @@ namespace ProJ.Bll
                 MultiColumn = true,
                 OrderIndex = rightorder + 16,
                 ShowModal = false,
-                ColName = "ProjectOwner.Principal"
+                ColName = "Project_Contacts.OwnerPrinci"
             });
             // getlistpro.ReportCols
             var PointColums = from bc in point
@@ -556,6 +556,7 @@ namespace ProJ.Bll
                                State= proj.State,
                                CreateDate= proj.CreateDate,
                                CreateMan= proj.CreateMan,
+                               Department=proj.Department
                            },
                            Project_Contacts = con,
                        };

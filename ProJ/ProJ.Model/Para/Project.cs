@@ -88,6 +88,10 @@ namespace ProJ.Model.Para
         /// 下一周工作计划
         /// </summary>
         public string NextPlan { get; set; }
+        /// <summary>
+        /// 责任管理部门名称
+        /// </summary>
+        public string Department { get; set; }
 
     }
 
@@ -364,6 +368,14 @@ namespace ProJ.Model.Para
         /// 责任管理部门责任领导
         /// </summary>
         public string DeptPrincipalTEL { get; set; }
+        /// <summary>
+        /// 业主具体责任人
+        /// </summary>
+        public string OwnerPrinci { get; set; }
+        /// <summary>
+        /// 业主具体责任人电话
+        /// </summary>
+        public string OwnerTEL { get; set; }
     }
     /// <summary>
     /// 问题发布
@@ -504,5 +516,9 @@ namespace ProJ.Model.Para
         /// 开工日期
         /// </summary>
         public DateTime? ComemenceDate { get; set; }
+        /// <summary>
+        /// 责任管理部门名称
+        /// </summary>
+        public string Department { get; set; }
     }
 }

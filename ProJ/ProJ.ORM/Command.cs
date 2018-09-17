@@ -378,18 +378,18 @@ namespace ProJ.ORM
                     drowsec.CreateCell(x + 8).SetCellValue(obj.ProjectInfo.Q4Invest.ToString());
                     drow.CreateCell(x + 9).SetCellValue(obj.ProjectInfo.Q4Memo);
                     drowsec.CreateCell(x + 9).SetCellValue(obj.ProjectInfo.Q4Memo);
-                    drow.CreateCell(x + 10).SetCellValue(obj.Project_Contacts.SitePrincipal);
-                    drowsec.CreateCell(x + 10).SetCellValue(obj.Project_Contacts.SitePrincipal);
-                    drow.CreateCell(x + 11).SetCellValue(obj.Project_Contacts.SiteLink);
-                    drowsec.CreateCell(x + 11).SetCellValue(obj.Project_Contacts.SiteLink);
-                    drow.CreateCell(x + 12).SetCellValue(obj.Project_Contacts.Handler);
-                    drowsec.CreateCell(x + 12).SetCellValue(obj.Project_Contacts.Handler);
+                    drow.CreateCell(x + 10).SetCellValue(obj.ProjectInfo.Department);
+                    drowsec.CreateCell(x + 10).SetCellValue(obj.ProjectInfo.Department);
+                    drow.CreateCell(x + 11).SetCellValue(obj.Project_Contacts.SitePrincipal);
+                    drowsec.CreateCell(x + 11).SetCellValue(obj.Project_Contacts.SitePrincipal);
+                    drow.CreateCell(x + 12).SetCellValue(obj.Project_Contacts.SiteLink);
+                    drowsec.CreateCell(x + 12).SetCellValue(obj.Project_Contacts.SiteLink);
                     drow.CreateCell(x + 13).SetCellValue(obj.ProjectOwner.OwnerName);
                     drowsec.CreateCell(x + 13).SetCellValue(obj.ProjectOwner.OwnerName);
-                    drow.CreateCell(x + 14).SetCellValue(obj.ProjectOwner.Handler);
-                    drowsec.CreateCell(x + 14).SetCellValue(obj.ProjectOwner.Handler);
-                    drow.CreateCell(x + 15).SetCellValue(obj.ProjectOwner.Principal);
-                    drowsec.CreateCell(x + 15).SetCellValue(obj.ProjectOwner.Principal);
+                    drow.CreateCell(x + 14).SetCellValue(obj.Project_Contacts.Handler);
+                    drowsec.CreateCell(x + 14).SetCellValue(obj.Project_Contacts.Handler);
+                    drow.CreateCell(x + 15).SetCellValue(obj.Project_Contacts.OwnerPrinci);
+                    drowsec.CreateCell(x + 15).SetCellValue(obj.Project_Contacts.OwnerPrinci);
                     j += 2;
                 }
                 string re = Guid.NewGuid().ToString() + ".xls";
