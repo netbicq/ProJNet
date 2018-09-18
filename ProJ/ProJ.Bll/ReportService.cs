@@ -558,7 +558,28 @@ namespace ProJ.Bll
                                CreateMan= proj.CreateMan,
                                Department=proj.Department
                            },
-                           Project_Contacts = con,
+                           Project_Contacts = new ProjContacts {
+                               ComLead= con.ComLead,
+                               SiteLink = con.SiteLink+ "\n"+con.SiteLinkTEL,
+                               LeaderTEL = con.LeaderTEL,
+                               OwnerPrinci = con.OwnerPrinci + "\n" + con.OwnerTEL,
+                               Leader = con.Leader,
+                               OwnerTEL = con.OwnerTEL,
+                               Handler = con.Handler + "\n" + con.HandlerTEL,
+                               SiteLinkTEL = con.SiteLinkTEL,
+                               SitePrincipal = con.SitePrincipal + "\n" + con.SitePrincipalTEL,
+                               ID = con.ID,
+                               Principal = con.Principal,
+                               DeptPrincipal = con.DeptPrincipal,
+                               ComPrincipal = con.ComPrincipal,
+                               ComLeadTEL = con.ComLeadTEL,
+                               ComPrincipalTEL = con.ComPrincipalTEL,
+                               HandlerTEL = con.HandlerTEL,
+                               DeptPrincipalTEL = con.DeptPrincipalTEL,
+                               SitePrincipalTEL = con.SitePrincipalTEL,
+                               PrincipalTEL = con.PrincipalTEL,
+                               ProjectID = con.ProjectID,
+                           },
                        };
             var getdata = reme.ToList();
             //逾期

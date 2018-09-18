@@ -277,32 +277,33 @@ namespace ProJ.ORM
                 NPOI.SS.UserModel.ISheet sheet = book.CreateSheet("project");
                 //标题行
                 NPOI.SS.UserModel.IRow trow = sheet.CreateRow(0);
-                trow.CreateCell(0).SetCellValue("项目名称");
-                trow.CreateCell(1).SetCellValue("计划/执行");
-                trow.CreateCell(2).SetCellValue("年度计划");
-                trow.CreateCell(3).SetCellValue("计划开工");
+                trow.CreateCell(0).SetCellValue("项目名称"); sheet.AutoSizeColumn(0);
+                trow.CreateCell(1).SetCellValue("计划/执行"); sheet.AutoSizeColumn(1);
+                trow.CreateCell(2).SetCellValue("年度计划"); sheet.AutoSizeColumn(2);
+                trow.CreateCell(3).SetCellValue("计划开工"); sheet.AutoSizeColumn(3);
                 int t = 4;
                 foreach (var item in list)
                 {
                     trow.CreateCell(t).SetCellValue(item.Caption);
+                    sheet.AutoSizeColumn(t);
                     t += 1;
                 }
-                trow.CreateCell(t).SetCellValue("当前进展情况及存在问题");
-                trow.CreateCell(t + 1).SetCellValue("下一周工作计划");
-                trow.CreateCell(t + 2).SetCellValue("第一季度完成投资");
-                trow.CreateCell(t + 3).SetCellValue("第一季度期末形象进度");
-                trow.CreateCell(t + 4).SetCellValue("第二季度完成投资");
-                trow.CreateCell(t + 5).SetCellValue("第二季度期末形象进度");
-                trow.CreateCell(t + 6).SetCellValue("第三季度完成投资");
-                trow.CreateCell(t + 7).SetCellValue("第三季度期末形象进度");
-                trow.CreateCell(t + 8).SetCellValue("第四季度完成投资");
-                trow.CreateCell(t + 9).SetCellValue("第四季度期末形象进度");
-                trow.CreateCell(t + 10).SetCellValue("责任管理部单位名称");
-                trow.CreateCell(t + 11).SetCellValue("项目负责人");
-                trow.CreateCell(t + 12).SetCellValue("具体责任人");
-                trow.CreateCell(t + 13).SetCellValue("业主单位名称");
-                trow.CreateCell(t + 14).SetCellValue("项目负责人");
-                trow.CreateCell(t + 15).SetCellValue("具体责任人");
+                trow.CreateCell(t).SetCellValue("当前进展情况及存在问题"); sheet.AutoSizeColumn(t);
+                trow.CreateCell(t + 1).SetCellValue("下一周工作计划"); sheet.AutoSizeColumn(t + 1);
+                trow.CreateCell(t + 2).SetCellValue("第一季度完成投资"); sheet.AutoSizeColumn(t + 2);
+                trow.CreateCell(t + 3).SetCellValue("第一季度期末形象进度"); sheet.AutoSizeColumn(t + 3);
+                trow.CreateCell(t + 4).SetCellValue("第二季度完成投资"); sheet.AutoSizeColumn(t + 4);
+                trow.CreateCell(t + 5).SetCellValue("第二季度期末形象进度"); sheet.AutoSizeColumn(t + 5);
+                trow.CreateCell(t + 6).SetCellValue("第三季度完成投资"); sheet.AutoSizeColumn(t + 6);
+                trow.CreateCell(t + 7).SetCellValue("第三季度期末形象进度"); sheet.AutoSizeColumn(t + 7);
+                trow.CreateCell(t + 8).SetCellValue("第四季度完成投资"); sheet.AutoSizeColumn(t + 8);
+                trow.CreateCell(t + 9).SetCellValue("第四季度期末形象进度"); sheet.AutoSizeColumn(t + 9);
+                trow.CreateCell(t + 10).SetCellValue("责任管理部单位名称"); sheet.AutoSizeColumn(t + 10);
+                trow.CreateCell(t + 11).SetCellValue("项目负责人"); sheet.AutoSizeColumn(t + 11);
+                trow.CreateCell(t + 12).SetCellValue("具体责任人"); sheet.AutoSizeColumn(t + 12);
+                trow.CreateCell(t + 13).SetCellValue("业主单位名称"); sheet.AutoSizeColumn(t + 13);
+                trow.CreateCell(t + 14).SetCellValue("项目负责人"); sheet.AutoSizeColumn(t + 14);
+                trow.CreateCell(t + 15).SetCellValue("具体责任人"); sheet.AutoSizeColumn(t + 15);
                 if (source == null)
                     throw new Exception("参数为空");
                 if (source.Count() == 0)

@@ -114,7 +114,7 @@ namespace ProJ.SMSClient
                                 List<string> ss = new List<string>();
                                 ss.Add(sms.ProjectInfo.ProjectName);
                                 ss.Add(points);
-                                jj.mobile = sms.ProjectContact.HandlerTEL + "," + sms.ProjectContact.PrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL + "," + sms.ProjectContact.ComLeadTEL;
+                                jj.mobile = sms.ProjectContact.SitePrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL + "," + sms.ProjectContact.HandlerTEL + "," + sms.ProjectContact.OwnerTEL + "," + sms.ProjectContact.ComLeadTEL;
                                 jj.templateno = System.Configuration.ConfigurationManager.AppSettings["smsmu1"];
                                 jj.variables = ss;
                                 SendTelMSG(jj);
@@ -137,8 +137,7 @@ namespace ProJ.SMSClient
                                 List<string> ss = new List<string>();
                                 ss.Add(sms.ProjectInfo.ProjectName);
                                 ss.Add(points);
-                                jj.mobile = sms.ProjectContact.SitePrincipalTEL + "," + sms.ProjectContact.PrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL + "," + sms.ProjectContact.LeaderTEL
-                                + "," + sms.ProjectContact.DeptPrincipalTEL + "," + sms.ProjectContact.ComPrincipalTEL + "," + sms.ProjectContact.ComLeadTEL;
+                                jj.mobile = sms.ProjectContact.SitePrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL + "," + sms.ProjectContact.HandlerTEL + "," + sms.ProjectContact.OwnerTEL + "," + sms.ProjectContact.ComLeadTEL + "," + sms.ProjectContact.ComPrincipalTEL + "," + sms.ProjectContact.LeaderTEL;
                                 jj.templateno = System.Configuration.ConfigurationManager.AppSettings["smsmu2"];
                                 jj.variables = ss;
                                 SendTelMSG(jj);
