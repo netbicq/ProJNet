@@ -532,6 +532,7 @@ namespace ProJ.Bll
                        let issues = issu.Where(q => q.ProjectID == proj.ID).OrderByDescending(q => q.CreateDate).FirstOrDefault()
                        let owner = own.FirstOrDefault(q => q.ID == proj.OwnerID)
                        let con = Cons.FirstOrDefault(q => q.ProjectID == proj.ID)
+                       orderby proj.ComemenceDate
                        select new Model.View.ReporDynlist
                        {
                            Issues = issues,
@@ -625,7 +626,7 @@ namespace ProJ.Bll
                 if (g >= 90 && item.ProjectInfo.CreateDate.Year == para.Query.Month.Year && item.ProjectInfo.CreateDate.Month == para.Query.Month.Month)
                     c += 1;
             }
-            var dal = para.Query.ExeceedType == PublicEnum.ExeceedType.Normal ? getdata : bin;
+            var dal = para.Query.ExeceedType == PublicEnum.ExeceedType.Normal ? getdata : bin.OrderBy(q=>q.ProjectInfo.ComemenceDate).ToList();
             string excel = "";
             if (para.ToExcel)
             {

@@ -310,6 +310,8 @@ namespace ProJ.ORM
                     throw new Exception("参数没有数据");
                 //创建数据行
                 int j = 1;
+                //合并 
+                int p = 1;int o = 0;
                 foreach (var obj in source)
                 {
                     int x = 4;
@@ -359,6 +361,7 @@ namespace ProJ.ORM
                             y++;
                         }
                     };
+                    o = x;
                     drow.CreateCell(x).SetCellValue(obj.Issues==null?"": obj.Issues.IssueContent.ToString());
                     drowsec.CreateCell(x).SetCellValue(obj.Issues== null ? "" : obj.Issues.IssueContent.ToString());
                     drow.CreateCell(x + 1).SetCellValue(obj.ProjectInfo.NextPlan);
@@ -392,6 +395,30 @@ namespace ProJ.ORM
                     drow.CreateCell(x + 15).SetCellValue(obj.Project_Contacts.OwnerPrinci);
                     drowsec.CreateCell(x + 15).SetCellValue(obj.Project_Contacts.OwnerPrinci);
                     j += 2;
+                }
+                foreach (var item in source)
+                {
+                    int x = o;
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(p, p + 1, 0, 0));
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(p, p + 1, 2, 2));
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(p, p + 1, 3, 3));
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(p, p + 1, x, x));
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(p, p + 1, x + 1, x + 1));
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(p, p + 1, x + 2, x + 2));
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(p, p + 1, x + 3, x + 3));
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(p, p + 1, x + 4, x + 4));
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(p, p + 1, x + 5, x + 5));
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(p, p + 1, x + 6, x + 6));
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(p, p + 1, x + 7, x + 7));
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(p, p + 1, x + 8, x + 8));
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(p, p + 1, x + 9, x + 9));
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(p, p + 1, x + 10, x + 10));
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(p, p + 1, x + 11, x + 11));
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(p, p + 1, x + 12, x + 12));
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(p, p + 1, x + 13, x + 13));
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(p, p + 1, x + 14, x + 14));
+                    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(p, p + 1, x + 15, x + 15));
+                    p += 2;
                 }
                 string re = Guid.NewGuid().ToString() + ".xls";
 
