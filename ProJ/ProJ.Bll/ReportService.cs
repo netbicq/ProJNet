@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 using ProJ.Model;
 using ProJ.Model.Para;
 using ProJ.Model.View;
@@ -21,6 +23,20 @@ namespace ProJ.Bll
             _work = work;
             Unitwork = work;
         }
+        //修改配置文件表头
+        public ActionResult<bool> EditWeb(string para)
+        {
+            Configuration config = WebConfigurationManager.OpenWebConfiguration("~");
+
+            AppSettingsSection app = config.AppSettings;
+            //app.Settings.Add("x", "this is X");
+
+            app.Settings["report1"].Value =para;
+
+            config.Save(ConfigurationSaveMode.Modified);
+            return new ActionResult<bool>(true);
+        }
+
         public ActionResult<Pager<Report>> GetReport(PagerQuery<ReportQuery> para)
         {
             //根据参数选出项目
@@ -211,6 +227,7 @@ namespace ProJ.Bll
 
         public ActionResult<ReportDyn> GetReportDyn(PagerQuery<ReportQuery> para)
         {
+            string report1 = System.Configuration.ConfigurationManager.AppSettings["report1"];//报表名字
             //根据参数选出项目
             ReportDyn getlistpro = new ReportDyn();
             var projects = _work.Repository<Model.DB.Project_Info>().Queryable(
@@ -619,26 +636,26 @@ namespace ProJ.Bll
                     item.ProJBool = true;
                     bin.Add(item);
                 }
-                if (g>=30&&g<60&&item.ProjectInfo.CreateDate.Year == para.Query.Month.Year && item.ProjectInfo.CreateDate.Month == para.Query.Month.Month)
+                if (g>=30&&g<60&&item.ProjectInfo.CreateDate.Year == para.Query.Month.Year && item.ProjectInfo.CreateDate.Month <= para.Query.Month.Month)
                     z += 1;
-                if (g >= 60 && g < 90 && item.ProjectInfo.CreateDate.Year == para.Query.Month.Year && item.ProjectInfo.CreateDate.Month == para.Query.Month.Month)
+                if (g >= 60 && g < 90 && item.ProjectInfo.CreateDate.Year == para.Query.Month.Year && item.ProjectInfo.CreateDate.Month <= para.Query.Month.Month)
                     x += 1;
-                if (g >= 90 && item.ProjectInfo.CreateDate.Year == para.Query.Month.Year && item.ProjectInfo.CreateDate.Month == para.Query.Month.Month)
+                if (g >= 90 && item.ProjectInfo.CreateDate.Year == para.Query.Month.Year && item.ProjectInfo.CreateDate.Month <= para.Query.Month.Month)
                     c += 1;
             }
             var dal = para.Query.ExeceedType == PublicEnum.ExeceedType.Normal ? getdata : bin.OrderBy(q=>q.ProjectInfo.ComemenceDate).ToList();
             string excel = "";
             if (para.ToExcel)
             {
-                excel = Command.CreateExcel(dal, PointColums, AppUser.OutPutPaht);
+                excel = Command.CreateExcel(dal, PointColums, AppUser.OutPutPaht, report1);
             }
             //新增内容
             var moth = para.Query.Month.ToString("yyyy-MM");
-            var prokl = _work.Repository<Model.DB.Project_Info>().Queryable(q=>q.CreateDate.Year==para.Query.Month.Year&& q.CreateDate.Month == para.Query.Month.Month);
+            var prokl = _work.Repository<Model.DB.Project_Info>().Queryable(q=>q.CreateDate.Year==para.Query.Month.Year&& q.CreateDate.Month <= para.Query.Month.Month);
             int o = 0;
             foreach (var item in bin)
             {
-                if (item.ProjectInfo.CreateDate.Year == para.Query.Month.Year && item.ProjectInfo.CreateDate.Month == para.Query.Month.Month)
+                if (item.ProjectInfo.CreateDate.Year == para.Query.Month.Year && item.ProjectInfo.CreateDate.Month <= para.Query.Month.Month)
                 {
                     o += 1;
                 }
@@ -653,7 +670,8 @@ namespace ProJ.Bll
                 Exec = o.ToString(),
                 POne=z.ToString(),
                 PThree=c.ToString(),
-                PTwo=x.ToString()
+                PTwo=x.ToString(),
+                Report1=report1
             };
             var re = new Pager<Model.View.ReporDynlist>().GetCurrentPage(dal, para.PageSize, para.PageIndex);
             re.ExcelResult = excel;

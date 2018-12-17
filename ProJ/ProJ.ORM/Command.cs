@@ -265,7 +265,7 @@ namespace ProJ.ORM
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static string CreateExcel(IEnumerable<ReporDynlist> source, IEnumerable<ReportColumn> list, string filePath)
+        public static string CreateExcel(IEnumerable<ReporDynlist> source, IEnumerable<ReportColumn> list, string filePath,string report1)
         {
             try
             {
@@ -275,8 +275,17 @@ namespace ProJ.ORM
                                     //操作excel
                 NPOI.HSSF.UserModel.HSSFWorkbook book = new NPOI.HSSF.UserModel.HSSFWorkbook();
                 NPOI.SS.UserModel.ISheet sheet = book.CreateSheet("project");
+                //表头
+                sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 1, 0,10));
+                NPOI.SS.UserModel.IRow row = sheet.CreateRow(0);
+                NPOI.SS.UserModel.ICell cell = row.CreateCell(0);
+                cell.SetCellValue(report1.ToString());
+                NPOI.SS.UserModel.ICellStyle cellstyle = book.CreateCellStyle();//设置垂直居中格式
+                cellstyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.Center;//居中
+                cellstyle.VerticalAlignment = NPOI.SS.UserModel.VerticalAlignment.Center;//垂直居中
+                cell.CellStyle = cellstyle;
                 //标题行
-                NPOI.SS.UserModel.IRow trow = sheet.CreateRow(0);
+                NPOI.SS.UserModel.IRow trow = sheet.CreateRow(2);
                 trow.CreateCell(0).SetCellValue("项目名称"); sheet.AutoSizeColumn(0);
                 trow.CreateCell(1).SetCellValue("计划/执行"); sheet.AutoSizeColumn(1);
                 trow.CreateCell(2).SetCellValue("年度计划"); sheet.AutoSizeColumn(2);
@@ -309,9 +318,9 @@ namespace ProJ.ORM
                 if (source.Count() == 0)
                     throw new Exception("参数没有数据");
                 //创建数据行
-                int j = 1;
+                int j = 3;
                 //合并 
-                int p = 1;int o = 0;
+                int p = 3;int o = 0;
                 foreach (var obj in source)
                 {
                     int x = 4;

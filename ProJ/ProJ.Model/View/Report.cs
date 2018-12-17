@@ -337,6 +337,10 @@ namespace ProJ.Model.View
     public class Pank
     {
         /// <summary>
+        /// 报表名字
+        /// </summary>
+        public string Report1 { get; set; }
+        /// <summary>
         /// 是否显示
         /// </summary>
         public bool IsOv { get; set; }

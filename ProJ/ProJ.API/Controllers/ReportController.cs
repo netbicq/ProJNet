@@ -18,7 +18,17 @@ namespace ProJ.API.Controllers
             bll = report;
             BusinessService = bll;
         }
-
+        /// <summary>
+        /// 修改表头
+        /// </summary>
+        /// <param name="para"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("editweb/{para}")]
+        public ActionResult<bool> EditWeb(string para)
+        {
+            return bll.EditWeb(para);
+        }
         /// <summary>
         /// 获取报表数据
         /// </summary>
