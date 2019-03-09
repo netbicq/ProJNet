@@ -333,6 +333,30 @@ namespace ProJ.Model.View
         public IEnumerable<ReportColumn> ReportCols { get; set; }
         public Pager<Model.View.ReporDynlist> ReporDynlist { get; set; }
         public Pank Pank { get; set; }
+        /// <summary>
+        /// 情况通报
+        /// </summary>
+        public DataInfo DataInfo { get; set; }
+    }
+
+    public class DataInfo
+    {
+        /// <summary>
+        /// 年度开工项目数
+        /// </summary>
+        public int YearCount { get; set; }
+        /// <summary>
+        /// 正常推进项目数
+        /// </summary>
+        public int NormalCount { get; set; }
+        /// <summary>
+        /// 滞后项目数
+        /// </summary>
+        public int DelayCount { get; set; }
+        /// <summary>
+        /// 滞后项目名称
+        /// </summary>
+        public IEnumerable<string> DeylayProje { get; set; }
     }
     public class Pank
     {
