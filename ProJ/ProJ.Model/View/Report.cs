@@ -354,9 +354,55 @@ namespace ProJ.Model.View
         /// </summary>
         public int DelayCount { get; set; }
         /// <summary>
+        /// 已开工数量
+        /// </summary>
+        public int StartCount { get; set; }
+        /// <summary>
         /// 滞后项目名称
         /// </summary>
-        public IEnumerable<string> DeylayProje { get; set; }
+        public List<string> DeylayProje { get; set; }
+
+        /// <summary>
+        /// 滞后详情
+        /// </summary>
+        public List<DelayInfo> DelayInfos { get; set; }
+    }
+    /// <summary>
+    /// 滞后详情
+    /// </summary>
+    public class DelayInfo
+    {
+        /// <summary>
+        /// 项目名称
+        /// </summary>
+        public string ProjectName { get; set; }
+        /// <summary>
+        /// 滞后项目ID
+        /// </summary>
+        public Guid ProjectID { get; set; }
+        /// <summary>
+        /// 节点数据
+        /// </summary>
+        public dynamic DataPoints { get; set; }
+
+        /// <summary>
+        /// 滞后节点信息
+        /// </summary>
+        public List<DelayPointInfo> DelayPoints { get; set; }
+    }
+    /// <summary>
+    /// 滞后节点信息
+    /// </summary>
+    public class DelayPointInfo
+    {
+        /// <summary>
+        /// 节点名称
+        /// </summary>
+        public string PointName { get; set; }
+        /// <summary>
+        ///滞后天数
+        /// </summary>
+        public int DelayDays { get; set; }
     }
     public class Pank
     {

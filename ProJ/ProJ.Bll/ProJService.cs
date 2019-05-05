@@ -1360,6 +1360,28 @@ namespace ProJ.Bll
             _work.Commit();
             return new ActionResult<bool>(true);
         }
+
+        public ActionResult<bool> OpenProject(Guid id)
+        {
+            try
+            {
+                var proj = _work.Repository<Model.DB.Project_Info>();
+                var em = proj.GetModel(q => q.ID == id);
+                if (em == null)
+                {
+                    throw new Exception("项目不存在");
+                }
+                em.State = (int)PublicEnum.ProjState.Normal;
+
+                proj.Update(em);
+                _work.Commit();
+                return new ActionResult<bool>(true);
+            }
+            catch (Exception ex)
+            {
+                return new ActionResult<bool>(ex);
+            }
+        }
         #endregion
     }
 }

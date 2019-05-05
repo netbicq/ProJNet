@@ -317,7 +317,7 @@ namespace ProJ.Bll
             //增加节点右边
             RightColumns.Add(new ReportColumn
             {
-                Caption = "当前进度情况及存在问题",
+                Caption = "进展情况及存在问题",
                 IsClass = false,
                 ColumnFixed = false,
                 IsPoint = false,
@@ -626,6 +626,7 @@ namespace ProJ.Bll
                 int i = 0; int g = 0;
                 foreach (var item5 in item.PointData)
                 {
+                    
                     if (item5.Key.Contains("tot") && item5.Value > 0)
                     {
                         i = 1;
@@ -680,16 +681,42 @@ namespace ProJ.Bll
             };
             var re = new Pager<Model.View.ReporDynlist>().GetCurrentPage(dal, para.PageSize, para.PageIndex);
             re.ExcelResult = excel;
-            getlistpro.ReporDynlist = re;
+            getlistpro.ReporDynlist = re; 
 
             //情况通报数据
             var datainfo = new DataInfo
             {
+                
                 YearCount = dal.Where(q => !string.IsNullOrWhiteSpace(q.ProjectInfo.ComemenceDate) && DateTime.Parse(q.ProjectInfo.ComemenceDate).Year == para.Query.Month.Year).Count(),
                 DelayCount = dal.Where(q => !string.IsNullOrWhiteSpace(q.ProjectInfo.ComemenceDate) && DateTime.Parse(q.ProjectInfo.ComemenceDate).Year == para.Query.Month.Year && q.ProJBool).Count(),
-                NormalCount = dal.Where(q => !string.IsNullOrWhiteSpace(q.ProjectInfo.ComemenceDate) && DateTime.Parse(q.ProjectInfo.ComemenceDate).Year == para.Query.Month.Year && !q.ProJBool).Count(),
-                DeylayProje = dal.Where(q => !string.IsNullOrWhiteSpace(q.ProjectInfo.ComemenceDate) && DateTime.Parse(q.ProjectInfo.ComemenceDate).Year == para.Query.Month.Year && q.ProJBool).Select(s => s.ProjectInfo.ProjectName)
+                NormalCount = dal.Where(q => !string.IsNullOrWhiteSpace(q.ProjectInfo.ComemenceDate) && DateTime.Parse(q.ProjectInfo.ComemenceDate).Year == para.Query.Month.Year && !q.ProJBool  && q.ProjectInfo.State !=(int)(PublicEnum.ProjState.Start)).Count(),
+                DeylayProje = dal.Where(q => !string.IsNullOrWhiteSpace(q.ProjectInfo.ComemenceDate) && DateTime.Parse(q.ProjectInfo.ComemenceDate).Year == para.Query.Month.Year && q.ProJBool).Select(s => s.ProjectInfo.ProjectName).ToList(),
+                StartCount = dal.Where(q => q.ProjectInfo.State == (int)PublicEnum.ProjState.Start).Count(),
+                 DelayInfos=(from delay in dal.Where(q=>!string.IsNullOrWhiteSpace(q.ProjectInfo.ComemenceDate) && DateTime.Parse(q.ProjectInfo.ComemenceDate).Year == para.Query.Month.Year && q.ProJBool)
+                            select new DelayInfo
+                            {
+                                 ProjectID =delay.ProjectInfo.ID, ProjectName =delay.ProjectInfo.ProjectName  , DataPoints=delay.PointData
+                            }).ToList()
+                            
             };
+            foreach(var inf in datainfo.DelayInfos.ToList())
+            {
+               var dpts  = new List<DelayPointInfo>();
+
+                foreach(var pt in inf.DataPoints)
+                {
+                    if(pt.Key.Contains("tot") && pt.Value > 0)
+                    {
+                        dpts.Add(new DelayPointInfo
+                        {
+                            DelayDays = pt.Value,
+                            PointName = ((string)pt.Key).Substring(4)
+                        });
+                    }
+                }
+                inf.DelayPoints = dpts;
+            }
+
             getlistpro.DataInfo = datainfo;
 
             return new ActionResult<ReportDyn>(getlistpro);
