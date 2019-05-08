@@ -329,7 +329,7 @@ namespace ProJ.Bll
             });
             RightColumns.Add(new ReportColumn
             {
-                Caption = "下一周工作计划",
+                Caption = "滞后原因",
                 IsClass = false,
                 ColumnFixed = false,
                 IsPoint = false,
@@ -696,7 +696,7 @@ namespace ProJ.Bll
                  DelayInfos=(from delay in dal.Where(q=>!string.IsNullOrWhiteSpace(q.ProjectInfo.ComemenceDate) && DateTime.Parse(q.ProjectInfo.ComemenceDate).Year == para.Query.Month.Year && q.ProJBool)
                             select new DelayInfo
                             {
-                                 ProjectID =delay.ProjectInfo.ID, ProjectName =delay.ProjectInfo.ProjectName  , DataPoints=delay.PointData
+                                 ProjectID =delay.ProjectInfo.ID, ProjectName =delay.ProjectInfo.ProjectName  , DataPoints=delay.PointData,DelayReason=delay.ProjectInfo.NextPlan
                             }).ToList()
                             
             };

@@ -389,6 +389,10 @@ namespace ProJ.Model.View
         /// 滞后节点信息
         /// </summary>
         public List<DelayPointInfo> DelayPoints { get; set; }
+        /// <summary>
+        /// 滞后原因
+        /// </summary>
+        public string DelayReason { get; set; }
     }
     /// <summary>
     /// 滞后节点信息
