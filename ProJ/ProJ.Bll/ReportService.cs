@@ -325,6 +325,7 @@ namespace ProJ.Bll
                 OrderIndex = rightorder + 1,
                 ShowModal = true,
                 ColName = "Issues.IssueContent"
+
             });
             RightColumns.Add(new ReportColumn
             {
