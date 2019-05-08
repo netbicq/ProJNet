@@ -157,6 +157,11 @@ namespace ProJ.Bll
             {
                 throw new Exception("用户不存在");
             }
+            if(dbuser.Login == "admin")
+            {
+                throw new Exception("系统内置用户不允许删除");
+
+            }
             if (dbuser.OwnerID!=Guid.Empty)
             {
                 var own = _work.Repository<Basic_Owner>();
