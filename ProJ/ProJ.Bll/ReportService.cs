@@ -31,7 +31,7 @@ namespace ProJ.Bll
             AppSettingsSection app = config.AppSettings;
             //app.Settings.Add("x", "this is X");
 
-            app.Settings["report1"].Value =para;
+            app.Settings["report1"].Value = para;
 
             config.Save(ConfigurationSaveMode.Modified);
             return new ActionResult<bool>(true);
@@ -268,21 +268,22 @@ namespace ProJ.Bll
             var RightColumns = new List<ReportColumn>();
             int rightorder = 1000;
             //增加节点左边按钮
-            
+
             LeftColumns.Add(new ReportColumn
             {
                 Caption = "项目名称",
                 ColumnFixed = true,
                 IsClass = true,
                 IsPoint = false,
-                MultiColumn = false, OrderIndex =leftorder+1,
+                MultiColumn = false,
+                OrderIndex = leftorder + 1,
                 ShowModal = false,
                 ColName = "ProjectInfo.ProjectName"
             });
             LeftColumns.Add(new ReportColumn
             {
                 Caption = "计划/实际",
-                Isbool=true,
+                Isbool = true,
                 ColumnFixed = true,
                 IsClass = false,
                 IsPoint = false,
@@ -291,17 +292,17 @@ namespace ProJ.Bll
                 ShowModal = false,
                 ColName = "SchExe"
             });
-             LeftColumns.Add(new ReportColumn
-             {
-                 Caption = "计划开工月份",
-                 ColumnFixed = true,
-                 IsClass = false,
-                 IsPoint = false,
-                 MultiColumn = false,
-                 OrderIndex = leftorder + 4,
-                 ShowModal = false,
-                 ColName = "ProjectInfo.ComemenceDate"
-             });
+            LeftColumns.Add(new ReportColumn
+            {
+                Caption = "计划开工月份",
+                ColumnFixed = true,
+                IsClass = false,
+                IsPoint = false,
+                MultiColumn = false,
+                OrderIndex = leftorder + 4,
+                ShowModal = false,
+                ColName = "ProjectInfo.ComemenceDate"
+            });
             LeftColumns.Add(new ReportColumn
             {
                 Caption = "年度计划投资",
@@ -316,18 +317,19 @@ namespace ProJ.Bll
             //增加节点右边
             RightColumns.Add(new ReportColumn
             {
-                Caption = "当前进度情况及存在问题",
+                Caption = "进展情况及存在问题",
                 IsClass = false,
-                ColumnFixed= false,
+                ColumnFixed = false,
                 IsPoint = false,
                 MultiColumn = false,
                 OrderIndex = rightorder + 1,
                 ShowModal = true,
                 ColName = "Issues.IssueContent"
+
             });
             RightColumns.Add(new ReportColumn
             {
-                Caption = "下一周工作计划",
+                Caption = "滞后原因",
                 IsClass = false,
                 ColumnFixed = false,
                 IsPoint = false,
@@ -347,7 +349,7 @@ namespace ProJ.Bll
                 OrderIndex = rightorder + 3,
                 ShowModal = false,
                 ColName = "",
-                Children=h1
+                Children = h1
             });
             h1.Add(new ReportColumn
             {
@@ -448,7 +450,7 @@ namespace ProJ.Bll
                 OrderIndex = rightorder + 11,
                 ShowModal = false,
                 ColName = "",
-                Children=h2
+                Children = h2
             });
             h2.Add(new ReportColumn
             {
@@ -494,7 +496,7 @@ namespace ProJ.Bll
                 OrderIndex = rightorder + 14,
                 ShowModal = false,
                 ColName = "",
-                Children=h3
+                Children = h3
             });
             h3.Add(new ReportColumn
             {
@@ -531,13 +533,13 @@ namespace ProJ.Bll
             });
             // getlistpro.ReportCols
             var PointColums = from bc in point
-                                    orderby bc.PointOrderIndex 
-                                    select new ReportColumn
-                                    {
-                                        Caption = bc.PointName,
-                                        ColName = bc.ColName,
-                                        OrderIndex=200 +bc.PointOrderIndex
-                                    };
+                              orderby bc.PointOrderIndex
+                              select new ReportColumn
+                              {
+                                  Caption = bc.PointName,
+                                  ColName = bc.ColName,
+                                  OrderIndex = 200 + bc.PointOrderIndex
+                              };
 
             LeftColumns.AddRange(PointColums.ToList());
             LeftColumns.AddRange(RightColumns);
@@ -554,9 +556,11 @@ namespace ProJ.Bll
                        {
                            Issues = issues,
                            ProjectOwner = owner,
-                           ProjectInfo =new Projinfo {test=proj.ComemenceDate,
-                           ComemenceDate="",
-                           IndustryID= proj.IndustryID,
+                           ProjectInfo = new Projinfo
+                           {
+                               test = proj.ComemenceDate,
+                               ComemenceDate = "",
+                               IndustryID = proj.IndustryID,
                                InvestMoney = proj.InvestMoney,
                                LevelID = proj.LevelID,
                                NextPlan = proj.NextPlan,
@@ -570,15 +574,16 @@ namespace ProJ.Bll
                                Q3Memo = proj.Q3Memo,
                                Q4Invest = proj.Q4Invest,
                                Q4Memo = proj.Q4Memo,
-                               ID=proj.ID,
-                               State= proj.State,
-                               CreateDate= proj.CreateDate,
-                               CreateMan= proj.CreateMan,
-                               Department=proj.Department
+                               ID = proj.ID,
+                               State = proj.State,
+                               CreateDate = proj.CreateDate,
+                               CreateMan = proj.CreateMan,
+                               Department = proj.Department
                            },
-                           Project_Contacts = new ProjContacts {
-                               ComLead= con.ComLead,
-                               SiteLink = con.SiteLink+ "\n"+con.SiteLinkTEL,
+                           Project_Contacts = new ProjContacts
+                           {
+                               ComLead = con.ComLead,
+                               SiteLink = con.SiteLink + "\n" + con.SiteLinkTEL,
                                LeaderTEL = con.LeaderTEL,
                                OwnerPrinci = con.OwnerPrinci + "\n" + con.OwnerTEL,
                                Leader = con.Leader,
@@ -606,7 +611,7 @@ namespace ProJ.Bll
             foreach (var item in getdata)
             {
                 item.ProjectInfo.ComemenceDate = ((DateTime)item.ProjectInfo.test).ToString("yyyy.MM");
-                item.isssum =true;
+                item.isssum = true;
                 //item.PointData = data;
                 foreach (var item1 in data)
                 {
@@ -619,31 +624,32 @@ namespace ProJ.Bll
                     }
                 }
                 //逾期
-                int i = 0;int g = 0;
+                int i = 0; int g = 0;
                 foreach (var item5 in item.PointData)
                 {
+                    
                     if (item5.Key.Contains("tot") && item5.Value > 0)
                     {
                         i = 1;
-                        if (item5.Value>g)
+                        if (item5.Value > g)
                         {
                             g = item5.Value;
                         };
                     }
                 }
-                if (i==1)
+                if (i == 1)
                 {
                     item.ProJBool = true;
                     bin.Add(item);
                 }
-                if (g>=30&&g<60&&item.ProjectInfo.CreateDate.Year == para.Query.Month.Year && item.ProjectInfo.CreateDate.Month <= para.Query.Month.Month)
+                if (g >= 30 && g < 60 && item.ProjectInfo.CreateDate.Year == para.Query.Month.Year && item.ProjectInfo.CreateDate.Month <= para.Query.Month.Month)
                     z += 1;
                 if (g >= 60 && g < 90 && item.ProjectInfo.CreateDate.Year == para.Query.Month.Year && item.ProjectInfo.CreateDate.Month <= para.Query.Month.Month)
                     x += 1;
                 if (g >= 90 && item.ProjectInfo.CreateDate.Year == para.Query.Month.Year && item.ProjectInfo.CreateDate.Month <= para.Query.Month.Month)
                     c += 1;
             }
-            var dal = para.Query.ExeceedType == PublicEnum.ExeceedType.Normal ? getdata : bin.OrderBy(q=>q.ProjectInfo.ComemenceDate).ToList();
+            var dal = para.Query.ExeceedType == PublicEnum.ExeceedType.Normal ? getdata : bin.OrderBy(q => q.ProjectInfo.ComemenceDate).ToList();
             string excel = "";
             if (para.ToExcel)
             {
@@ -651,7 +657,7 @@ namespace ProJ.Bll
             }
             //新增内容
             var moth = para.Query.Month.ToString("yyyy-MM");
-            var prokl = _work.Repository<Model.DB.Project_Info>().Queryable(q=>q.CreateDate.Year==para.Query.Month.Year&& q.CreateDate.Month <= para.Query.Month.Month);
+            var prokl = _work.Repository<Model.DB.Project_Info>().Queryable(q => q.CreateDate.Year == para.Query.Month.Year && q.CreateDate.Month <= para.Query.Month.Month);
             int o = 0;
             foreach (var item in bin)
             {
@@ -659,23 +665,61 @@ namespace ProJ.Bll
                 {
                     o += 1;
                 }
-                
+
             }
+
             getlistpro.Pank = new Pank
             {
-                IsOv=AppUser.CurrentUserInfo.UserInfo.OwnerID==Guid.Empty?true:false,
+                IsOv = AppUser.CurrentUserInfo.UserInfo.OwnerID == Guid.Empty ? true : false,
                 Moth = Convert.ToDateTime(moth),
                 Prophase = prokl.Count().ToString(),
                 Normal = (prokl.Count() - o).ToString(),
                 Exec = o.ToString(),
-                POne=z.ToString(),
-                PThree=c.ToString(),
-                PTwo=x.ToString(),
-                Report1=report1
+                POne = z.ToString(),
+                PThree = c.ToString(),
+                PTwo = x.ToString(),
+                Report1 = report1
             };
             var re = new Pager<Model.View.ReporDynlist>().GetCurrentPage(dal, para.PageSize, para.PageIndex);
             re.ExcelResult = excel;
-            getlistpro.ReporDynlist = re;
+            getlistpro.ReporDynlist = re; 
+
+            //情况通报数据
+            var datainfo = new DataInfo
+            {
+                
+                YearCount = dal.Where(q => !string.IsNullOrWhiteSpace(q.ProjectInfo.ComemenceDate) && DateTime.Parse(q.ProjectInfo.ComemenceDate).Year == para.Query.Month.Year).Count(),
+                DelayCount = dal.Where(q => !string.IsNullOrWhiteSpace(q.ProjectInfo.ComemenceDate) && DateTime.Parse(q.ProjectInfo.ComemenceDate).Year == para.Query.Month.Year && q.ProJBool).Count(),
+                NormalCount = dal.Where(q => !string.IsNullOrWhiteSpace(q.ProjectInfo.ComemenceDate) && DateTime.Parse(q.ProjectInfo.ComemenceDate).Year == para.Query.Month.Year && !q.ProJBool  && q.ProjectInfo.State !=(int)(PublicEnum.ProjState.Start)).Count(),
+                DeylayProje = dal.Where(q => !string.IsNullOrWhiteSpace(q.ProjectInfo.ComemenceDate) && DateTime.Parse(q.ProjectInfo.ComemenceDate).Year == para.Query.Month.Year && q.ProJBool).Select(s => s.ProjectInfo.ProjectName).ToList(),
+                StartCount = dal.Where(q => q.ProjectInfo.State == (int)PublicEnum.ProjState.Start).Count(),
+                 DelayInfos=(from delay in dal.Where(q=>!string.IsNullOrWhiteSpace(q.ProjectInfo.ComemenceDate) && DateTime.Parse(q.ProjectInfo.ComemenceDate).Year == para.Query.Month.Year && q.ProJBool)
+                            select new DelayInfo
+                            {
+                                 ProjectID =delay.ProjectInfo.ID, ProjectName =delay.ProjectInfo.ProjectName  , DataPoints=delay.PointData,DelayReason=delay.ProjectInfo.NextPlan
+                            }).ToList()
+                            
+            };
+            foreach(var inf in datainfo.DelayInfos.ToList())
+            {
+               var dpts  = new List<DelayPointInfo>();
+
+                foreach(var pt in inf.DataPoints)
+                {
+                    if(pt.Key.Contains("tot") && pt.Value > 0)
+                    {
+                        dpts.Add(new DelayPointInfo
+                        {
+                            DelayDays = pt.Value,
+                            PointName = ((string)pt.Key).Substring(4)
+                        });
+                    }
+                }
+                inf.DelayPoints = dpts;
+            }
+
+            getlistpro.DataInfo = datainfo;
+
             return new ActionResult<ReportDyn>(getlistpro);
         }
     }

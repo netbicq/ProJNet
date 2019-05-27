@@ -48,6 +48,17 @@ namespace ProJ.API.Controllers
             return bll.ProJNew(pro);
         }
         /// <summary>
+        /// 项目取消开工
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("openproj/{id:Guid}")]
+        [HttpGet]
+        public ActionResult<bool> OpenProj(Guid id)
+        {
+            return bll.OpenProject(id);
+        }
+        /// <summary>
         /// 获取列表
         /// </summary>
         /// <param name="para"></param>

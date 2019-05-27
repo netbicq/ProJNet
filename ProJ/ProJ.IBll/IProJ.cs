@@ -42,6 +42,12 @@ namespace ProJ.IBll
         /// <returns></returns>
         ActionResult<bool> StateSet(PublicEnum.ProjState state, Guid ID);
         /// <summary>
+        /// 项目取消开工
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        ActionResult<bool> OpenProject(Guid id);
+        /// <summary>
         /// 问题发布
         /// </summary>
         /// <param name="owner"></param>
