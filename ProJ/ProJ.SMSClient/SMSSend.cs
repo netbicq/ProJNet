@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -63,6 +66,7 @@ namespace ProJ.SMSClient
                             var points = "";
                             //节点2周
                             var points2 = "";
+                            
                             foreach (var tsms in sms.Timeouts.Where(q=>q.WeekInt>=1))
                             {
                                 Model.DB.Project_SMS dbsms;
@@ -114,9 +118,10 @@ namespace ProJ.SMSClient
                                 List<string> ss = new List<string>();
                                 ss.Add(sms.ProjectInfo.ProjectName);
                                 ss.Add(points);
-                                jj.mobile = sms.ProjectContact.SitePrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL + "," + sms.ProjectContact.HandlerTEL + "," + sms.ProjectContact.OwnerTEL + "," + sms.ProjectContact.ComLeadTEL;
-                                jj.templateno = System.Configuration.ConfigurationManager.AppSettings["smsmu1"];
-                                jj.variables = ss;
+                                ss.Add("7");
+                                jj.mobiles = sms.ProjectContact.SitePrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL + "," + sms.ProjectContact.HandlerTEL + "," + sms.ProjectContact.OwnerTEL + "," + sms.ProjectContact.ComLeadTEL;
+                                jj.templateId = System.Configuration.ConfigurationManager.AppSettings["templateId"];
+                                jj.Params= ss;
                                 SendTelMSG(jj);
                                 //var smspara = new SMSPara()
                                 //{
@@ -137,9 +142,10 @@ namespace ProJ.SMSClient
                                 List<string> ss = new List<string>();
                                 ss.Add(sms.ProjectInfo.ProjectName);
                                 ss.Add(points);
-                                jj.mobile = sms.ProjectContact.SitePrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL + "," + sms.ProjectContact.HandlerTEL + "," + sms.ProjectContact.OwnerTEL + "," + sms.ProjectContact.ComLeadTEL + "," + sms.ProjectContact.ComPrincipalTEL + "," + sms.ProjectContact.LeaderTEL;
-                                jj.templateno = System.Configuration.ConfigurationManager.AppSettings["smsmu2"];
-                                jj.variables = ss;
+                                ss.Add("14");
+                                jj.mobiles = sms.ProjectContact.SitePrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL + "," + sms.ProjectContact.HandlerTEL + "," + sms.ProjectContact.OwnerTEL + "," + sms.ProjectContact.ComLeadTEL + "," + sms.ProjectContact.ComPrincipalTEL + "," + sms.ProjectContact.LeaderTEL;
+                                jj.templateId = System.Configuration.ConfigurationManager.AppSettings["templateId"];
+                                jj.Params = ss;
                                 SendTelMSG(jj);
                                 //var smspara = new SMSPara()
                                 //{
@@ -174,23 +180,36 @@ namespace ProJ.SMSClient
 
             try
             {
-                string smsur = System.Configuration.ConfigurationManager.AppSettings["smsmulturl"];//短信地址
-                string smsui = System.Configuration.ConfigurationManager.AppSettings["smsuid"];//短信平台用户名
-                string smspwd = System.Configuration.ConfigurationManager.AppSettings["smspwd"];//短信平台密码
+                string smsur = System.Configuration.ConfigurationManager.AppSettings["smsurl"];//短信地址
+                string smsui = System.Configuration.ConfigurationManager.AppSettings["apId"];//短信平台用户名
+                string smspwd = System.Configuration.ConfigurationManager.AppSettings["secretKey"];//短信平台密码
+                string ecname= System.Configuration.ConfigurationManager.AppSettings["ecName"];//企业名
 
 
+                pack.apId = smsui;
+                pack.secretKey = smspwd;
+                pack.ecName = ecname;
+                JObject obj = new JObject();
+                obj.Add("ecName", new JValue(pack.ecName));
+                obj.Add("apId", new JValue(pack.apId));
+                obj.Add("secretKey", new JValue(pack.secretKey));
+                obj.Add("mobiles", new JValue(pack.secretKey));
+                obj.Add("params", new JValue(JsonConvert.SerializeObject(pack.Params)));
+                obj.Add("templateId", new JValue(pack.templateId));
+                obj.Add("sign", new JValue(pack.sign));
+                obj.Add("addSerial", new JValue(pack.sign));
+                var mac = pack.ecName + pack.apId + pack.secretKey + pack.templateId + pack.mobiles + JsonConvert.SerializeObject(pack.Params) + pack.sign + pack.addSerial;
+                var mac1 = UserMd5(mac);//要进行32位MD5加密
+                var length = mac1.Length;
+                obj.Add("mac", new JValue(mac1));
+                string paras = obj.ToString();
+                var jiami = Base64Code(paras);//传参数前要进行64位加密
 
-                //System.Net.Http.HttpClient client = new HttpClient();
-                //client.BaseAddress = new Uri(smsur);
 
-                pack.uid = smsui;
-                pack.userpwd = smspwd;
-
-                
                 var parastr = Newtonsoft.Json.JsonConvert.SerializeObject(pack);
                 System.Net.WebRequest request = (System.Net.WebRequest)System.Net.HttpWebRequest.Create(smsur);
                 request.Method = "POST";
-                Byte[] postbytes = System.Text.Encoding.GetEncoding("UTF-8").GetBytes(parastr);
+                Byte[] postbytes = System.Text.Encoding.GetEncoding("UTF-8").GetBytes(jiami);
                 request.ContentType = "application/json";
                 request.ContentLength = postbytes.Length;
                 using (System.IO.Stream stream = request.GetRequestStream())
@@ -215,12 +234,6 @@ namespace ProJ.SMSClient
                         restream.Close();
                     }
                 }
-                //var para = new StringContent(parastr, System.Text.Encoding.UTF8);
-                //client.DefaultRequestHeaders.Add("Content-Type", "application/json");
-                //client.DefaultRequestHeaders.Accept.Add(
-                //    new MediaTypeWithQualityHeaderValue("application/json"));
-                //var result = client.PostAsync("multisend", para).Result;
-
             }
             catch (Exception ex)
             {
@@ -229,55 +242,103 @@ namespace ProJ.SMSClient
 
         }
 
-    }
-    /// <summary>
-    /// 发送参数
-    /// </summary>
-    public class SMSPara
-    {
 
-        public string mobile { get; set; }
+        /// <summary>
+        /// Base64加密 
+        /// </summary>
+        /// <param name="Message"></param>
+        /// <returns></returns>
+        public static string Base64Code(string Message)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(Message);//这里要注意不是Default 因为Default默认GB2312
+            return Convert.ToBase64String(bytes);
+        }
 
-        public int tpl_id { get; set; }
-
-        public string tpl_value { get; set; }
-        public string key { get
+        /// <summary>
+        /// Md5 加密
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string UserMd5(string str)
+        {
+            string cl = str;
+            string pwd = "";
+            MD5 md5 = MD5.Create();//实例化一个md5对像
+                                   // 加密后是一个字节类型的数组，这里要注意编码UTF8/Unicode等的选择　
+            byte[] s = md5.ComputeHash(Encoding.UTF8.GetBytes(cl));
+            // 通过使用循环，将字节类型的数组转换为字符串，此字符串是常规字符格式化所得
+            for (int i = 0; i < s.Length; i++)
             {
-                return System.Configuration.ConfigurationManager.AppSettings["smskey"];
-            } }
-
-        public string dtype { get { return "json"; } }
+                // 将得到的字符串使用十六进制类型格式。格式后的字符是小写的字母，如果使用大写（X）则格式后的字符是大写字符 
+                pwd = pwd + s[i].ToString("x2");
+            }
+            return pwd;
+        }
     }
 
-
-
+    //public class SMSPacket
+    //{
+    //    /// <summary>
+    //    /// 用户名，不赋值
+    //    /// </summary>
+    //    public string uid { get; set; }
+    //    /// <summary>
+    //    /// 密码，不赋值
+    //    /// </summary>
+    //    public string userpwd { get; set; }
+    //    /// <summary>
+    //    /// 多号码用英文逗号
+    //    /// </summary>
+    //    public string mobile { get; set; }
+    //    /// <summary>
+    //    /// 签名可以不传
+    //    /// </summary>
+    //    public string signature { get; set; }
+    //    /// <summary>
+    //    /// 变理值集合，传入的值顺序与变理顺序对应
+    //    /// </summary>
+    //    public IEnumerable<string> variables { get; set; }
+    //    /// <summary>
+    //    /// 模板ID
+    //    /// </summary>
+    //    public string templateno { get; set; }
+    //}
 
     public class SMSPacket
     {
         /// <summary>
-        /// 用户名，不赋值
+        /// 企业名
         /// </summary>
-        public string uid { get; set; }
+        public string ecName { get; set; }
         /// <summary>
-        /// 密码，不赋值
+        /// 接口配置的用户名
         /// </summary>
-        public string userpwd { get; set; }
+        public string apId { get; set; }
         /// <summary>
-        /// 多号码用英文逗号
+        /// 接口配置的密码
         /// </summary>
-        public string mobile { get; set; }
+        public string secretKey { get; set; }
         /// <summary>
-        /// 签名可以不传
+        /// 电话以逗号隔开
         /// </summary>
-        public string signature { get; set; }
+        public string mobiles { get; set; }
         /// <summary>
-        /// 变理值集合，传入的值顺序与变理顺序对应
+        /// 模板号
         /// </summary>
-        public IEnumerable<string> variables { get; set; }
+        public string templateId { get; set; }
         /// <summary>
-        /// 模板ID
+        /// 编码
         /// </summary>
-        public string templateno { get; set; }
+        public string sign { get; set; }
+        /// <summary>
+        /// 可不填
+        /// </summary>
+        public string addSerial { get; set; } = "";
+        /// <summary>
+        /// 参数
+        /// </summary>
+        public List<string> Params { get; set; }
+
     }
 
 
