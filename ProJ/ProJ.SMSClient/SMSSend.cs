@@ -199,11 +199,12 @@ namespace ProJ.SMSClient
                 string smsui = System.Configuration.ConfigurationManager.AppSettings["apId"];//短信平台用户名
                 string smspwd = System.Configuration.ConfigurationManager.AppSettings["secretKey"];//短信平台密码
                 string ecname= System.Configuration.ConfigurationManager.AppSettings["ecName"];//企业名
-
+                string sign= System.Configuration.ConfigurationManager.AppSettings["sign"];//企业名
 
                 pack.apId = smsui;
                 pack.secretKey = smspwd;
                 pack.ecName = ecname;
+                pack.sign = sign;
                 JObject obj = new JObject();
                 obj.Add("ecName", new JValue(pack.ecName));
                 obj.Add("apId", new JValue(pack.apId));
