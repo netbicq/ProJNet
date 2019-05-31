@@ -209,11 +209,11 @@ namespace ProJ.SMSClient
                 obj.Add("ecName", new JValue(pack.ecName));
                 obj.Add("apId", new JValue(pack.apId));
                 obj.Add("secretKey", new JValue(pack.secretKey));
-                obj.Add("mobiles", new JValue(pack.secretKey));
+                obj.Add("mobiles", new JValue(pack.mobiles));
                 obj.Add("params", new JValue(JsonConvert.SerializeObject(pack.Params)));
                 obj.Add("templateId", new JValue(pack.templateId));
                 obj.Add("sign", new JValue(pack.sign));
-                obj.Add("addSerial", new JValue(pack.sign));
+                obj.Add("addSerial", new JValue(pack.addSerial));
                 var mac = pack.ecName + pack.apId + pack.secretKey + pack.templateId + pack.mobiles + JsonConvert.SerializeObject(pack.Params) + pack.sign + pack.addSerial;
                 var mac1 = UserMd5(mac);//要进行32位MD5加密
                 var length = mac1.Length;
