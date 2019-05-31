@@ -128,6 +128,8 @@ namespace ProJ.SMSClient
                                 jj.templateId = System.Configuration.ConfigurationManager.AppSettings["templateId"];
                                 jj.Params= ss;
                                 SendTelMSG(jj);
+                                LogHelper.WriteLog(typeof(ProJ.SMSClient.SMSSend),Newtonsoft.Json.JsonConvert.SerializeObject(jj));
+
                                 //var smspara = new SMSPara()
                                 //{
                                 //    mobile = "15523213827",
@@ -159,6 +161,7 @@ namespace ProJ.SMSClient
                                 jj.templateId = System.Configuration.ConfigurationManager.AppSettings["templateId"];
                                 jj.Params = ss;
                                 SendTelMSG(jj);
+                                LogHelper.WriteLog(typeof(ProJ.SMSClient.SMSSend), Newtonsoft.Json.JsonConvert.SerializeObject(jj));
                                 //var smspara = new SMSPara()
                                 //{
                                 //    mobile= "15523213827",
@@ -228,7 +231,9 @@ namespace ProJ.SMSClient
                 {
                     stream.Write(postbytes, 0, postbytes.Length);
                     stream.Close();
+
                 }
+                LogHelper.WriteLog(typeof(SMSSend), "发送短信");
                 string re = "";
                 using (System.Net.WebResponse response = request.GetResponse())
                 {
@@ -245,6 +250,7 @@ namespace ProJ.SMSClient
                         }
                         restream.Close();
                     }
+                    LogHelper.WriteLog(typeof(SMSSend), "发送结果：" + re);
                 }
             }
             catch (Exception ex)
