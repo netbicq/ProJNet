@@ -119,7 +119,12 @@ namespace ProJ.SMSClient
                                 ss.Add(sms.ProjectInfo.ProjectName);
                                 ss.Add(points);
                                 ss.Add("7");
-                                jj.mobiles = sms.ProjectContact.SitePrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL + "," + sms.ProjectContact.HandlerTEL + "," + sms.ProjectContact.OwnerTEL + "," + sms.ProjectContact.ComLeadTEL;
+                                //jj.mobiles = sms.ProjectContact.SitePrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL + "," + sms.ProjectContact.HandlerTEL + "," + sms.ProjectContact.OwnerTEL + "," + sms.ProjectContact.ComLeadTEL;
+                                jj.mobiles = (string.IsNullOrEmpty(sms.ProjectContact.SitePrincipalTEL) ? "" : (sms.ProjectContact.SitePrincipalTEL + ","))
+                                          + (string.IsNullOrEmpty(sms.ProjectContact.SiteLinkTEL) ? "" : (sms.ProjectContact.SiteLinkTEL + ","))
+                                          + (string.IsNullOrEmpty(sms.ProjectContact.HandlerTEL) ? "" : (sms.ProjectContact.HandlerTEL + ","))
+                                          + (string.IsNullOrEmpty(sms.ProjectContact.OwnerTEL) ? "" : (sms.ProjectContact.OwnerTEL + ","))
+                                          + (string.IsNullOrEmpty(sms.ProjectContact.ComLeadTEL) ? "" : (sms.ProjectContact.ComLeadTEL + ","));
                                 jj.templateId = System.Configuration.ConfigurationManager.AppSettings["templateId"];
                                 jj.Params= ss;
                                 SendTelMSG(jj);
@@ -141,9 +146,16 @@ namespace ProJ.SMSClient
                                 SMSPacket jj = new SMSPacket();
                                 List<string> ss = new List<string>();
                                 ss.Add(sms.ProjectInfo.ProjectName);
-                                ss.Add(points);
+                                ss.Add(points2);
                                 ss.Add("14");
-                                jj.mobiles = sms.ProjectContact.SitePrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL + "," + sms.ProjectContact.HandlerTEL + "," + sms.ProjectContact.OwnerTEL + "," + sms.ProjectContact.ComLeadTEL + "," + sms.ProjectContact.ComPrincipalTEL + "," + sms.ProjectContact.LeaderTEL;
+                                //jj.mobiles = sms.ProjectContact.SitePrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL + "," + sms.ProjectContact.HandlerTEL + "," + sms.ProjectContact.OwnerTEL + "," + sms.ProjectContact.ComLeadTEL + "," + sms.ProjectContact.ComPrincipalTEL + "," + sms.ProjectContact.LeaderTEL;
+                                jj.mobiles = (string.IsNullOrEmpty(sms.ProjectContact.SitePrincipalTEL) ? "" : (sms.ProjectContact.SitePrincipalTEL + ","))
+                                           + (string.IsNullOrEmpty(sms.ProjectContact.SiteLinkTEL) ? "" : (sms.ProjectContact.SiteLinkTEL + ","))
+                                           + (string.IsNullOrEmpty(sms.ProjectContact.HandlerTEL) ? "" : (sms.ProjectContact.HandlerTEL + ","))
+                                           + (string.IsNullOrEmpty(sms.ProjectContact.OwnerTEL) ? "" : (sms.ProjectContact.OwnerTEL + ","))
+                                           + (string.IsNullOrEmpty(sms.ProjectContact.ComLeadTEL) ? "" : (sms.ProjectContact.ComLeadTEL + ","))
+                                           + (string.IsNullOrEmpty(sms.ProjectContact.ComPrincipalTEL) ? "" : (sms.ProjectContact.ComPrincipalTEL + ","))
+                                           + (string.IsNullOrEmpty(sms.ProjectContact.LeaderTEL) ? "" : (sms.ProjectContact.LeaderTEL + ","));
                                 jj.templateId = System.Configuration.ConfigurationManager.AppSettings["templateId"];
                                 jj.Params = ss;
                                 SendTelMSG(jj);
