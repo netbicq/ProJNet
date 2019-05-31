@@ -143,7 +143,7 @@ namespace ProJ.SMSClient
                                 SMSPacket jj = new SMSPacket();
                                 List<string> ss = new List<string>();
                                 ss.Add(sms.ProjectInfo.ProjectName);
-                                ss.Add(points);
+                                ss.Add(points2);
                                 ss.Add("14");
                                 jj.mobiles = sms.ProjectContact.SitePrincipalTEL + "," + sms.ProjectContact.SiteLinkTEL + "," + sms.ProjectContact.HandlerTEL + "," + sms.ProjectContact.OwnerTEL + "," + sms.ProjectContact.ComLeadTEL + "," + sms.ProjectContact.ComPrincipalTEL + "," + sms.ProjectContact.LeaderTEL;
                                 jj.templateId = System.Configuration.ConfigurationManager.AppSettings["templateId"];
